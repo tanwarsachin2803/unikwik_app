@@ -12,6 +12,10 @@ import 'package:unikwik_app/data/mock/mock_channel_data.dart';
 import 'package:unikwik_app/data/mock/mock_person_data.dart';
 import 'package:unikwik_app/presentation/screens/community/widgets/question_popup.dart';
 import 'package:unikwik_app/presentation/screens/community/widgets/channel_modal.dart';
+import 'package:unikwik_app/presentation/screens/community/widgets/channel_creation_popup.dart';
+import 'package:unikwik_app/presentation/widgets/glass_dropdown_chip.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart';
 
 class CommunityScreen extends StatefulWidget {
   @override
@@ -21,6 +25,69 @@ class CommunityScreen extends StatefulWidget {
 class _CommunityScreenState extends State<CommunityScreen> {
   int _selectedTab = 0;
   String _selectedCountry = 'Germany';
+  String? _selectedUniversity;
+  List<String> _universities = [];
+  List<Map<String, dynamic>> _students = [];
+
+  // Mock data for fallback
+  static const List<String> _mockUniversities = [
+    'RWTH Aachen', 'TU Munich', 'Heidelberg University'
+  ];
+  static const List<Map<String, dynamic>> _mockStudents = [
+    {
+      'name': 'Sara Mehta',
+      'emoji': '🧑‍🎓',
+      'university': 'RWTH Aachen',
+      'course': 'MSc Computer Science',
+    },
+    {
+      'name': 'Ali Khan',
+      'emoji': '🧑‍🎓',
+      'university': 'TU Munich',
+      'course': 'MBA',
+    },
+    {
+      'name': 'John Doe',
+      'emoji': '🧑‍🎓',
+      'university': 'Heidelberg University',
+      'course': 'BSc Physics',
+    },
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUniversities(_selectedCountry);
+  }
+
+  Future<void> _loadUniversities(String country) async {
+    final csv = await rootBundle.loadString('assets/Ranking - Sheet1.csv');
+    final lines = LineSplitter.split(csv).toList();
+    final header = lines[0].split(',');
+    final countryIndex = header.indexOf('Country');
+    final universityIndex = header.indexOf('University');
+    final courseIndex = header.contains('Course') ? header.indexOf('Course') : -1;
+    final universities = <String>{};
+    final students = <Map<String, dynamic>>[];
+    for (var i = 1; i < lines.length; i++) {
+      final row = lines[i].split(',');
+      if (row.length > countryIndex && row[countryIndex] == country) {
+        universities.add(row[universityIndex]);
+        students.add({
+          'name': 'Student $i',
+          'emoji': '🧑‍🎓',
+          'university': row[universityIndex],
+          'course': (courseIndex != -1 && row.length > courseIndex) ? row[courseIndex] : 'Course',
+        });
+      }
+    }
+    setState(() {
+      _universities = universities.isNotEmpty ? universities.toList() : List<String>.from(_mockUniversities);
+      _students = students.isNotEmpty ? students : List<Map<String, dynamic>>.from(_mockStudents);
+      _selectedUniversity = _universities.isNotEmpty ? _universities[0] : null;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -48,19 +115,56 @@ class _CommunityScreenState extends State<CommunityScreen> {
                       countries: const ['Germany', 'Canada', 'USA'],
                       selectedCountry: _selectedCountry,
                       onChanged: (country) {
-                        setState(() => _selectedCountry = country);
+                        setState(() {
+                          _selectedCountry = country;
+                        });
+                        _loadUniversities(country);
                       },
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(15),
-                    child: Text(
-                      'Channels',
-                      style: TextStyle(
-                        color: AppColors.deepTeal,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Channels',
+                          style: TextStyle(
+                            color: AppColors.deepTeal,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            border: Border.all(color: AppColors.sand, width: 2),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: IconButton(
+                            icon: Icon(Icons.add, color: AppColors.deepTeal, size: 26),
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (ctx) => ChannelCreationPopup(
+                                  onAdd: (name) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text('Channel "$name" added!'),
+                                        backgroundColor: Colors.green,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                            splashRadius: 24,
+                            tooltip: 'Add Channel',
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   SizedBox(
@@ -96,50 +200,132 @@ class _CommunityScreenState extends State<CommunityScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    child: FiltersWidget(onChanged: (f) {}),
-                  ),
-                  Expanded(
-                    child: ListView.separated(
-                      padding: const EdgeInsets.all(12),
-                      itemCount: mockPeople.where((p) => p['country'] == _selectedCountry).length,
-                      separatorBuilder: (_, __) => const SizedBox(height: 10),
-                      itemBuilder: (context, i) {
-                        final filtered = mockPeople.where((p) => p['country'] == _selectedCountry).toList();
-                        final person = filtered[i];
-                        return PersonCard(
-                          person: person,
-                          onConnect: () {
-                            if ((person['personalDetailsComplete'] ?? false) && (person['socialLinked'] ?? false)) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Connection request sent!'), backgroundColor: Colors.blue),
-                              );
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Complete personal details and link social account'), backgroundColor: Colors.red),
-                              );
-                            }
-                          },
-                          onAsk: () {
-                            showDialog(
-                              context: context,
-                              builder: (ctx) => QuestionPopup(
-                                personName: person['name'],
-                                onSent: () {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text('Thanks for asking question to ${person['name']}'),
-                                      backgroundColor: Colors.green,
-                                    ),
-                                  );
-                                },
-                              ),
-                            );
-                          },
-                        );
-                      },
+                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                    child: Text(
+                      'Connections',
+                      style: TextStyle(
+                        color: AppColors.deepTeal,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
+                  if (_universities.isEmpty)
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                      child: Text('No universities found for this country.', style: TextStyle(color: Colors.white70)),
+                    ),
+                  if (_universities.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                      child: GlassDropdownChip<String>(
+                        options: _universities,
+                        selectedValue: _selectedUniversity,
+                        onChanged: (val) {
+                          setState(() => _selectedUniversity = val);
+                        },
+                        labelBuilder: (u) => u,
+                        placeholder: 'Select a university',
+                        blur: 12,
+                        blurDropdown: 12,
+                        chipTint: Colors.white.withOpacity(0.13),
+                        dropdownTint: Colors.white.withOpacity(0.13),
+                        isActive: true,
+                      ),
+                    ),
+                  if (_selectedUniversity == null || _students.where((s) => s['university'] == _selectedUniversity).isEmpty)
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                      child: Text('No students found for this university.', style: TextStyle(color: Colors.white70)),
+                    ),
+                  if (_selectedUniversity != null && _students.where((s) => s['university'] == _selectedUniversity).isNotEmpty)
+                    Expanded(
+                      child: ListView.separated(
+                        padding: const EdgeInsets.all(15),
+                        itemCount: _students.where((s) => s['university'] == _selectedUniversity).length,
+                        separatorBuilder: (_, __) => const SizedBox(height: 12),
+                        itemBuilder: (context, i) {
+                          final filtered = _students.where((s) => s['university'] == _selectedUniversity).toList();
+                          final student = filtered[i];
+                          return Container(
+                            padding: const EdgeInsets.all(18),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(student['emoji'], style: const TextStyle(fontSize: 32)),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(student['name'], style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 18)),
+                                      Text(student['university'], style: const TextStyle(color: Colors.white70, fontSize: 15)),
+                                      Text(student['course'], style: const TextStyle(color: Colors.white54, fontSize: 14)),
+                                      const SizedBox(height: 10),
+                                      Row(
+                                        children: [
+                                          ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: AppColors.sand,
+                                              foregroundColor: AppColors.deepTeal,
+                                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                                            ),
+                                            onPressed: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: (ctx) => QuestionPopup(
+                                                  personName: student['name'],
+                                                  onSent: () {
+                                                    ScaffoldMessenger.of(context).showSnackBar(
+                                                      SnackBar(
+                                                        content: Text('Thanks for asking question to ${student['name']}'),
+                                                        backgroundColor: Colors.green,
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                              );
+                                            },
+                                            child: const Text('Ask Question'),
+                                          ),
+                                          const SizedBox(width: 10),
+                                          ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: AppColors.sand,
+                                              foregroundColor: AppColors.deepTeal,
+                                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                                            ),
+                                            onPressed: () {
+                                              ScaffoldMessenger.of(context).showSnackBar(
+                                                SnackBar(
+                                                  content: Text('Connection request sent to ${student['name']}!'),
+                                                  backgroundColor: Colors.blue,
+                                                ),
+                                              );
+                                            },
+                                            child: const Text('Connect'),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ).asGlass(
+                            tintColor: Colors.white.withOpacity(0.13),
+                            blurX: 12,
+                            blurY: 12,
+                            clipBorderRadius: BorderRadius.circular(18),
+                          );
+                        },
+                      ),
+                    ),
                 ],
               ),
             ),

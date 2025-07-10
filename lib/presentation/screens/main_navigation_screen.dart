@@ -9,6 +9,7 @@ import 'package:unikwik_app/presentation/screens/university/universities_screen.
 import 'package:unikwik_app/presentation/widgets/profile_drawer.dart';
 import 'package:unikwik_app/presentation/screens/community/community_screen.dart';
 import 'package:unikwik_app/presentation/screens/travel_explorer_screen.dart';
+import 'package:unikwik_app/presentation/screens/exam_prep/exam_prep_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -26,7 +27,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> with Single
     Icons.attach_money,   // Loans tab
     Icons.account_balance, // Universities tab
     Icons.group,          // Community tab
-    Icons.auto_stories,   // Profile/Exam Prep tab
+    Icons.school,         // Exam Prep tab (new)
   ];
 
   void _showSnackBar(BuildContext context, String message) {
@@ -44,6 +45,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> with Single
       case 3:
         return CommunityScreen();
       case 4:
+        return ExamPrepScreen();
+      case 5:
         return const Center(child: Text('Profile Screen', style: TextStyle(fontSize: 22)));
       default:
         return TravelExplorerScreen();
