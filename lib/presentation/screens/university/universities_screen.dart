@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:unikwik_app/presentation/widgets/gradient_background.dart';
+import 'package:unikwik_app/presentation/widgets/glass_container.dart';
 import 'widgets/university_card.dart';
-import 'widgets/glass_dropdown_chip.dart';
-import 'package:unikwik_app/data/models/university_model.dart';
-import 'package:unikwik_app/data/repositories/university_repository.dart';
-import 'package:unikwik_app/core/services/university_ranking_service.dart';
-import 'package:unikwik_app/core/models/university_ranking.dart';
-import 'package:unikwik_app/presentation/screens/community/community_screen.dart';
+import 'widgets/university_filter_chip.dart';
+import 'dart:convert';
 
 class UniversityScreen extends StatefulWidget {
   const UniversityScreen({super.key});
@@ -15,356 +14,259 @@ class UniversityScreen extends StatefulWidget {
   State<UniversityScreen> createState() => _UniversityScreenState();
 }
 
-class _UniversityScreenState extends State<UniversityScreen> {
-  // Default values for filters
-  static const String defaultRegion = 'World';
-  static const String? defaultCountry = null;
-  static const String defaultSearchQuery = '';
-  static const String? defaultTuitionFilter = null;
-  static const String? defaultApplicationFilter = null;
+class _UniversityScreenState extends State<UniversityScreen>
+    with TickerProviderStateMixin {
+  // Animation controllers
+  late AnimationController _searchController;
+  late AnimationController _filterController;
+  late AnimationController _listController;
 
-  String? selectedRegion = defaultRegion;
-  String? selectedCountry = defaultCountry;
-  String searchQuery = defaultSearchQuery;
-  String? tuitionFilter = defaultTuitionFilter;
-  String? applicationFilter = defaultApplicationFilter;
-  
-  // Controllers for better input handling
-  final TextEditingController searchController = TextEditingController();
-  final TextEditingController tuitionController = TextEditingController();
-  final TextEditingController applicationController = TextEditingController();
-
-  // Repository for data operations
-  late final UniversityRepository _repository;
-  
-  // State for universities
-  List<University> _universities = [];
+  // Data state
+  List<Map<String, dynamic>> _allUniversities = [];
+  List<Map<String, dynamic>> _filteredUniversities = [];
+  List<Map<String, dynamic>> _countries = [];
   bool _isLoading = true;
   String? _error;
 
-  // Dynamic filter options
-  List<String> regionOptions = [];
-  List<String> countryOptions = [];
+  // Filter state
+  String _searchQuery = '';
+  String? _selectedCountry;
+  String? _selectedRegion;
+  String? _selectedRanking;
+  double? _maxTuition;
+  double? _maxApplicationFee;
+  bool _showFilters = false;
+  // 1. Add sort state
+  bool _sortAscending = false;
 
+  // Controllers
+  final TextEditingController _searchTextController = TextEditingController();
+  final TextEditingController _tuitionController = TextEditingController();
+  final TextEditingController _applicationController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  int _currentPage = 0;
-  final int _pageSize = 10;
-  bool _isLoadingMore = false;
-  bool _hasMore = true;
-  List<UniversityRanking> _allRankings = [];
+
+  // Filter options
+  List<String> _regions = [];
+  final List<String> _rankingRanges = [
+    'Top 10',
+    'Top 25',
+    'Top 50',
+    'Top 100',
+    'Top 200',
+    'All'
+  ];
+
+  int? _expandedIndex; // Track which card is expanded
 
   @override
   void initState() {
     super.initState();
-    _repository = UniversityRepository();
-    _loadFilterOptions();
-    _initScrollListener();
-    _loadInitialUniversities();
+    _initializeAnimations();
+    _loadUniversityData();
   }
 
-  void _initScrollListener() {
-    _scrollController.addListener(() {
-      if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200 && !_isLoadingMore && _hasMore && !_isLoading) {
-        _loadMoreUniversities();
-      }
-    });
-  }
-
-  Future<void> _loadInitialUniversities() async {
-    setState(() {
-      _universities = [];
-      _currentPage = 0;
-      _hasMore = true;
-      _isLoading = true;
-      _error = null;
-    });
-    try {
-      // Load all rankings from CSV once
-      _allRankings = await UniversityRankingService.loadUniversityRankings();
-      await _loadMoreUniversities(reset: true);
-    } catch (e) {
-      setState(() {
-        _error = 'Failed to load universities: $e';
-        _isLoading = false;
-      });
-    }
-  }
-
-  Future<void> _loadMoreUniversities({bool reset = false}) async {
-    if (_isLoadingMore) return;
-    setState(() {
-      _isLoadingMore = true;
-      if (reset) _universities = [];
-    });
-    try {
-      // Sort by ranking (ascending)
-      final sorted = List<UniversityRanking>.from(_allRankings)
-        ..sort((a, b) => a.ranking.compareTo(b.ranking));
-      final start = _currentPage * _pageSize;
-      final end = start + _pageSize;
-      final pageRankings = sorted.skip(start).take(_pageSize).toList();
-      if (pageRankings.isEmpty) {
-        setState(() {
-          _hasMore = false;
-          _isLoadingMore = false;
-        });
-        return;
-      }
-      final names = pageRankings.map((r) => r.university).toList();
-      final universities = await _repository.getFilteredUniversities(
-        searchQuery: null,
-        country: null,
-        maxTuition: null,
-        maxApplicationFee: null,
-        limit: _pageSize,
-      );
-      // Only keep those in this page
-      final filtered = universities.where((u) => names.contains(u.name)).toList();
-      // Sort to match CSV order
-      filtered.sort((a, b) => names.indexOf(a.name).compareTo(names.indexOf(b.name)));
-      setState(() {
-        if (reset) {
-          _universities = filtered;
-        } else {
-          _universities.addAll(filtered);
-        }
-        _currentPage++;
-        _hasMore = filtered.length == _pageSize;
-        _isLoading = false;
-        _isLoadingMore = false;
-      });
-    } catch (e) {
-      setState(() {
-        _error = 'Failed to load more universities: $e';
-        _isLoading = false;
-        _isLoadingMore = false;
-      });
-    }
-  }
-
-  Future<void> _loadFilterOptions() async {
-    // Load unique regions and countries from CSV
-    final regions = await UniversityRankingService.getUniqueRegions(
-      await UniversityRankingService.loadUniversityRankings(),
+  void _initializeAnimations() {
+    _searchController = AnimationController(
+      duration: const Duration(milliseconds: 800),
+      vsync: this,
     );
-    setState(() {
-      regionOptions = ['World', ...regions];
-    });
-    await _updateCountryOptions(selectedRegion);
-  }
+    _filterController = AnimationController(
+      duration: const Duration(milliseconds: 600),
+      vsync: this,
+    );
+    _listController = AnimationController(
+      duration: const Duration(milliseconds: 1200),
+      vsync: this,
+    );
 
-  Future<void> _updateCountryOptions(String? region) async {
-    final rankings = await UniversityRankingService.loadUniversityRankings();
-    List<String> countries;
-    if (region != null && region != 'World') {
-      countries = rankings
-        .where((r) => r.region == region)
-        .map((r) => r.country)
-        .where((c) => c.isNotEmpty)
-        .toSet()
-        .toList();
-    } else {
-      countries = UniversityRankingService.getUniqueCountries(rankings);
-    }
-    countries.sort();
-    setState(() {
-      countryOptions = countries;
+    // Start animations
+    _searchController.forward();
+    Future.delayed(const Duration(milliseconds: 200), () {
+      _filterController.forward();
+    });
+    Future.delayed(const Duration(milliseconds: 400), () {
+      _listController.forward();
     });
   }
 
-  // Load universities from top 10 in CSV
-  Future<void> _loadUniversities() async {
-    setState(() {
-      _isLoading = true;
-      _error = null;
-    });
-
+  Future<void> _loadUniversityData() async {
     try {
-      // 1. Load all rankings from CSV
-      final rankings = await UniversityRankingService.loadUniversityRankings();
-      // 2. Sort by ranking (ascending, i.e., 1 is best)
-      final top10 = List<UniversityRanking>.from(rankings)
-        ..sort((a, b) => a.ranking.compareTo(b.ranking));
-      final top10List = top10.take(10).toList();
-      // 3. Get their names
-      final names = top10List.map((r) => r.university).toList();
-      // 4. Fetch Firestore data for these names
-      final universities = await _repository.getFilteredUniversities(
-        searchQuery: null,
-        country: null,
-        maxTuition: null,
-        maxApplicationFee: null,
-        limit: 10,
-      );
-      // 5. Filter to only those in top 10 names (in case Firestore has more)
-      final filtered = universities.where((u) => names.contains(u.name)).toList();
-      // 6. Sort to match CSV order
-      filtered.sort((a, b) => names.indexOf(a.name).compareTo(names.indexOf(b.name)));
       setState(() {
-        _universities = filtered;
+        _isLoading = true;
+        _error = null;
+      });
+
+      // Load countries data
+      final countriesData = await rootBundle.loadString('assets/university_data/countries.json');
+      final countriesList = json.decode(countriesData) as List;
+      _countries = countriesList.cast<Map<String, dynamic>>();
+
+      // Load all universities from all countries
+      List<Map<String, dynamic>> allUnis = [];
+      for (final country in _countries) {
+        final fileName = (country['fileName'] as String?) ?? country['name'].toString().replaceAll(RegExp(r'[^a-zA-Z0-9]'), '_').toLowerCase() + '.json';
+        try {
+          final uniData = await rootBundle.loadString('assets/university_data/$fileName');
+          final countryData = json.decode(uniData) as Map<String, dynamic>;
+          final universities = countryData['universities'] as List;
+          for (final u in universities) {
+            // Robust parsing: skip if name or rank is null
+            if (u == null || u['name'] == null || u['rank'] == null) continue;
+            // Defensive: ensure all fields are strings or provide defaults
+            allUnis.add({
+              ...u,
+              'name': u['name']?.toString() ?? '',
+              'country': u['country']?.toString() ?? '',
+              'region': u['region']?.toString() ?? '',
+              'score': (u['score'] is num) ? u['score'] : double.tryParse(u['score']?.toString() ?? '') ?? 0.0,
+              'rank': (u['rank'] is int) ? u['rank'] : int.tryParse(u['rank']?.toString() ?? '') ?? 9999,
+              'tuitionFee': (u['tuitionFee'] is int) ? u['tuitionFee'] : int.tryParse(u['tuitionFee']?.toString() ?? '') ?? 0,
+              'applicationFee': (u['applicationFee'] is int) ? u['applicationFee'] : int.tryParse(u['applicationFee']?.toString() ?? '') ?? 0,
+              'applicationOpen': u['applicationOpen'] ?? false,
+              'flag': country['flag'] ?? '',
+            });
+          }
+        } catch (e) {
+          // Ignore missing files or bad data
+        }
+      }
+
+      // Extract unique regions
+      final regions = allUnis
+          .map((uni) => uni['region'] as String?)
+          .where((region) => region != null && region.isNotEmpty)
+          .map((region) => region!)
+          .toSet()
+          .toList();
+      regions.sort();
+
+      // Show top 10 by default
+      allUnis.sort((a, b) => (a['rank'] as int).compareTo(b['rank'] as int));
+      final top10 = allUnis.take(10).toList();
+
+      setState(() {
+        _allUniversities = allUnis;
+        _filteredUniversities = top10;
+        _regions = regions;
         _isLoading = false;
       });
     } catch (e) {
       setState(() {
-        _error = 'Failed to load universities: $e';
+        _error = 'Failed to load university data: $e';
         _isLoading = false;
       });
     }
   }
 
-  // Load filtered universities
-  Future<void> _loadFilteredUniversities() async {
+  void _applyFilters() {
+    List<Map<String, dynamic>> filtered = List.from(_allUniversities);
+
+    // Search filter
+    if (_searchQuery.isNotEmpty) {
+      filtered = filtered.where((uni) {
+        final name = (uni['name'] as String).toLowerCase();
+        final country = (uni['country'] as String).toLowerCase();
+        final query = _searchQuery.toLowerCase();
+        return name.contains(query) || country.contains(query);
+      }).toList();
+    }
+
+    // Country filter
+    if (_selectedCountry != null) {
+      filtered = filtered.where((uni) => uni['country'] == _selectedCountry).toList();
+    }
+
+    // Region filter
+    if (_selectedRegion != null) {
+      filtered = filtered.where((uni) => uni['region'] == _selectedRegion).toList();
+    }
+
+    // Ranking filter
+    if (_selectedRanking != null) {
+      final maxRank = _getMaxRankFromRange(_selectedRanking!);
+      if (maxRank > 0) {
+        filtered = filtered.where((uni) => (uni['rank'] as int) <= maxRank).toList();
+      }
+    }
+
+    // Tuition filter
+    if (_maxTuition != null) {
+      filtered = filtered.where((uni) => (uni['tuitionFee'] as int) <= _maxTuition!).toList();
+    }
+
+    // Application fee filter
+    if (_maxApplicationFee != null) {
+      filtered = filtered.where((uni) => (uni['applicationFee'] as int) <= _maxApplicationFee!).toList();
+    }
+
+    // Sort by rank
+    filtered.sort((a, b) => (a['rank'] as int).compareTo(b['rank'] as int));
+    if (!_sortAscending) {
+      filtered = filtered.reversed.toList();
+    }
+
+    // If no filters, show top 10 by rank (after sorting)
+    if (!_hasActiveFilters) {
+      filtered = filtered.take(10).toList();
+    }
     setState(() {
-      _isLoading = true;
-      _error = null;
+      _filteredUniversities = filtered;
     });
+  }
 
-    try {
-      double? maxTuition;
-      double? maxApplicationFee;
-
-      if (tuitionFilter != null && tuitionFilter!.isNotEmpty) {
-        maxTuition = double.tryParse(tuitionFilter!);
-      }
-
-      if (applicationFilter != null && applicationFilter!.isNotEmpty) {
-        maxApplicationFee = double.tryParse(applicationFilter!);
-      }
-
-      final universities = await _repository.getFilteredUniversities(
-        searchQuery: searchQuery.isNotEmpty ? searchQuery : null,
-        country: selectedCountry,
-        maxTuition: maxTuition,
-        maxApplicationFee: maxApplicationFee,
-        limit: 10,
-      );
-
-      setState(() {
-        _universities = universities;
-        _isLoading = false;
-      });
-    } catch (e) {
-      setState(() {
-        _error = 'Failed to load filtered universities: $e';
-        _isLoading = false;
-      });
+  int _getMaxRankFromRange(String range) {
+    switch (range) {
+      case 'Top 10':
+        return 10;
+      case 'Top 25':
+        return 25;
+      case 'Top 50':
+        return 50;
+      case 'Top 100':
+        return 100;
+      case 'Top 200':
+        return 200;
+      default:
+        return 0; // All
     }
   }
 
-  // Method to clear all filters
   void _clearAllFilters() {
     setState(() {
-      selectedRegion = defaultRegion;
-      selectedCountry = defaultCountry;
-      searchQuery = defaultSearchQuery;
-      tuitionFilter = defaultTuitionFilter;
-      applicationFilter = defaultApplicationFilter;
-      
-      // Clear text controllers
-      searchController.clear();
-      tuitionController.clear();
-      applicationController.clear();
+      _searchQuery = '';
+      _selectedCountry = null;
+      _selectedRegion = null;
+      _selectedRanking = null;
+      _maxTuition = null;
+      _maxApplicationFee = null;
+      _showFilters = false;
+      _sortAscending = false; // Reset sort state
     });
-    
-    // Reload universities without filters
-    _loadUniversities();
+
+    _searchTextController.clear();
+    _tuitionController.clear();
+    _applicationController.clear();
+
+    _applyFilters();
   }
 
-  // Method to check if any filters are active
-  bool _hasActiveFilters() {
-    return searchQuery.isNotEmpty ||
-           (selectedCountry != null && selectedCountry!.isNotEmpty) ||
-           (tuitionFilter != null && tuitionFilter!.isNotEmpty) ||
-           (applicationFilter != null && applicationFilter!.isNotEmpty);
-  }
-
-  // Method to check if a specific filter is active
-  bool _isFilterActive(String? value) {
-    return value != null && value.isNotEmpty;
-  }
-
-  // Map regions to countries
-  final Map<String, List<String>> regionToCountries = {
-    'World': ['USA', 'UK', 'Japan'],
-    'Europe': ['UK'],
-    'Asia': ['Japan'],
-    'North America': ['USA'],
-    // Add more as needed
-  };
-
-  List<String> get visibleCountryOptions {
-    if (selectedRegion == null || selectedRegion == 'World') {
-      return regionToCountries['World']!;
-    }
-    return regionToCountries[selectedRegion!] ?? [];
-  }
-
-  List<University> get filteredUniversities {
-    var list = _universities;
-    // Only show universities with a positive integer ranking
-    list = list.where((u) => u.ranking != null && u.ranking! > 0).toList();
-    // Filter by search query
-    if (searchQuery.isNotEmpty) {
-      list = list.where((u) => 
-        u.name.toLowerCase().contains(searchQuery.toLowerCase())
-      ).toList();
-    }
-    // Filter by country
-    if (selectedCountry != null && selectedCountry!.isNotEmpty) {
-      list = list.where((u) => u.country == selectedCountry).toList();
-    }
-    // Filter by tuition fee (max value)
-    if (tuitionFilter != null && tuitionFilter!.isNotEmpty) {
-      try {
-        double maxTuition = double.parse(tuitionFilter!);
-        list = list.where((u) => u.tuitionFee <= maxTuition).toList();
-      } catch (e) {
-        // Invalid number, ignore filter
-      }
-    }
-    // Filter by application fee (max value)
-    if (applicationFilter != null && applicationFilter!.isNotEmpty) {
-      try {
-        double maxApplication = double.parse(applicationFilter!);
-        list = list.where((u) => u.applicationFee <= maxApplication).toList();
-      } catch (e) {
-        // Invalid number, ignore filter
-      }
-    }
-    // Limit to 10 results for better performance
-    return list.take(10).toList();
-  }
-
-  // Add this method to toggle watchlist
-  Future<void> _toggleWatchlist(University university) async {
-    final newStatus = !university.isWatchlisted;
-    setState(() {
-      _universities = _universities.map((u) =>
-        u.id == university.id ? University(
-          id: u.id,
-          name: u.name,
-          country: u.country,
-          imageUrl: u.imageUrl,
-          tuitionFee: u.tuitionFee,
-          applicationFee: u.applicationFee,
-          applicationOpen: u.applicationOpen,
-          deadlines: u.deadlines,
-          ranking: u.ranking,
-          region: u.region,
-          applicationUrl: u.applicationUrl,
-          csvRanking: u.csvRanking,
-          isWatchlisted: newStatus,
-        ) : u
-      ).toList();
-    });
-    await _repository.toggleWatchlist(university.id, newStatus);
+  bool get _hasActiveFilters {
+    return _searchQuery.isNotEmpty ||
+        _selectedCountry != null ||
+        _selectedRegion != null ||
+        _selectedRanking != null ||
+        _maxTuition != null ||
+        _maxApplicationFee != null;
   }
 
   @override
   void dispose() {
-    searchController.dispose();
-    tuitionController.dispose();
-    applicationController.dispose();
+    _searchController.dispose();
+    _filterController.dispose();
+    _listController.dispose();
+    _searchTextController.dispose();
+    _tuitionController.dispose();
+    _applicationController.dispose();
     _scrollController.dispose();
     super.dispose();
   }
@@ -378,354 +280,759 @@ class _UniversityScreenState extends State<UniversityScreen> {
           SafeArea(
             child: Column(
               children: [
-                // Header with title and tabs
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.public, color: Colors.lightBlueAccent, size: 32),
-                      const SizedBox(width: 10),
-                      Text(
-                        'Universities',
-                        style: TextStyle(
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white.withOpacity(0.9),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                // Filters
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        // Search TextField
-                        Container(
-                          width: 200,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(18),
-                            color: Colors.white.withOpacity(0.1),
-                            border: Border.all(
-                              color: _isFilterActive(searchQuery) 
-                                  ? Colors.blueAccent.withOpacity(0.8)
-                                  : Colors.white.withOpacity(0.2),
-                              width: _isFilterActive(searchQuery) ? 2 : 1,
-                            ),
-                            boxShadow: _isFilterActive(searchQuery) ? [
-                              BoxShadow(
-                                color: Colors.blueAccent.withOpacity(0.3),
-                                blurRadius: 8,
-                                spreadRadius: 2,
-                              ),
-                            ] : null,
-                          ),
-                          child: TextField(
-                            controller: searchController,
-                            onChanged: (value) {
-                              setState(() {
-                                searchQuery = value;
-                              });
-                              _loadFilteredUniversities();
-                            },
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
-                            decoration: const InputDecoration(
-                              hintText: 'Search universities...',
-                              hintStyle: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 16,
-                              ),
-                              border: InputBorder.none,
-                              contentPadding: EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 12,
-                              ),
-                              prefixIcon: Icon(
-                                Icons.search,
-                                color: Colors.white70,
-                                size: 20,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        GlassDropdownChip<String>(
-                          options: regionOptions,
-                          selectedValue: selectedRegion,
-                          onChanged: (region) async {
-                            setState(() {
-                              selectedRegion = region;
-                              selectedCountry = null;
-                            });
-                            await _updateCountryOptions(region);
-                            _loadFilteredUniversities();
-                          },
-                          labelBuilder: (region) => region,
-                          placeholder: 'Region',
-                          isActive: selectedRegion != defaultRegion,
-                          activeGlowColor: Colors.purpleAccent,
-                        ),
-                        const SizedBox(width: 12),
-                        GlassDropdownChip<String>(
-                          options: countryOptions,
-                          selectedValue: selectedCountry,
-                          onChanged: (country) {
-                            setState(() {
-                              selectedCountry = country;
-                            });
-                            _loadFilteredUniversities();
-                          },
-                          labelBuilder: (country) => country,
-                          placeholder: 'Country',
-                          isActive: _isFilterActive(selectedCountry),
-                          activeGlowColor: Colors.cyanAccent,
-                        ),
-                        const SizedBox(width: 12),
-                        // Tuition Fee Filter
-                        Container(
-                          width: 150,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(18),
-                            color: Colors.white.withOpacity(0.1),
-                            border: Border.all(
-                              color: _isFilterActive(tuitionFilter) 
-                                  ? Colors.greenAccent.withOpacity(0.8)
-                                  : Colors.white.withOpacity(0.2),
-                              width: _isFilterActive(tuitionFilter) ? 2 : 1,
-                            ),
-                            boxShadow: _isFilterActive(tuitionFilter) ? [
-                              BoxShadow(
-                                color: Colors.greenAccent.withOpacity(0.3),
-                                blurRadius: 8,
-                                spreadRadius: 2,
-                              ),
-                            ] : null,
-                          ),
-                          child: TextField(
-                            controller: tuitionController,
-                            onChanged: (value) {
-                              setState(() {
-                                tuitionFilter = value;
-                              });
-                              _loadFilteredUniversities();
-                            },
-                            keyboardType: TextInputType.number,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
-                            decoration: const InputDecoration(
-                              hintText: 'Max Tuition',
-                              hintStyle: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 16,
-                              ),
-                              border: InputBorder.none,
-                              contentPadding: EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 12,
-                              ),
-                              prefixIcon: Icon(
-                                Icons.attach_money,
-                                color: Colors.white70,
-                                size: 20,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        // Application Fee Filter
-                        Container(
-                          width: 150,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(18),
-                            color: Colors.white.withOpacity(0.1),
-                            border: Border.all(
-                              color: _isFilterActive(applicationFilter) 
-                                  ? Colors.orangeAccent.withOpacity(0.8)
-                                  : Colors.white.withOpacity(0.2),
-                              width: _isFilterActive(applicationFilter) ? 2 : 1,
-                            ),
-                            boxShadow: _isFilterActive(applicationFilter) ? [
-                              BoxShadow(
-                                color: Colors.orangeAccent.withOpacity(0.3),
-                                blurRadius: 8,
-                                spreadRadius: 2,
-                              ),
-                            ] : null,
-                          ),
-                          child: TextField(
-                            controller: applicationController,
-                            onChanged: (value) {
-                              setState(() {
-                                applicationFilter = value;
-                              });
-                              _loadFilteredUniversities();
-                            },
-                            keyboardType: TextInputType.number,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
-                            decoration: const InputDecoration(
-                              hintText: 'Max App Fee',
-                              hintStyle: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 16,
-                              ),
-                              border: InputBorder.none,
-                              contentPadding: EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 12,
-                              ),
-                              prefixIcon: Icon(
-                                Icons.description,
-                                color: Colors.white70,
-                                size: 20,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        // Clear All Filters Button
-                        GestureDetector(
-                          onTap: _clearAllFilters,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(18),
-                              color: Colors.white.withOpacity(0.1),
-                              border: Border.all(
-                                color: _hasActiveFilters() 
-                                    ? Colors.redAccent.withOpacity(0.8)
-                                    : Colors.white.withOpacity(0.2),
-                                width: _hasActiveFilters() ? 2 : 1,
-                              ),
-                              boxShadow: _hasActiveFilters() ? [
-                                BoxShadow(
-                                  color: Colors.redAccent.withOpacity(0.3),
-                                  blurRadius: 8,
-                                  spreadRadius: 2,
-                                ),
-                              ] : null,
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  Icons.clear_all,
-                                  color: Colors.white70,
-                                  size: 20,
-                                ),
-                                const SizedBox(width: 8),
-                                Text(
-                                  'Clear',
-                                  style: const TextStyle(
-                                    color: Colors.white70,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: _isLoading
-                      ? const Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                          ),
-                        )
-                      : _error != null
-                          ? Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    _error!,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  const SizedBox(height: 16),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      ElevatedButton(
-                                        onPressed: _loadUniversities,
-                                        child: const Text('Retry'),
-                                      ),
-                                      const SizedBox(width: 16),
-                                      ElevatedButton(
-                                        onPressed: () async {
-                                          try {
-                                            await _repository.addSampleData();
-                                            _loadUniversities();
-                                            ScaffoldMessenger.of(context).showSnackBar(
-                                              const SnackBar(
-                                                content: Text('Sample data added successfully!'),
-                                                backgroundColor: Colors.green,
-                                              ),
-                                            );
-                                          } catch (e) {
-                                            ScaffoldMessenger.of(context).showSnackBar(
-                                              SnackBar(
-                                                content: Text('Failed to add sample data: $e'),
-                                                backgroundColor: Colors.red,
-                                              ),
-                                            );
-                                          }
-                                        },
-                                        child: const Text('Add Sample Data'),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            )
-                          : filteredUniversities.isEmpty
-                              ? const Center(
-                                  child: Text(
-                                    'No universities found',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                )
-                              : ListView.builder(
-                                  controller: _scrollController,
-                                  padding: const EdgeInsets.symmetric(vertical: 12),
-                                  itemCount: filteredUniversities.length,
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 12),
-                                      child: UniversityCard(
-                                        university: filteredUniversities[index],
-                                        index: index,
-                                        onWatchlistToggle: () => _toggleWatchlist(filteredUniversities[index]),
-                                      ),
-                                    );
-                                  },
-                                ),
-                ),
+                _buildHeader(),
+                _buildSearchBar(),
+                _buildFilterSection(),
+                _buildResultsSection(),
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildHeader() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center, // Center the row
+        children: [
+          Icon(
+            Icons.school_rounded,
+            color: Colors.amber[300],
+            size: 32,
+          ),
+          const SizedBox(width: 12),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Universities',
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white.withOpacity(0.95),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFilterToggle() {
+    final bool hasActiveFilters = _hasActiveFilters;
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _showFilters = !_showFilters;
+        });
+        if (_showFilters) {
+          _filterController.forward();
+        } else {
+          _filterController.reverse();
+        }
+      },
+      child: GlassContainer(
+        child: Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: hasActiveFilters ? Colors.amber.withOpacity(0.18) : Colors.transparent,
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                _showFilters ? Icons.tune : Icons.tune_outlined,
+                color: hasActiveFilters ? Colors.amber : Colors.white,
+                size: 20,
+              ),
+              const SizedBox(width: 6),
+              Text(
+                'Filters',
+                style: TextStyle(
+                  color: hasActiveFilters ? Colors.amber : Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ).animate(controller: _searchController)
+      .fadeIn(delay: 600.ms)
+      .scale(begin: const Offset(0.8, 0.8));
+  }
+
+  Widget _buildSearchBar() {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      child: Row(
+        children: [
+          Expanded(
+            child: GlassContainer(
+              child: TextField(
+                controller: _searchTextController,
+                onChanged: (value) {
+                  setState(() {
+                    _searchQuery = value;
+                  });
+                  _applyFilters();
+                },
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                ),
+                decoration: InputDecoration(
+                  hintText: 'Search universities or countries...',
+                  hintStyle: TextStyle(
+                    color: Colors.white.withOpacity(0.6),
+                    fontSize: 16,
+                  ),
+                  border: InputBorder.none,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 16,
+                  ),
+                  prefixIcon: Icon(
+                    Icons.search_rounded,
+                    color: Colors.white.withOpacity(0.7),
+                    size: 24,
+                  ),
+                  suffixIcon: _searchQuery.isNotEmpty
+                      ? IconButton(
+                          onPressed: () {
+                            _searchTextController.clear();
+                            setState(() {
+                              _searchQuery = '';
+                            });
+                            _applyFilters();
+                          },
+                          icon: Icon(
+                            Icons.clear_rounded,
+                            color: Colors.white.withOpacity(0.7),
+                            size: 20,
+                          ),
+                        )
+                      : null,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
+          _buildSortButton(),
+          const SizedBox(width: 8),
+          _buildFilterToggle(),
+        ],
+      ),
+    ).animate(controller: _searchController)
+      .fadeIn(delay: 300.ms)
+      .slideY(begin: 0.3);
+  }
+
+  Widget _buildSortButton() {
+    return GlassContainer(
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            _sortAscending = !_sortAscending;
+            _applyFilters();
+          });
+        },
+        child: Container(
+          padding: const EdgeInsets.all(12),
+          child: Row(
+            children: [
+              Icon(
+                _sortAscending ? Icons.arrow_upward : Icons.arrow_downward,
+                color: Colors.white,
+                size: 20,
+              ),
+              const SizedBox(width: 6),
+              Text(
+                'Sort',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFilterSection() {
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
+      height: _showFilters ? null : 0,
+      child: _showFilters
+          ? Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+              child: Column(
+                children: [
+                  _buildFilterChips(),
+                  const SizedBox(height: 12),
+                  _buildAdvancedFilters(),
+                  const SizedBox(height: 12),
+                  _buildClearFiltersButton(),
+                ],
+              ),
+            ).animate(controller: _filterController)
+              .fadeIn()
+              .slideY(begin: -0.3)
+          : const SizedBox.shrink(),
+    );
+  }
+
+  Widget _buildFilterChips() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Wrap(
+          spacing: 8.0,
+          runSpacing: 8.0,
+          children: [
+            // Region filter
+            UniversityFilterChip(
+              label: _selectedRegion ?? 'All Regions',
+              isSelected: _selectedRegion != null,
+              onTap: () => _showRegionPicker(),
+              icon: Icons.map_rounded,
+              color: Colors.green,
+            ),
+            // Country filter
+            UniversityFilterChip(
+              label: _selectedCountry ?? 'All countries',
+              isSelected: _selectedCountry != null,
+              onTap: () => _showCountryPicker(),
+              icon: Icons.public_rounded,
+              color: Colors.blue,
+            ),
+            // Ranking/count filter
+            UniversityFilterChip(
+              label: _selectedRanking ?? 'All',
+              isSelected: _selectedRanking != null,
+              onTap: () => _showRankingPicker(),
+              icon: Icons.emoji_events_rounded,
+              color: Colors.amber,
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAdvancedFilters() {
+    return Row(
+      children: [
+        Expanded(
+          child: GlassContainer(
+            child: TextField(
+              controller: _tuitionController,
+              onChanged: (value) {
+                setState(() {
+                  _maxTuition = double.tryParse(value);
+                });
+                _applyFilters();
+              },
+              keyboardType: TextInputType.number,
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                hintText: 'Max Tuition',
+                hintStyle: TextStyle(color: Colors.white.withOpacity(0.6)),
+                border: InputBorder.none,
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                prefixIcon: Icon(
+                  Icons.attach_money_rounded,
+                  color: Colors.white.withOpacity(0.7),
+                  size: 18,
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: GlassContainer(
+            child: TextField(
+              controller: _applicationController,
+              onChanged: (value) {
+                setState(() {
+                  _maxApplicationFee = double.tryParse(value);
+                });
+                _applyFilters();
+              },
+              keyboardType: TextInputType.number,
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                hintText: 'Application Fee',
+                hintStyle: TextStyle(color: Colors.white.withOpacity(0.6)),
+                border: InputBorder.none,
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                prefixIcon: Icon(
+                  Icons.description_rounded,
+                  color: Colors.white.withOpacity(0.7),
+                  size: 18,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildClearFiltersButton() {
+    return GestureDetector(
+      onTap: _clearAllFilters,
+      child: GlassContainer(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.clear_all_rounded,
+                color: Colors.red[300],
+                size: 18,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                'Clear All Filters',
+                style: TextStyle(
+                  color: Colors.red[300],
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildResultsSection() {
+    return Expanded(
+      child: _isLoading
+          ? _buildLoadingState()
+          : _error != null
+              ? _buildErrorState()
+              : _filteredUniversities.isEmpty
+                  ? _buildEmptyState()
+                  : _buildUniversitiesList(),
+    );
+  }
+
+  Widget _buildLoadingState() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircularProgressIndicator(
+            color: Colors.amber[300],
+            strokeWidth: 3,
+          ).animate(onPlay: (controller) => controller.repeat())
+            .rotate(duration: 1.seconds),
+          const SizedBox(height: 16),
+          Text(
+            'Loading universities...',
+            style: TextStyle(
+              color: Colors.white.withOpacity(0.8),
+              fontSize: 16,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildErrorState() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.error_outline_rounded,
+            color: Colors.red[300],
+            size: 64,
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'Oops! Something went wrong',
+            style: TextStyle(
+              color: Colors.white.withOpacity(0.9),
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            _error!,
+            style: TextStyle(
+              color: Colors.white.withOpacity(0.7),
+              fontSize: 14,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 20),
+          GestureDetector(
+            onTap: _loadUniversityData,
+            child: GlassContainer(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                child: const Text(
+                  'Try Again',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEmptyState() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.search_off_rounded,
+            color: Colors.white.withOpacity(0.5),
+            size: 64,
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'No universities found',
+            style: TextStyle(
+              color: Colors.white.withOpacity(0.8),
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Try adjusting your filters or search terms',
+            style: TextStyle(
+              color: Colors.white.withOpacity(0.6),
+              fontSize: 14,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          if (_hasActiveFilters) ...[
+            const SizedBox(height: 20),
+            GestureDetector(
+              onTap: _clearAllFilters,
+              child: GlassContainer(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  child: const Text(
+                    'Clear Filters',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildUniversitiesList() {
+    return ListView.builder(
+      controller: _scrollController,
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      itemCount: _filteredUniversities.length,
+      itemBuilder: (context, index) {
+        final university = _filteredUniversities[index];
+        final isExpanded = _expandedIndex == index;
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 12),
+          child: UniversityCard(
+            university: university,
+            index: index,
+            isExpanded: isExpanded,
+            onTap: () {
+              setState(() {
+                _expandedIndex = isExpanded ? null : index;
+              });
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  void _showCountryPicker() {
+    final filteredCountries = _selectedRegion == null
+        ? _countries
+        : _countries.where((c) => c['region'] == _selectedRegion).toList();
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) => _buildCountryPicker(filteredCountries),
+    );
+  }
+
+  void _showRegionPicker() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) => _buildRegionPicker(),
+    );
+  }
+
+  void _showRankingPicker() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) => _buildRankingPicker(),
+    );
+  }
+
+  Widget _buildCountryPicker(List<Map<String, dynamic>> countryList) {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.5,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              children: [
+                const Text(
+                  'Select Country',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const Spacer(),
+                GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  child: const Icon(Icons.close),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: countryList.length + 1,
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  return ListTile(
+                    leading: const Icon(Icons.public),
+                    title: const Text('All Countries'),
+                    onTap: () {
+                      setState(() {
+                        _selectedCountry = null;
+                      });
+                      _applyFilters();
+                      Navigator.pop(context);
+                    },
+                  );
+                }
+                final country = countryList[index - 1];
+                return ListTile(
+                  leading: Text(
+                    country['flag'] ?? '🏳️',
+                    style: const TextStyle(fontSize: 24),
+                  ),
+                  title: Text(country['name']),
+                  subtitle: Text('${country['count']} universities'),
+                  onTap: () {
+                    setState(() {
+                      _selectedCountry = country['name'];
+                    });
+                    _applyFilters();
+                    Navigator.pop(context);
+                  },
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRegionPicker() {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.5,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              children: [
+                const Text(
+                  'Select Region',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const Spacer(),
+                GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  child: const Icon(Icons.close),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: _regions.length + 1,
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  return ListTile(
+                    leading: const Icon(Icons.map),
+                    title: const Text('All Regions'),
+                    onTap: () {
+                      setState(() {
+                        _selectedRegion = null;
+                      });
+                      _applyFilters();
+                      Navigator.pop(context);
+                    },
+                  );
+                }
+                final region = _regions[index - 1];
+                return ListTile(
+                  leading: const Icon(Icons.public),
+                  title: Text(region),
+                  onTap: () {
+                    setState(() {
+                      _selectedRegion = region;
+                    });
+                    _applyFilters();
+                    Navigator.pop(context);
+                  },
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRankingPicker() {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.4,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              children: [
+                const Text(
+                  'Select Ranking',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const Spacer(),
+                GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  child: const Icon(Icons.close),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: _rankingRanges.length + 1,
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  return ListTile(
+                    leading: const Icon(Icons.emoji_events),
+                    title: const Text('All Rankings'),
+                    onTap: () {
+                      setState(() {
+                        _selectedRanking = null;
+                      });
+                      _applyFilters();
+                      Navigator.pop(context);
+                    },
+                  );
+                }
+                final ranking = _rankingRanges[index - 1];
+                return ListTile(
+                  leading: const Icon(Icons.star),
+                  title: Text(ranking),
+                  onTap: () {
+                    setState(() {
+                      _selectedRanking = ranking;
+                    });
+                    _applyFilters();
+                    Navigator.pop(context);
+                  },
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showUniversityDetails(Map<String, dynamic> university) {
+    // TODO: Implement university details screen
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('${university['name']} details coming soon!'),
+        backgroundColor: Colors.amber[700],
+      ),
+    );
+  }
+
+  // 3. Glass look for 'Upcoming' option (example usage)
+  Widget _buildUpcomingOption() {
+    return GlassContainer(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: const [
+            Icon(Icons.access_time, color: Colors.white, size: 20),
+            SizedBox(width: 8),
+            Text('Upcoming', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600)),
+          ],
+        ),
       ),
     );
   }
