@@ -1,0 +1,27 @@
+{
+  "name": "visa-service-backend",
+  "version": "1.0.0",
+  "description": "Backend API for Visa Requirements Viewer",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": [
+    "visa",
+    "api",
+    "express",
+    "nodejs"
+  ],
+  "author": "Unikwik Team",
+  "license": "MIT"
+} 

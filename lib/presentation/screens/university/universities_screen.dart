@@ -6,6 +6,7 @@ import 'package:unikwik_app/data/models/university_model.dart';
 import 'package:unikwik_app/data/repositories/university_repository.dart';
 import 'package:unikwik_app/core/services/university_ranking_service.dart';
 import 'package:unikwik_app/core/models/university_ranking.dart';
+import 'package:unikwik_app/presentation/screens/community/community_screen.dart';
 
 class UniversityScreen extends StatefulWidget {
   const UniversityScreen({super.key});
@@ -377,46 +378,20 @@ class _UniversityScreenState extends State<UniversityScreen> {
           SafeArea(
             child: Column(
               children: [
-                // Header with title and back button
+                // Header with title and tabs
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                  child: Stack(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // Back Button
-                      Positioned(
-                        left: 0,
-                        top: 0,
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).pushReplacementNamed('/');
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              color: Colors.white.withOpacity(0.1),
-                              border: Border.all(
-                                color: Colors.white.withOpacity(0.2),
-                                width: 1,
-                              ),
-                            ),
-                            child: const Icon(
-                              Icons.arrow_back_ios,
-                              color: Colors.white,
-                              size: 20,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // Centered Title
-                      Center(
-                        child: const Text(
-                          'Universities',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      Icon(Icons.public, color: Colors.lightBlueAccent, size: 32),
+                      const SizedBox(width: 10),
+                      Text(
+                        'Universities',
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white.withOpacity(0.9),
                         ),
                       ),
                     ],

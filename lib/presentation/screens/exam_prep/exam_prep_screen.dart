@@ -228,32 +228,19 @@ class _ExamPrepScreenState extends State<ExamPrepScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Top row: Avatar and Exam Prep
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 44,
-                      height: 44,
-                      decoration: BoxDecoration(
-                        color: AppColors.sand.withOpacity(0.5),
-                        shape: BoxShape.circle,
-                      ),
-                      alignment: Alignment.center,
-                      child: const Text('U', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22, color: Colors.white)),
+                // Page description
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 8.0),
+                  child: Text(
+                    'Prepare for your exams with detailed info, tips, and resources for every major test!',
+                    style: TextStyle(
+                      color: Colors.white70,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
                     ),
-                    const SizedBox(width: 16),
-                    const Text(
-                      'Exam Prep',
-                      style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-                const SizedBox(height: 32),
                 // Language dropdown
                 GlassDropdownChip<String>(
                   options: _languages,
@@ -357,23 +344,6 @@ class _ExamPrepScreenState extends State<ExamPrepScreen> {
           _buildInfoRow('💰', exam.fee),
           const SizedBox(height: 4),
           _buildInfoRow('📅', exam.validity),
-          const Spacer(),
-          // Difficulty
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Text(
-              exam.difficulty,
-              style: const TextStyle(
-                fontSize: 10,
-                color: Colors.white,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
         ],
       ),
     ).asGlass(

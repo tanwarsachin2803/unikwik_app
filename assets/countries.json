@@ -1,0 +1,18 @@
+[
+  { "key": "united_states", "name": "United States", "flag": "🇺🇸" },
+  { "key": "united_kingdom", "name": "United Kingdom", "flag": "🇬🇧" },
+  { "key": "germany", "name": "Germany", "flag": "🇩🇪" },
+  { "key": "australia", "name": "Australia", "flag": "🇦🇺" },
+  { "key": "canada", "name": "Canada", "flag": "🇨🇦" },
+  { "key": "india", "name": "India", "flag": "🇮🇳" },
+  { "key": "france", "name": "France", "flag": "🇫🇷" },
+  { "key": "japan", "name": "Japan", "flag": "🇯🇵" },
+  { "key": "china", "name": "China", "flag": "🇨🇳" },
+  { "key": "brazil", "name": "Brazil", "flag": "🇧🇷" },
+  { "key": "south_africa", "name": "South Africa", "flag": "🇿🇦" },
+  { "key": "uae", "name": "United Arab Emirates", "flag": "🇦🇪" },
+  { "key": "italy", "name": "Italy", "flag": "🇮🇹" },
+  { "key": "spain", "name": "Spain", "flag": "🇪🇸" },
+  { "key": "singapore", "name": "Singapore", "flag": "🇸🇬" },
+  { "key": "thailand", "name": "Thailand", "flag": "🇹🇭" }
+] 

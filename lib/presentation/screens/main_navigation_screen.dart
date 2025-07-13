@@ -10,6 +10,7 @@ import 'package:unikwik_app/presentation/widgets/profile_drawer.dart';
 import 'package:unikwik_app/presentation/screens/community/community_screen.dart';
 import 'package:unikwik_app/presentation/screens/travel_explorer_screen.dart';
 import 'package:unikwik_app/presentation/screens/exam_prep/exam_prep_screen.dart';
+import 'package:unikwik_app/presentation/widgets/app_scaffold.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -139,17 +140,23 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> with Single
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      backgroundColor: AppColors.bgGradientStart,
-      extendBody: true, // This is important for curved navigation bar
-      drawer: const ProfileDrawer(
-        firstName: 'Sachin',
-        lastName: 'Tanwar',
-        personalComplete: true,
-        educationComplete: false,
-        professionalComplete: false,
-        certificationsComplete: true,
+    return AppScaffold(
+      firstName: 'Sachin',
+      lastName: 'Tanwar',
+      personalComplete: true,
+      educationComplete: false,
+      professionalComplete: false,
+      certificationsComplete: true,
+      bottomNavigationBar: CurvedNavigationBar(
+        backgroundColor: Colors.transparent,
+        color: AppColors.deepTeal,
+        items: _icons.map((icon) => Icon(icon, color: Colors.white, size: 30)).toList(),
+        index: _selectedIndex,
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
       ),
       body: Stack(
         children: [
@@ -157,41 +164,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> with Single
           SafeArea(
             child: Column(
               children: [
-                // Top bar with profile icon (only show on non-university screens)
-                if (_selectedIndex != 2) // Hide top bar on universities screen
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                    child: Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            _scaffoldKey.currentState?.openDrawer();
-                          },
-                          child: GlassContainer(
-                            padding: const EdgeInsets.all(8),
-                            blurX: 30,
-                            blurY: 30,
-                            borderRadius: 40,
-                            tintColor: Colors.white.withOpacity(0.18),
-                            child: CircleAvatar(
-                              radius: 22,
-                              backgroundColor: Colors.transparent,
-                              child: Text(
-                                'U',
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                  color: AppColors.deepTeal,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        const Spacer(),
-                      ],
-                    ),
-                  ),
-                // Fill the area between top and bottom nav
                 Expanded(
                   child: _buildCurrentScreen(),
                 ),
@@ -199,20 +171,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> with Single
             ),
           ),
         ],
-      ),
-      bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: Colors.transparent,
-        color: AppColors.deepTeal.withOpacity(0.9),
-        buttonBackgroundColor: AppColors.steelBlue,
-        height: 75,
-        animationDuration: const Duration(milliseconds: 300),
-        index: _selectedIndex,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-        items: _icons.map((icon) => Icon(icon, size: 30, color: Colors.white)).toList(),
       ),
     );
   }

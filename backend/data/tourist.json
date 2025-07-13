@@ -1,0 +1,163 @@
+{
+  "visa_type": "tourist",
+  "description": "Tourist visas for leisure travel and sightseeing",
+  "countries": {
+    "united_states": {
+      "name": "United States",
+      "flag": "🇺🇸",
+      "requirements": [
+        "Valid passport with at least 6 months validity",
+        "DS-160 confirmation page",
+        "Visa application fee receipt",
+        "Recent passport-size photographs",
+        "Proof of financial means",
+        "Travel itinerary",
+        "Accommodation details",
+        "Employment letter",
+        "Bank statements (last 3 months)"
+      ],
+      "processing_time": "3-5 business days",
+      "fees": {
+        "visa_fee": 160,
+        "currency": "USD",
+        "service_fee": 25
+      },
+      "validity": "10 years",
+      "max_stay": "6 months per entry",
+      "notes": [
+        "Interview required at US Embassy/Consulate",
+        "Strong ties to home country must be demonstrated",
+        "No guarantee of approval"
+      ]
+    },
+    "united_kingdom": {
+      "name": "United Kingdom",
+      "flag": "🇬🇧",
+      "requirements": [
+        "Valid passport",
+        "Online application form",
+        "Recent passport photos",
+        "Proof of funds",
+        "Travel itinerary",
+        "Accommodation confirmation",
+        "Employment/student status proof",
+        "Bank statements"
+      ],
+      "processing_time": "15-20 business days",
+      "fees": {
+        "visa_fee": 95,
+        "currency": "GBP",
+        "service_fee": 0
+      },
+      "validity": "6 months",
+      "max_stay": "6 months",
+      "notes": [
+        "Biometric appointment required",
+        "Documents must be in English",
+        "Processing times may vary"
+      ]
+    },
+    "germany": {
+      "name": "Germany",
+      "flag": "🇩🇪",
+      "requirements": [
+        "Valid passport",
+        "Visa application form",
+        "Recent photos",
+        "Travel insurance",
+        "Flight itinerary",
+        "Hotel reservations",
+        "Financial proof",
+        "Employment letter"
+      ],
+      "processing_time": "10-15 business days",
+      "fees": {
+        "visa_fee": 80,
+        "currency": "EUR",
+        "service_fee": 20
+      },
+      "validity": "90 days",
+      "max_stay": "90 days",
+      "notes": [
+        "Schengen visa",
+        "Valid for all Schengen countries",
+        "Biometric data collection required"
+      ]
+    },
+    "australia": {
+      "name": "Australia",
+      "flag": "🇦🇺",
+      "requirements": [
+        "Valid passport",
+        "Online application",
+        "Recent photos",
+        "Financial documents",
+        "Travel itinerary",
+        "Accommodation details",
+        "Employment proof",
+        "Health insurance"
+      ],
+      "processing_time": "20-30 business days",
+      "fees": {
+        "visa_fee": 145,
+        "currency": "AUD",
+        "service_fee": 0
+      },
+      "validity": "12 months",
+      "max_stay": "3 months",
+      "notes": [
+        "Electronic visa (eVisitor)",
+        "No physical visa sticker",
+        "Must be applied online"
+      ]
+    },
+    "canada": {
+      "name": "Canada",
+      "flag": "🇨🇦",
+      "requirements": [
+        "Valid passport",
+        "Online application",
+        "Recent photos",
+        "Financial proof",
+        "Travel itinerary",
+        "Purpose of visit letter",
+        "Employment letter",
+        "Bank statements"
+      ],
+      "processing_time": "15-30 business days",
+      "fees": {
+        "visa_fee": 100,
+        "currency": "CAD",
+        "service_fee": 0
+      },
+      "validity": "10 years",
+      "max_stay": "6 months",
+      "notes": [
+        "Biometric data required",
+        "Processing time varies by country",
+        "Strong ties to home country needed"
+      ]
+    }
+  },
+  "general_requirements": [
+    "Valid passport with sufficient validity",
+    "Completed visa application form",
+    "Recent passport-size photographs",
+    "Proof of financial means",
+    "Travel itinerary and accommodation",
+    "Travel insurance",
+    "Employment/student status proof",
+    "Bank statements",
+    "Purpose of visit documentation"
+  ],
+  "common_fees": {
+    "application_fee": "50-200 USD equivalent",
+    "service_fee": "0-50 USD equivalent",
+    "express_fee": "50-100 USD equivalent"
+  },
+  "processing_times": {
+    "standard": "10-30 business days",
+    "express": "3-7 business days",
+    "super_express": "1-3 business days"
+  }
+} 

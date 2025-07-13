@@ -1,0 +1,101 @@
+[
+  {
+    "country": "Austria",
+    "visa_type": "tourist",
+    "where_to_apply": "VFS Global visa application centers in India.",
+    "how_to_apply": "Book an appointment on the VFS website and submit documents in person.",
+    "requirements": [
+      "Passport valid for at least 3 months after departure",
+      "Travel insurance",
+      "Flight reservation",
+      "Hotel booking"
+    ],
+    "validity": "Up to 90 days within 180 days",
+    "fees": {
+      "adult": {
+        "eur": 90,
+        "inr": 9000
+      },
+      "child_6_12": {
+        "eur": 45,
+        "inr": 4500
+      },
+      "child_below_6": {
+        "eur": 0,
+        "inr": 0
+      }
+    },
+    "documents_required": [
+      "Application form",
+      "Passport",
+      "Photograph",
+      "Travel insurance",
+      "Cover letter"
+    ],
+    "photo_specifications": [
+      "35-45mm width",
+      "White background",
+      "Face covering 70-80% of the frame",
+      "No reflections or red eyes"
+    ],
+    "notes": "Fees may vary based on exchange rate and are non-refundable."
+  },
+  {
+    "country": "France",
+    "visa_type": "tourist",
+    "where_to_apply": "VFS Global France application centers in India.",
+    "how_to_apply": "Register on France-Visas website, then submit biometrics at VFS.",
+    "requirements": [
+      "Visa application form",
+      "Valid passport",
+      "Travel itinerary",
+      "Financial proof"
+    ],
+    "validity": "Short-stay Schengen visa: 90 days",
+    "fees": {
+      "adult": {
+        "eur": 80,
+        "inr": 8000
+      }
+    },
+    "documents_required": [
+      "Visa form",
+      "Travel insurance",
+      "Proof of accommodation"
+    ],
+    "photo_specifications": [
+      "Recent photo, white background",
+      "Full face visible, no shadows"
+    ],
+    "notes": "Insurance must cover EUR 30,000 minimum for medical emergencies."
+  },
+  {
+    "country": "Germany",
+    "visa_type": "student",
+    "where_to_apply": "German Embassy/Consulate or VFS in India.",
+    "how_to_apply": "Fill visa form online and schedule appointment at VFS.",
+    "requirements": [
+      "University admission letter",
+      "Proof of financial resources",
+      "Academic transcripts"
+    ],
+    "validity": "Up to 6 months initially, extendable in Germany",
+    "fees": {
+      "adult": {
+        "eur": 75,
+        "inr": 7500
+      }
+    },
+    "documents_required": [
+      "Visa application",
+      "Passport",
+      "Photographs",
+      "Blocked account proof"
+    ],
+    "photo_specifications": [
+      "Biometric photo",
+      "White background, high resolution"
+    ],
+    "notes": "Blocked account is mandatory for financial proof."
+  }
+]

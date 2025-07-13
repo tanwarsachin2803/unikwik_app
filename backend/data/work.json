@@ -1,0 +1,188 @@
+{
+  "visa_type": "work",
+  "description": "Work visas for employment and professional opportunities",
+  "countries": {
+    "united_states": {
+      "name": "United States",
+      "flag": "🇺🇸",
+      "requirements": [
+        "Valid passport",
+        "DS-160 confirmation page",
+        "I-797 approval notice",
+        "Employment offer letter",
+        "Labor certification (if required)",
+        "Educational qualifications",
+        "Work experience documents",
+        "Financial documents",
+        "Proof of ties to home country"
+      ],
+      "processing_time": "3-5 business days",
+      "fees": {
+        "visa_fee": 190,
+        "currency": "USD",
+        "fraud_prevention_fee": 500,
+        "service_fee": 25
+      },
+      "validity": "Duration of employment",
+      "max_stay": "Duration of employment",
+      "notes": [
+        "H-1B for specialty occupations",
+        "L-1 for intracompany transfers",
+        "E-1/E-2 for treaty traders/investors",
+        "Interview required",
+        "Employer sponsorship needed"
+      ]
+    },
+    "united_kingdom": {
+      "name": "United Kingdom",
+      "flag": "🇬🇧",
+      "requirements": [
+        "Valid passport",
+        "Certificate of Sponsorship",
+        "Job offer from licensed sponsor",
+        "English language proficiency",
+        "Financial maintenance proof",
+        "Tuberculosis test results",
+        "Criminal record certificate",
+        "Academic qualifications"
+      ],
+      "processing_time": "15-20 business days",
+      "fees": {
+        "visa_fee": 625,
+        "currency": "GBP",
+        "health_surcharge": 624,
+        "service_fee": 0
+      },
+      "validity": "Up to 5 years",
+      "max_stay": "Up to 5 years",
+      "notes": [
+        "Skilled Worker visa",
+        "Must meet minimum salary requirements",
+        "Healthcare surcharge required",
+        "Can apply for settlement after 5 years"
+      ]
+    },
+    "australia": {
+      "name": "Australia",
+      "flag": "🇦🇺",
+      "requirements": [
+        "Valid passport",
+        "Nomination from approved sponsor",
+        "Skills assessment (if required)",
+        "English language proficiency",
+        "Health examination",
+        "Character documents",
+        "Employment contract",
+        "Financial capacity evidence"
+      ],
+      "processing_time": "20-30 business days",
+      "fees": {
+        "visa_fee": 4115,
+        "currency": "AUD",
+        "health_insurance": "400-600 AUD/year",
+        "service_fee": 0
+      },
+      "validity": "Up to 4 years",
+      "max_stay": "Up to 4 years",
+      "notes": [
+        "Subclass 482 Temporary Skill Shortage",
+        "Subclass 186 Employer Nomination",
+        "Must meet skill and salary requirements",
+        "Pathway to permanent residency"
+      ]
+    },
+    "canada": {
+      "name": "Canada",
+      "flag": "🇨🇦",
+      "requirements": [
+        "Valid passport",
+        "LMIA (Labor Market Impact Assessment)",
+        "Job offer letter",
+        "Educational credentials assessment",
+        "English/French language proficiency",
+        "Medical examination",
+        "Police certificate",
+        "Proof of funds"
+      ],
+      "processing_time": "15-30 business days",
+      "fees": {
+        "visa_fee": 155,
+        "currency": "CAD",
+        "biometric_fee": 85,
+        "service_fee": 0
+      },
+      "validity": "Up to 2 years",
+      "max_stay": "Up to 2 years",
+      "notes": [
+        "Temporary Foreign Worker Program",
+        "Express Entry for skilled workers",
+        "Provincial Nominee Program",
+        "Pathway to permanent residence"
+      ]
+    },
+    "germany": {
+      "name": "Germany",
+      "flag": "🇩🇪",
+      "requirements": [
+        "Valid passport",
+        "Employment contract",
+        "Job description",
+        "Educational qualifications",
+        "German language proficiency (if required)",
+        "Health insurance",
+        "Financial proof",
+        "Work permit approval"
+      ],
+      "processing_time": "10-15 business days",
+      "fees": {
+        "visa_fee": 75,
+        "currency": "EUR",
+        "work_permit_fee": 140,
+        "service_fee": 20
+      },
+      "validity": "Duration of employment",
+      "max_stay": "Duration of employment",
+      "notes": [
+        "EU Blue Card for highly skilled workers",
+        "General employment visa",
+        "Must meet salary thresholds",
+        "German language may be required"
+      ]
+    }
+  },
+  "general_requirements": [
+    "Valid passport with sufficient validity",
+    "Job offer from employer",
+    "Employment contract",
+    "Educational qualifications",
+    "Work experience documents",
+    "Language proficiency proof",
+    "Health examination results",
+    "Police clearance certificate",
+    "Financial capacity evidence",
+    "Employer sponsorship/approval"
+  ],
+  "common_fees": {
+    "application_fee": "200-500 USD equivalent",
+    "work_permit_fee": "100-300 USD equivalent",
+    "health_insurance": "300-800 USD/year",
+    "service_fee": "0-50 USD equivalent"
+  },
+  "processing_times": {
+    "standard": "15-30 business days",
+    "express": "5-10 business days",
+    "priority": "2-5 business days"
+  },
+  "work_categories": {
+    "skilled_workers": "Professionals with specific qualifications",
+    "temporary_workers": "Seasonal or project-based work",
+    "intracompany_transfers": "Company internal transfers",
+    "investors": "Business investors and entrepreneurs",
+    "researchers": "Academic and research positions"
+  },
+  "salary_requirements": {
+    "minimum_salary": "Varies by country and occupation",
+    "market_rate": "Must meet local market standards",
+    "prevailing_wage": "Required in some countries"
+  }
+} 

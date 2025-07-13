@@ -1,0 +1,182 @@
+{
+  "visa_type": "study",
+  "description": "Student visas for educational purposes and academic programs",
+  "countries": {
+    "united_states": {
+      "name": "United States",
+      "flag": "🇺🇸",
+      "requirements": [
+        "Valid passport",
+        "DS-160 confirmation page",
+        "I-20 form from SEVP-approved school",
+        "SEVIS fee payment receipt",
+        "Visa application fee receipt",
+        "Recent passport photos",
+        "Academic transcripts",
+        "Standardized test scores (TOEFL, SAT, GRE, etc.)",
+        "Financial documents",
+        "Proof of ties to home country"
+      ],
+      "processing_time": "3-5 business days",
+      "fees": {
+        "visa_fee": 160,
+        "currency": "USD",
+        "sevis_fee": 350,
+        "service_fee": 25
+      },
+      "validity": "Duration of study program",
+      "max_stay": "Duration of study program",
+      "notes": [
+        "F-1 visa for academic studies",
+        "M-1 visa for vocational studies",
+        "Interview required",
+        "Must maintain full-time enrollment",
+        "Limited work opportunities"
+      ]
+    },
+    "united_kingdom": {
+      "name": "United Kingdom",
+      "flag": "🇬🇧",
+      "requirements": [
+        "Valid passport",
+        "CAS (Confirmation of Acceptance for Studies)",
+        "Academic qualifications",
+        "English language proficiency proof",
+        "Financial documents",
+        "Tuberculosis test results",
+        "Criminal record certificate",
+        "Parental consent (if under 18)"
+      ],
+      "processing_time": "15-20 business days",
+      "fees": {
+        "visa_fee": 348,
+        "currency": "GBP",
+        "health_surcharge": 470,
+        "service_fee": 0
+      },
+      "validity": "Duration of course + 4 months",
+      "max_stay": "Duration of course + 4 months",
+      "notes": [
+        "Student Route visa",
+        "Must study at licensed institution",
+        "Can work part-time during studies",
+        "Healthcare surcharge required"
+      ]
+    },
+    "australia": {
+      "name": "Australia",
+      "flag": "🇦🇺",
+      "requirements": [
+        "Valid passport",
+        "CoE (Confirmation of Enrolment)",
+        "Academic transcripts",
+        "English language proficiency",
+        "Financial capacity evidence",
+        "Health insurance (OSHC)",
+        "Health examination results",
+        "Character documents"
+      ],
+      "processing_time": "20-30 business days",
+      "fees": {
+        "visa_fee": 620,
+        "currency": "AUD",
+        "health_insurance": "400-600 AUD/year",
+        "service_fee": 0
+      },
+      "validity": "Duration of course + 2 months",
+      "max_stay": "Duration of course + 2 months",
+      "notes": [
+        "Subclass 500 Student visa",
+        "Must maintain enrollment",
+        "Can work up to 40 hours per fortnight",
+        "Overseas Student Health Cover required"
+      ]
+    },
+    "canada": {
+      "name": "Canada",
+      "flag": "🇨🇦",
+      "requirements": [
+        "Valid passport",
+        "Letter of acceptance from DLI",
+        "Proof of financial support",
+        "Academic transcripts",
+        "English/French language proficiency",
+        "Medical examination",
+        "Police certificate",
+        "Statement of purpose"
+      ],
+      "processing_time": "15-30 business days",
+      "fees": {
+        "visa_fee": 150,
+        "currency": "CAD",
+        "biometric_fee": 85,
+        "service_fee": 0
+      },
+      "validity": "Duration of study program",
+      "max_stay": "Duration of study program",
+      "notes": [
+        "Study Permit required",
+        "Must study at Designated Learning Institution",
+        "Can work on/off campus",
+        "Post-Graduation Work Permit available"
+      ]
+    },
+    "germany": {
+      "name": "Germany",
+      "flag": "🇩🇪",
+      "requirements": [
+        "Valid passport",
+        "University admission letter",
+        "Academic qualifications",
+        "German language proficiency (if applicable)",
+        "Financial proof (blocked account)",
+        "Health insurance",
+        "Motivation letter",
+        "CV/Resume"
+      ],
+      "processing_time": "10-15 business days",
+      "fees": {
+        "visa_fee": 75,
+        "currency": "EUR",
+        "blocked_account": 11208,
+        "service_fee": 20
+      },
+      "validity": "Duration of study program",
+      "max_stay": "Duration of study program",
+      "notes": [
+        "National visa for studies",
+        "Blocked account required",
+        "Can work 120 full days or 240 half days",
+        "Health insurance mandatory"
+      ]
+    }
+  },
+  "general_requirements": [
+    "Valid passport with sufficient validity",
+    "Letter of acceptance from educational institution",
+    "Academic transcripts and certificates",
+    "Language proficiency proof",
+    "Financial capacity evidence",
+    "Health insurance coverage",
+    "Medical examination results",
+    "Police clearance certificate",
+    "Statement of purpose/motivation letter",
+    "Proof of ties to home country"
+  ],
+  "common_fees": {
+    "application_fee": "100-400 USD equivalent",
+    "health_insurance": "300-800 USD/year",
+    "tuition_deposit": "1000-5000 USD equivalent",
+    "service_fee": "0-50 USD equivalent"
+  },
+  "processing_times": {
+    "standard": "15-30 business days",
+    "express": "5-10 business days",
+    "priority": "2-5 business days"
+  },
+  "work_rights": {
+    "part_time": "Usually 20 hours per week",
+    "full_time": "During holidays only",
+    "internships": "May require additional permission"
+  }
+} 

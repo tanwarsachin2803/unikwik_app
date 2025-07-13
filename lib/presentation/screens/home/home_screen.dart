@@ -102,54 +102,71 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
         // Service cards row (Visa, Loan)
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18),
-          child: Row(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: GestureDetector(
-                  onTap: () => _showSnackBar(context, 'Visa Service tapped'),
-                  child: GlassContainer(
-                    borderRadius: 22,
-                    blurX: 30,
-                    blurY: 30,
-                    tintColor: Colors.white.withOpacity(0.18),
-                    padding: const EdgeInsets.symmetric(vertical: 28),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SandGlassContainer(
-                          padding: const EdgeInsets.all(12),
-                          child: Icon(Icons.public, size: 36, color: AppColors.deepTeal),
-                        ),
-                        const SizedBox(height: 10),
-                        const Text('Visa Service', style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.deepTeal)),
-                      ],
-                    ),
+              const Padding(
+                padding: EdgeInsets.only(bottom: 8.0),
+                child: Text(
+                  'Find the right visa for your destination and get started on your journey!',
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
                   ),
+                  textAlign: TextAlign.center,
                 ),
               ),
-              const SizedBox(width: 18),
-              Expanded(
-                child: GestureDetector(
-                  onTap: () => _showSnackBar(context, 'Loan Service tapped'),
-                  child: GlassContainer(
-                    borderRadius: 22,
-                    blurX: 30,
-                    blurY: 30,
-                    tintColor: Colors.white.withOpacity(0.18),
-                    padding: const EdgeInsets.symmetric(vertical: 28),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SandGlassContainer(
-                          padding: const EdgeInsets.all(12),
-                          child: Icon(Icons.attach_money, size: 36, color: AppColors.deepTeal),
+              Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => _showSnackBar(context, 'Visa Service tapped'),
+                      child: GlassContainer(
+                        borderRadius: 22,
+                        blurX: 30,
+                        blurY: 30,
+                        tintColor: Colors.white.withOpacity(0.18),
+                        padding: const EdgeInsets.symmetric(vertical: 28),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SandGlassContainer(
+                              padding: const EdgeInsets.all(12),
+                              child: Icon(Icons.public, size: 36, color: AppColors.deepTeal),
+                            ),
+                            const SizedBox(height: 10),
+                            const Text('Visa Service', style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.deepTeal)),
+                          ],
                         ),
-                        const SizedBox(height: 10),
-                        const Text('Loan Service', style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.deepTeal)),
-                      ],
+                      ),
                     ),
                   ),
-                ),
+                  const SizedBox(width: 18),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => _showSnackBar(context, 'Loan Service tapped'),
+                      child: GlassContainer(
+                        borderRadius: 22,
+                        blurX: 30,
+                        blurY: 30,
+                        tintColor: Colors.white.withOpacity(0.18),
+                        padding: const EdgeInsets.symmetric(vertical: 28),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SandGlassContainer(
+                              padding: const EdgeInsets.all(12),
+                              child: Icon(Icons.attach_money, size: 36, color: AppColors.deepTeal),
+                            ),
+                            const SizedBox(height: 10),
+                            const Text('Loan Service', style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.deepTeal)),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

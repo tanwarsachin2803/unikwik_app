@@ -1,0 +1,198 @@
+{
+  "visa_type": "medical",
+  "description": "Medical visas for healthcare treatment and medical procedures",
+  "countries": {
+    "united_states": {
+      "name": "United States",
+      "flag": "🇺🇸",
+      "requirements": [
+        "Valid passport",
+        "DS-160 confirmation page",
+        "Medical appointment letter",
+        "Treatment plan from US doctor",
+        "Financial documents for medical expenses",
+        "Health insurance coverage",
+        "Medical records and diagnosis",
+        "Proof of payment arrangements",
+        "Accommodation details",
+        "Return flight itinerary"
+      ],
+      "processing_time": "3-5 business days",
+      "fees": {
+        "visa_fee": 160,
+        "currency": "USD",
+        "service_fee": 25
+      },
+      "validity": "6 months",
+      "max_stay": "6 months",
+      "notes": [
+        "B-2 visa for medical treatment",
+        "Interview required",
+        "Must demonstrate ability to pay",
+        "Treatment must be unavailable in home country"
+      ]
+    },
+    "united_kingdom": {
+      "name": "United Kingdom",
+      "flag": "🇬🇧",
+      "requirements": [
+        "Valid passport",
+        "Medical appointment confirmation",
+        "Treatment plan from UK doctor",
+        "Financial documents",
+        "Health insurance coverage",
+        "Medical records and diagnosis",
+        "Accommodation arrangements",
+        "Return travel plans",
+        "Sponsor letter (if applicable)"
+      ],
+      "processing_time": "15-20 business days",
+      "fees": {
+        "visa_fee": 95,
+        "currency": "GBP",
+        "health_surcharge": 470,
+        "service_fee": 0
+      },
+      "validity": "6 months",
+      "max_stay": "6 months",
+      "notes": [
+        "Standard Visitor visa for medical treatment",
+        "Healthcare surcharge required",
+        "Must have NHS treatment arranged",
+        "Can extend stay if needed"
+      ]
+    },
+    "germany": {
+      "name": "Germany",
+      "flag": "🇩🇪",
+      "requirements": [
+        "Valid passport",
+        "Medical appointment letter",
+        "Treatment plan from German doctor",
+        "Financial guarantee",
+        "Health insurance coverage",
+        "Medical records and diagnosis",
+        "Accommodation confirmation",
+        "Return flight booking",
+        "Medical necessity proof"
+      ],
+      "processing_time": "10-15 business days",
+      "fees": {
+        "visa_fee": 80,
+        "currency": "EUR",
+        "service_fee": 20
+      },
+      "validity": "90 days",
+      "max_stay": "90 days",
+      "notes": [
+        "Schengen visa for medical treatment",
+        "Valid for all Schengen countries",
+        "Must demonstrate medical necessity",
+        "Can extend for medical reasons"
+      ]
+    },
+    "thailand": {
+      "name": "Thailand",
+      "flag": "🇹🇭",
+      "requirements": [
+        "Valid passport",
+        "Medical appointment letter",
+        "Treatment plan from Thai hospital",
+        "Financial documents",
+        "Health insurance coverage",
+        "Medical records and diagnosis",
+        "Accommodation details",
+        "Return flight itinerary",
+        "Hospital guarantee letter"
+      ],
+      "processing_time": "5-10 business days",
+      "fees": {
+        "visa_fee": 2000,
+        "currency": "THB",
+        "service_fee": 0
+      },
+      "validity": "90 days",
+      "max_stay": "90 days",
+      "notes": [
+        "Medical Treatment visa",
+        "Popular for medical tourism",
+        "High-quality healthcare facilities",
+        "Can extend for treatment duration"
+      ]
+    },
+    "india": {
+      "name": "India",
+      "flag": "🇮🇳",
+      "requirements": [
+        "Valid passport",
+        "Medical visa application form",
+        "Medical appointment letter",
+        "Treatment plan from Indian hospital",
+        "Financial documents",
+        "Medical records and diagnosis",
+        "Accommodation arrangements",
+        "Return flight booking",
+        "Hospital invitation letter"
+      ],
+      "processing_time": "5-7 business days",
+      "fees": {
+        "visa_fee": 80,
+        "currency": "USD",
+        "service_fee": 0
+      },
+      "validity": "1 year",
+      "max_stay": "1 year",
+      "notes": [
+        "Medical visa (M visa)",
+        "Multiple entries allowed",
+        "Popular for affordable treatment",
+        "Can extend for medical reasons"
+      ]
+    }
+  },
+  "general_requirements": [
+    "Valid passport with sufficient validity",
+    "Medical appointment confirmation",
+    "Treatment plan from destination doctor/hospital",
+    "Medical records and diagnosis",
+    "Financial capacity for medical expenses",
+    "Health insurance coverage",
+    "Accommodation arrangements",
+    "Return travel plans",
+    "Medical necessity documentation",
+    "Sponsor/financial guarantee (if applicable)"
+  ],
+  "common_fees": {
+    "application_fee": "50-200 USD equivalent",
+    "health_insurance": "500-2000 USD/treatment",
+    "medical_deposit": "1000-10000 USD equivalent",
+    "service_fee": "0-50 USD equivalent"
+  },
+  "processing_times": {
+    "standard": "10-20 business days",
+    "express": "3-7 business days",
+    "urgent": "1-3 business days"
+  },
+  "medical_categories": {
+    "surgery": "Surgical procedures and operations",
+    "treatment": "Medical treatment and therapy",
+    "consultation": "Medical consultations and second opinions",
+    "rehabilitation": "Post-treatment rehabilitation",
+    "specialized_care": "Specialized medical care and procedures"
+  },
+  "popular_treatments": {
+    "cardiac_surgery": "Heart surgery and cardiology",
+    "orthopedic": "Joint replacement and orthopedic surgery",
+    "dental": "Dental procedures and implants",
+    "cosmetic": "Cosmetic and plastic surgery",
+    "fertility": "Fertility treatment and IVF",
+    "cancer": "Cancer treatment and oncology",
+    "neurology": "Neurological procedures and treatment"
+  },
+  "insurance_requirements": {
+    "coverage_amount": "Minimum coverage varies by country",
+    "treatment_scope": "Must cover planned medical procedures",
+    "emergency_coverage": "Emergency medical coverage required",
+    "repatriation": "Medical repatriation coverage recommended"
+  }
+} 

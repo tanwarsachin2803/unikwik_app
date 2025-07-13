@@ -94,6 +94,23 @@ class _CommunityScreenState extends State<CommunityScreen> {
       child: Column(
         children: [
           const SizedBox(height: 32),
+          // Main headline (like Visa Service)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.groups, color: Colors.lightBlueAccent, size: 32),
+              const SizedBox(width: 10),
+              Text(
+                'Community',
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white.withOpacity(0.9),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
           CommunityTopNavBar(
             selectedIndex: _selectedTab,
             onChanged: (index) {
