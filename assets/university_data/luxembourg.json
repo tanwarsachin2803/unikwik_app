@@ -1,0 +1,39 @@
+{
+  "country": "Luxembourg",
+  "flag": "🇱🇺",
+  "totalUniversities": 1,
+  "universities": [
+    {
+      "id": "Luxembourg_1",
+      "rank": 381,
+      "ranking": "",
+      "name": "University of Luxembourg",
+      "code": "LU",
+      "country": "Luxembourg",
+      "score": 29.1,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 52436,
+      "applicationFee": 194,
+      "applicationOpen": false,
+      "applicationUrl": "https://universityofluxembourg.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=University%20of%20Luxembourg",
+      "isWatchlisted": false,
+      "description": "University of Luxembourg is a prestigious university located in Luxembourg.",
+      "programs": [
+        "Computer Science",
+        "Engineering",
+        "Business",
+        "Arts",
+        "Medicine"
+      ],
+      "acceptanceRate": 38,
+      "studentCount": 23838,
+      "founded": 1909,
+      "campusType": "Urban",
+      "worldRanking": 381,
+      "countryRanking": 1
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "country": "Brunei",
+  "flag": "🇧🇳",
+  "totalUniversities": 2,
+  "universities": [
+    {
+      "id": "Brunei_1",
+      "rank": 387,
+      "ranking": "256=",
+      "name": "Universiti Brunei Darussalam (UBD)",
+      "code": "BN",
+      "country": "Brunei",
+      "score": 28.3,
+      "region": "Asia",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 17672,
+      "applicationFee": 166,
+      "applicationOpen": false,
+      "applicationUrl": "https://universitibruneidarussalam(ubd).edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Universiti%20Brunei%20Darussalam%20(UBD)",
+      "isWatchlisted": false,
+      "description": "Universiti Brunei Darussalam (UBD) is a prestigious university located in Brunei.",
+      "programs": [
+        "Computer Science",
+        "Engineering",
+        "Business",
+        "Arts",
+        "Medicine"
+      ],
+      "acceptanceRate": 14,
+      "studentCount": 51442,
+      "founded": 1922,
+      "campusType": "Suburban",
+      "worldRanking": 387,
+      "countryRanking": 1
+    },
+    {
+      "id": "Brunei_2",
+      "rank": 525,
+      "ranking": "340=",
+      "name": "Universiti Teknologi Brunei",
+      "code": "BN",
+      "country": "Brunei",
+      "score": 22.4,
+      "region": "Asia",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 32949,
+      "applicationFee": 113,
+      "applicationOpen": true,
+      "applicationUrl": "https://universititeknologibrunei.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Universiti%20Teknologi%20Brunei",
+      "isWatchlisted": false,
+      "description": "Universiti Teknologi Brunei is a prestigious university located in Brunei.",
+      "programs": [
+        "Computer Science",
+        "Engineering",
+        "Business",
+        "Arts",
+        "Medicine"
+      ],
+      "acceptanceRate": 27,
+      "studentCount": 42304,
+      "founded": 1807,
+      "campusType": "Suburban",
+      "worldRanking": 525,
+      "countryRanking": 2
+    }
+  ]
+}

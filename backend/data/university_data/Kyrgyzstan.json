@@ -1,0 +1,24 @@
+{
+  "country": "Kyrgyzstan",
+  "totalUniversities": 1,
+  "universities": [
+    {
+      "id": "Kyrgyzstan_1",
+      "rank": 851,
+      "ranking": "801-1000",
+      "name": "Kyrgyz-Turkish Manas University",
+      "code": "KG",
+      "country": "Kyrgyzstan",
+      "score": 0,
+      "region": "Asia",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 51503,
+      "applicationFee": 193,
+      "applicationOpen": false,
+      "applicationUrl": "https://kyrgyz-turkishmanasuniversity.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Kyrgyz-Turkish%20Manas%20University",
+      "isWatchlisted": false
+    }
+  ]
+}

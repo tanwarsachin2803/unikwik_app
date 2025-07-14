@@ -1,0 +1,42 @@
+{
+  "country": "Dominican Republic",
+  "totalUniversities": 2,
+  "universities": [
+    {
+      "id": "Dominican Republic_1",
+      "rank": 1001,
+      "ranking": "801-1000",
+      "name": "Instituto Tecnológico de Santo Domingo (INTEC)",
+      "code": "DO",
+      "country": "Dominican Republic",
+      "score": 0,
+      "region": "South America",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 16443,
+      "applicationFee": 66,
+      "applicationOpen": false,
+      "applicationUrl": "https://institutotecnológicodesantodomingo(intec).edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Instituto%20Tecnol%C3%B3gico%20de%20Santo%20Domingo%20(INTEC)",
+      "isWatchlisted": false
+    },
+    {
+      "id": "Dominican Republic_2",
+      "rank": 1201,
+      "ranking": "1201-1400",
+      "name": "Pontificia Universidad Catolica Madre y Maestra",
+      "code": "DO",
+      "country": "Dominican Republic",
+      "score": 0,
+      "region": "South America",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 28038,
+      "applicationFee": 215,
+      "applicationOpen": false,
+      "applicationUrl": "https://pontificiauniversidadcatolicamadreymaestra.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Pontificia%20Universidad%20Catolica%20Madre%20y%20Maestra",
+      "isWatchlisted": false
+    }
+  ]
+}

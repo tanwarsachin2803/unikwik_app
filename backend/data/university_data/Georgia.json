@@ -1,0 +1,42 @@
+{
+  "country": "Georgia",
+  "totalUniversities": 2,
+  "universities": [
+    {
+      "id": "Georgia_1",
+      "rank": 801,
+      "ranking": "601-650",
+      "name": "Ivane Javakhishvili Tbilisi State University",
+      "code": "GE",
+      "country": "Georgia",
+      "score": 0,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 31019,
+      "applicationFee": 129,
+      "applicationOpen": true,
+      "applicationUrl": "https://ivanejavakhishvilitbilisistateuniversity.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Ivane%20Javakhishvili%20Tbilisi%20State%20University",
+      "isWatchlisted": false
+    },
+    {
+      "id": "Georgia_2",
+      "rank": 1401,
+      "ranking": "",
+      "name": "Georgian Technical University",
+      "code": "GE",
+      "country": "Georgia",
+      "score": 0,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 27618,
+      "applicationFee": 241,
+      "applicationOpen": true,
+      "applicationUrl": "https://georgiantechnicaluniversity.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Georgian%20Technical%20University",
+      "isWatchlisted": false
+    }
+  ]
+}

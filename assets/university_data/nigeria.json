@@ -1,0 +1,71 @@
+{
+  "country": "Nigeria",
+  "flag": "🇳🇬",
+  "totalUniversities": 2,
+  "universities": [
+    {
+      "id": "Nigeria_1",
+      "rank": 1401,
+      "ranking": "",
+      "name": "University of Ibadan",
+      "code": "NG",
+      "country": "Nigeria",
+      "score": 0,
+      "region": "Africa",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 47014,
+      "applicationFee": 110,
+      "applicationOpen": false,
+      "applicationUrl": "https://universityofibadan.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=University%20of%20Ibadan",
+      "isWatchlisted": false,
+      "description": "University of Ibadan is a prestigious university located in Nigeria.",
+      "programs": [
+        "Computer Science",
+        "Engineering",
+        "Business",
+        "Arts",
+        "Medicine"
+      ],
+      "acceptanceRate": 17,
+      "studentCount": 40575,
+      "founded": 1920,
+      "campusType": "Suburban",
+      "worldRanking": 1401,
+      "countryRanking": 1
+    },
+    {
+      "id": "Nigeria_2",
+      "rank": 1401,
+      "ranking": "",
+      "name": "University of Lagos",
+      "code": "NG",
+      "country": "Nigeria",
+      "score": 0,
+      "region": "Africa",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 19035,
+      "applicationFee": 205,
+      "applicationOpen": true,
+      "applicationUrl": "https://universityoflagos.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=University%20of%20Lagos",
+      "isWatchlisted": false,
+      "description": "University of Lagos is a prestigious university located in Nigeria.",
+      "programs": [
+        "Computer Science",
+        "Engineering",
+        "Business",
+        "Arts",
+        "Medicine"
+      ],
+      "acceptanceRate": 25,
+      "studentCount": 23175,
+      "founded": 1951,
+      "campusType": "Suburban",
+      "worldRanking": 1401,
+      "countryRanking": 2
+    }
+  ]
+}

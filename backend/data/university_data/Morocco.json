@@ -1,0 +1,24 @@
+{
+  "country": "Morocco",
+  "totalUniversities": 1,
+  "universities": [
+    {
+      "id": "Morocco_1",
+      "rank": 1201,
+      "ranking": "1401+",
+      "name": "Université Mohammed V de Rabat",
+      "code": "MA",
+      "country": "Morocco",
+      "score": 0,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 13630,
+      "applicationFee": 241,
+      "applicationOpen": true,
+      "applicationUrl": "https://universitémohammedvderabat.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Universit%C3%A9%20Mohammed%20V%20de%20Rabat",
+      "isWatchlisted": false
+    }
+  ]
+}

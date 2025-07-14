@@ -1,0 +1,24 @@
+{
+  "country": "Armenia",
+  "totalUniversities": 1,
+  "universities": [
+    {
+      "id": "Armenia_1",
+      "rank": 1001,
+      "ranking": "801-1000",
+      "name": "Yerevan State University",
+      "code": "AM",
+      "country": "Armenia",
+      "score": 0,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 16930,
+      "applicationFee": 166,
+      "applicationOpen": false,
+      "applicationUrl": "https://yerevanstateuniversity.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Yerevan%20State%20University",
+      "isWatchlisted": false
+    }
+  ]
+}

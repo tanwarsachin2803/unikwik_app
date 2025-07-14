@@ -1,0 +1,60 @@
+{
+  "country": "Slovenia",
+  "totalUniversities": 3,
+  "universities": [
+    {
+      "id": "Slovenia_1",
+      "rank": 621,
+      "ranking": "601-650",
+      "name": "University of Ljubljana",
+      "code": "SI",
+      "country": "Slovenia",
+      "score": 0,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 30274,
+      "applicationFee": 161,
+      "applicationOpen": true,
+      "applicationUrl": "https://universityofljubljana.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=University%20of%20Ljubljana",
+      "isWatchlisted": false
+    },
+    {
+      "id": "Slovenia_2",
+      "rank": 851,
+      "ranking": "801-1000",
+      "name": "University of Maribor",
+      "code": "SI",
+      "country": "Slovenia",
+      "score": 0,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 44628,
+      "applicationFee": 141,
+      "applicationOpen": true,
+      "applicationUrl": "https://universityofmaribor.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=University%20of%20Maribor",
+      "isWatchlisted": false
+    },
+    {
+      "id": "Slovenia_3",
+      "rank": 1001,
+      "ranking": "1001-1200",
+      "name": "University of Primorska",
+      "code": "SI",
+      "country": "Slovenia",
+      "score": 0,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 54873,
+      "applicationFee": 204,
+      "applicationOpen": true,
+      "applicationUrl": "https://universityofprimorska.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=University%20of%20Primorska",
+      "isWatchlisted": false
+    }
+  ]
+}

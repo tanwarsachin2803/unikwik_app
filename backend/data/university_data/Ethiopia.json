@@ -1,0 +1,24 @@
+{
+  "country": "Ethiopia",
+  "totalUniversities": 1,
+  "universities": [
+    {
+      "id": "Ethiopia_1",
+      "rank": 851,
+      "ranking": "",
+      "name": "Addis Ababa University",
+      "code": "ET",
+      "country": "Ethiopia",
+      "score": 0,
+      "region": "Africa",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 17259,
+      "applicationFee": 135,
+      "applicationOpen": false,
+      "applicationUrl": "https://addisababauniversity.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Addis%20Ababa%20University",
+      "isWatchlisted": false
+    }
+  ]
+}

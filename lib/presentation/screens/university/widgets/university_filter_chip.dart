@@ -39,9 +39,9 @@ class UniversityFilterChip extends StatelessWidget {
               ),
             ] : null,
           ),
-          child: Row(
+              child: Row(
             mainAxisSize: MainAxisSize.min,
-            children: [
+                children: [
               Icon(
                 icon,
                 color: isSelected ? color : Colors.white.withOpacity(0.7),
@@ -51,17 +51,17 @@ class UniversityFilterChip extends StatelessWidget {
                 .then()
                 .shake(duration: 200.ms),
               const SizedBox(width: 8),
-              Text(
+                  Text(
                 label,
                 style: TextStyle(
-                  color: Colors.white,
+                      color: Colors.white,
                   fontSize: 14,
                   fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                ),
+                  ),
               ),
               if (isSelected) ...[
                 const SizedBox(width: 6),
-                Icon(
+                  Icon(
                   Icons.check_circle_rounded,
                   color: color,
                   size: 16,

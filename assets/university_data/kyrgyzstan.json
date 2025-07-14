@@ -1,0 +1,39 @@
+{
+  "country": "Kyrgyzstan",
+  "flag": "🇰🇬",
+  "totalUniversities": 1,
+  "universities": [
+    {
+      "id": "Kyrgyzstan_1",
+      "rank": 851,
+      "ranking": "801-1000",
+      "name": "Kyrgyz-Turkish Manas University",
+      "code": "KG",
+      "country": "Kyrgyzstan",
+      "score": 0,
+      "region": "Asia",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 58367,
+      "applicationFee": 59,
+      "applicationOpen": true,
+      "applicationUrl": "https://kyrgyz-turkishmanasuniversity.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Kyrgyz-Turkish%20Manas%20University",
+      "isWatchlisted": false,
+      "description": "Kyrgyz-Turkish Manas University is a prestigious university located in Kyrgyzstan.",
+      "programs": [
+        "Computer Science",
+        "Engineering",
+        "Business",
+        "Arts",
+        "Medicine"
+      ],
+      "acceptanceRate": 10,
+      "studentCount": 15871,
+      "founded": 1980,
+      "campusType": "Urban",
+      "worldRanking": 851,
+      "countryRanking": 1
+    }
+  ]
+}

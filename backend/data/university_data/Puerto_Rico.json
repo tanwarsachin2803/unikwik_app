@@ -1,0 +1,24 @@
+{
+  "country": "Puerto Rico",
+  "totalUniversities": 1,
+  "universities": [
+    {
+      "id": "Puerto Rico_1",
+      "rank": 1001,
+      "ranking": "1201-1400",
+      "name": "Universidad de Puerto Rico",
+      "code": "PR",
+      "country": "Puerto Rico",
+      "score": 0,
+      "region": "South America",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 35319,
+      "applicationFee": 183,
+      "applicationOpen": true,
+      "applicationUrl": "https://universidaddepuertorico.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Universidad%20de%20Puerto%20Rico",
+      "isWatchlisted": false
+    }
+  ]
+}

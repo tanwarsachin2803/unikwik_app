@@ -1,0 +1,39 @@
+{
+  "country": "Morocco",
+  "flag": "🇲🇦",
+  "totalUniversities": 1,
+  "universities": [
+    {
+      "id": "Morocco_1",
+      "rank": 1201,
+      "ranking": "1401+",
+      "name": "Université Mohammed V de Rabat",
+      "code": "MA",
+      "country": "Morocco",
+      "score": 0,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 39521,
+      "applicationFee": 121,
+      "applicationOpen": false,
+      "applicationUrl": "https://universitémohammedvderabat.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Universit%C3%A9%20Mohammed%20V%20de%20Rabat",
+      "isWatchlisted": false,
+      "description": "Université Mohammed V de Rabat is a prestigious university located in Morocco.",
+      "programs": [
+        "Computer Science",
+        "Engineering",
+        "Business",
+        "Arts",
+        "Medicine"
+      ],
+      "acceptanceRate": 27,
+      "studentCount": 24584,
+      "founded": 1963,
+      "campusType": "Urban",
+      "worldRanking": 1201,
+      "countryRanking": 1
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "country": "Qatar",
+  "flag": "🇶🇦",
+  "totalUniversities": 2,
+  "universities": [
+    {
+      "id": "Qatar_1",
+      "rank": 173,
+      "ranking": "208=",
+      "name": "Qatar University",
+      "code": "QA",
+      "country": "Qatar",
+      "score": 48.7,
+      "region": "Asia",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 40439,
+      "applicationFee": 141,
+      "applicationOpen": true,
+      "applicationUrl": "https://qataruniversity.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Qatar%20University",
+      "isWatchlisted": false,
+      "description": "Qatar University is a prestigious university located in Qatar.",
+      "programs": [
+        "Computer Science",
+        "Engineering",
+        "Business",
+        "Arts",
+        "Medicine"
+      ],
+      "acceptanceRate": 18,
+      "studentCount": 37271,
+      "founded": 1858,
+      "campusType": "Suburban",
+      "worldRanking": 173,
+      "countryRanking": 1
+    },
+    {
+      "id": "Qatar_2",
+      "rank": 310,
+      "ranking": "",
+      "name": "Hamad Bin Khalifa University",
+      "code": "QA",
+      "country": "Qatar",
+      "score": 33.8,
+      "region": "Asia",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 57990,
+      "applicationFee": 71,
+      "applicationOpen": false,
+      "applicationUrl": "https://hamadbinkhalifauniversity.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Hamad%20Bin%20Khalifa%20University",
+      "isWatchlisted": false,
+      "description": "Hamad Bin Khalifa University is a prestigious university located in Qatar.",
+      "programs": [
+        "Computer Science",
+        "Engineering",
+        "Business",
+        "Arts",
+        "Medicine"
+      ],
+      "acceptanceRate": 28,
+      "studentCount": 51564,
+      "founded": 1924,
+      "campusType": "Suburban",
+      "worldRanking": 310,
+      "countryRanking": 2
+    }
+  ]
+}

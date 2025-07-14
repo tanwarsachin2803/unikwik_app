@@ -1,0 +1,24 @@
+{
+  "country": "Bosnia and Herzegovina",
+  "totalUniversities": 1,
+  "universities": [
+    {
+      "id": "Bosnia and Herzegovina_1",
+      "rank": 1201,
+      "ranking": "1201-1400",
+      "name": "University of Sarajevo",
+      "code": "BA",
+      "country": "Bosnia and Herzegovina",
+      "score": 0,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 43959,
+      "applicationFee": 61,
+      "applicationOpen": false,
+      "applicationUrl": "https://universityofsarajevo.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=University%20of%20Sarajevo",
+      "isWatchlisted": false
+    }
+  ]
+}

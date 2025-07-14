@@ -1,0 +1,42 @@
+{
+  "country": "Sri Lanka",
+  "totalUniversities": 2,
+  "universities": [
+    {
+      "id": "Sri Lanka_1",
+      "rank": 1001,
+      "ranking": "1201-1400",
+      "name": "University of Colombo",
+      "code": "LK",
+      "country": "Sri Lanka",
+      "score": 0,
+      "region": "Asia",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 40644,
+      "applicationFee": 63,
+      "applicationOpen": true,
+      "applicationUrl": "https://universityofcolombo.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=University%20of%20Colombo",
+      "isWatchlisted": false
+    },
+    {
+      "id": "Sri Lanka_2",
+      "rank": 1201,
+      "ranking": "1001-1200",
+      "name": "University of Peradeniya",
+      "code": "LK",
+      "country": "Sri Lanka",
+      "score": 0,
+      "region": "Asia",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 20141,
+      "applicationFee": 94,
+      "applicationOpen": false,
+      "applicationUrl": "https://universityofperadeniya.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=University%20of%20Peradeniya",
+      "isWatchlisted": false
+    }
+  ]
+}

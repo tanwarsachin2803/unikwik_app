@@ -1,0 +1,39 @@
+{
+  "country": "Uganda",
+  "flag": "🇺🇬",
+  "totalUniversities": 1,
+  "universities": [
+    {
+      "id": "Uganda_1",
+      "rank": 951,
+      "ranking": "1201-1400",
+      "name": "Makerere University",
+      "code": "UG",
+      "country": "Uganda",
+      "score": 0,
+      "region": "Africa",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 16240,
+      "applicationFee": 125,
+      "applicationOpen": true,
+      "applicationUrl": "https://makerereuniversity.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Makerere%20University",
+      "isWatchlisted": false,
+      "description": "Makerere University is a prestigious university located in Uganda.",
+      "programs": [
+        "Computer Science",
+        "Engineering",
+        "Business",
+        "Arts",
+        "Medicine"
+      ],
+      "acceptanceRate": 35,
+      "studentCount": 33940,
+      "founded": 1968,
+      "campusType": "Urban",
+      "worldRanking": 951,
+      "countryRanking": 1
+    }
+  ]
+}

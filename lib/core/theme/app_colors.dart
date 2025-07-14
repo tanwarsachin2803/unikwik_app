@@ -18,4 +18,21 @@ class AppColors {
   static const white80 = Color(0xCCFFFFFF);
   static const deepTeal60 = Color(0x990A4C6A);
   static const deepTeal80 = Color(0xCC0A4C6A);
+
+  // Modern palette
+  static const bgLight = Color(0xFFEFF7F8);
+  static const bgMid = Color(0xFFBBCED0);
+  static const bgMid2 = Color(0xFF819B9E);
+  static const accent1 = Color(0xFF739498);
+  static const accent2 = Color(0xFF5E8085);
+}
+
+class AppTheme {
+  static Color get background => AppColors.bgLight;
+  static Color get dropdown => AppColors.bgMid;
+  static Color get card => AppColors.bgMid2;
+  static Color get accent => AppColors.accent1;
+  static Color get accentDark => AppColors.accent2;
+  static Color get textOnLight => Colors.black87;
+  static Color get textOnDark => Colors.white;
 } 

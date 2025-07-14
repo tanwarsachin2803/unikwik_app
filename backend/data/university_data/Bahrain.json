@@ -1,0 +1,60 @@
+{
+  "country": "Bahrain",
+  "totalUniversities": 3,
+  "universities": [
+    {
+      "id": "Bahrain_1",
+      "rank": 582,
+      "ranking": "561-570",
+      "name": "Applied Science University - Bahrain",
+      "code": "BH",
+      "country": "Bahrain",
+      "score": 20.3,
+      "region": "Asia",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 13978,
+      "applicationFee": 54,
+      "applicationOpen": false,
+      "applicationUrl": "https://appliedscienceuniversity-bahrain.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Applied%20Science%20University%20-%20Bahrain",
+      "isWatchlisted": false
+    },
+    {
+      "id": "Bahrain_2",
+      "rank": 751,
+      "ranking": "651-700",
+      "name": "Ahlia University",
+      "code": "BH",
+      "country": "Bahrain",
+      "score": 0,
+      "region": "Asia",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 48605,
+      "applicationFee": 121,
+      "applicationOpen": false,
+      "applicationUrl": "https://ahliauniversity.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Ahlia%20University",
+      "isWatchlisted": false
+    },
+    {
+      "id": "Bahrain_3",
+      "rank": 951,
+      "ranking": "801-1000",
+      "name": "University of Bahrain",
+      "code": "BH",
+      "country": "Bahrain",
+      "score": 0,
+      "region": "Asia",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 39314,
+      "applicationFee": 237,
+      "applicationOpen": true,
+      "applicationUrl": "https://universityofbahrain.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=University%20of%20Bahrain",
+      "isWatchlisted": false
+    }
+  ]
+}

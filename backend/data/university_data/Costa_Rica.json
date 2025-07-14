@@ -1,0 +1,60 @@
+{
+  "country": "Costa Rica",
+  "totalUniversities": 3,
+  "universities": [
+    {
+      "id": "Costa Rica_1",
+      "rank": 544,
+      "ranking": "511-520",
+      "name": "Universidad de Costa Rica",
+      "code": "CR",
+      "country": "Costa Rica",
+      "score": 21.6,
+      "region": "South America",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 31928,
+      "applicationFee": 221,
+      "applicationOpen": true,
+      "applicationUrl": "https://universidaddecostarica.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Universidad%20de%20Costa%20Rica",
+      "isWatchlisted": false
+    },
+    {
+      "id": "Costa Rica_2",
+      "rank": 951,
+      "ranking": "801-1000",
+      "name": "Tecnológico de Costa Rica -TEC",
+      "code": "CR",
+      "country": "Costa Rica",
+      "score": 0,
+      "region": "South America",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 22224,
+      "applicationFee": 106,
+      "applicationOpen": false,
+      "applicationUrl": "https://tecnológicodecostarica-tec.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Tecnol%C3%B3gico%20de%20Costa%20Rica%20-TEC",
+      "isWatchlisted": false
+    },
+    {
+      "id": "Costa Rica_3",
+      "rank": 1001,
+      "ranking": "1001-1200",
+      "name": "Universidad Nacional, Costa Rica",
+      "code": "CR",
+      "country": "Costa Rica",
+      "score": 0,
+      "region": "South America",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 28474,
+      "applicationFee": 74,
+      "applicationOpen": true,
+      "applicationUrl": "https://universidadnacional,costarica.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Universidad%20Nacional%2C%20Costa%20Rica",
+      "isWatchlisted": false
+    }
+  ]
+}

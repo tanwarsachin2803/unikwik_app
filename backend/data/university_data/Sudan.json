@@ -1,0 +1,42 @@
+{
+  "country": "Sudan",
+  "totalUniversities": 2,
+  "universities": [
+    {
+      "id": "Sudan_1",
+      "rank": 1201,
+      "ranking": "1201-1400",
+      "name": "University of Khartoum",
+      "code": "SD",
+      "country": "Sudan",
+      "score": 0,
+      "region": "Africa",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 57544,
+      "applicationFee": 232,
+      "applicationOpen": true,
+      "applicationUrl": "https://universityofkhartoum.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=University%20of%20Khartoum",
+      "isWatchlisted": false
+    },
+    {
+      "id": "Sudan_2",
+      "rank": 1401,
+      "ranking": "1401+",
+      "name": "Sudan University of Science and Technology",
+      "code": "SD",
+      "country": "Sudan",
+      "score": 0,
+      "region": "Africa",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 57020,
+      "applicationFee": 207,
+      "applicationOpen": true,
+      "applicationUrl": "https://sudanuniversityofscienceandtechnology.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Sudan%20University%20of%20Science%20and%20Technology",
+      "isWatchlisted": false
+    }
+  ]
+}

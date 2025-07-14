@@ -1,0 +1,60 @@
+{
+  "country": "Estonia",
+  "totalUniversities": 3,
+  "universities": [
+    {
+      "id": "Estonia_1",
+      "rank": 358,
+      "ranking": "296=",
+      "name": "University of Tartu",
+      "code": "EE",
+      "country": "Estonia",
+      "score": 30.8,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 19426,
+      "applicationFee": 153,
+      "applicationOpen": false,
+      "applicationUrl": "https://universityoftartu.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=University%20of%20Tartu",
+      "isWatchlisted": false
+    },
+    {
+      "id": "Estonia_2",
+      "rank": 651,
+      "ranking": "701-750",
+      "name": "Tallinn University of Technology (TalTech)",
+      "code": "EE",
+      "country": "Estonia",
+      "score": 0,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 38337,
+      "applicationFee": 242,
+      "applicationOpen": false,
+      "applicationUrl": "https://tallinnuniversityoftechnology(taltech).edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Tallinn%20University%20of%20Technology%20(TalTech)",
+      "isWatchlisted": false
+    },
+    {
+      "id": "Estonia_3",
+      "rank": 1001,
+      "ranking": "1001-1200",
+      "name": "Tallinn University",
+      "code": "EE",
+      "country": "Estonia",
+      "score": 0,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 53251,
+      "applicationFee": 235,
+      "applicationOpen": false,
+      "applicationUrl": "https://tallinnuniversity.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Tallinn%20University",
+      "isWatchlisted": false
+    }
+  ]
+}

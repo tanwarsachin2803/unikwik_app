@@ -1,0 +1,71 @@
+{
+  "country": "Sudan",
+  "flag": "🇸🇩",
+  "totalUniversities": 2,
+  "universities": [
+    {
+      "id": "Sudan_1",
+      "rank": 1201,
+      "ranking": "1201-1400",
+      "name": "University of Khartoum",
+      "code": "SD",
+      "country": "Sudan",
+      "score": 0,
+      "region": "Africa",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 57050,
+      "applicationFee": 212,
+      "applicationOpen": true,
+      "applicationUrl": "https://universityofkhartoum.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=University%20of%20Khartoum",
+      "isWatchlisted": false,
+      "description": "University of Khartoum is a prestigious university located in Sudan.",
+      "programs": [
+        "Computer Science",
+        "Engineering",
+        "Business",
+        "Arts",
+        "Medicine"
+      ],
+      "acceptanceRate": 26,
+      "studentCount": 13928,
+      "founded": 1932,
+      "campusType": "Suburban",
+      "worldRanking": 1201,
+      "countryRanking": 1
+    },
+    {
+      "id": "Sudan_2",
+      "rank": 1401,
+      "ranking": "1401+",
+      "name": "Sudan University of Science and Technology",
+      "code": "SD",
+      "country": "Sudan",
+      "score": 0,
+      "region": "Africa",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 48745,
+      "applicationFee": 140,
+      "applicationOpen": false,
+      "applicationUrl": "https://sudanuniversityofscienceandtechnology.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Sudan%20University%20of%20Science%20and%20Technology",
+      "isWatchlisted": false,
+      "description": "Sudan University of Science and Technology is a prestigious university located in Sudan.",
+      "programs": [
+        "Computer Science",
+        "Engineering",
+        "Business",
+        "Arts",
+        "Medicine"
+      ],
+      "acceptanceRate": 21,
+      "studentCount": 17931,
+      "founded": 1829,
+      "campusType": "Urban",
+      "worldRanking": 1401,
+      "countryRanking": 2
+    }
+  ]
+}

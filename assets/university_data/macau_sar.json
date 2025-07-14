@@ -1,0 +1,71 @@
+{
+  "country": "Macau SAR",
+  "flag": "🇲🇴",
+  "totalUniversities": 2,
+  "universities": [
+    {
+      "id": "Macau_SAR_1",
+      "rank": 254,
+      "ranking": "304",
+      "name": "University of Macau",
+      "code": "MO",
+      "country": "Macau SAR",
+      "score": 38.9,
+      "region": "Asia",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 48820,
+      "applicationFee": 85,
+      "applicationOpen": true,
+      "applicationUrl": "https://universityofmacau.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=University%20of%20Macau",
+      "isWatchlisted": false,
+      "description": "University of Macau is a prestigious university located in Macau SAR.",
+      "programs": [
+        "Computer Science",
+        "Engineering",
+        "Business",
+        "Arts",
+        "Medicine"
+      ],
+      "acceptanceRate": 36,
+      "studentCount": 47683,
+      "founded": 1989,
+      "campusType": "Rural",
+      "worldRanking": 254,
+      "countryRanking": 1
+    },
+    {
+      "id": "Macau_SAR_2",
+      "rank": 505,
+      "ranking": "581-590",
+      "name": "Macau University of Science and Technology",
+      "code": "MO",
+      "country": "Macau SAR",
+      "score": 23,
+      "region": "Asia",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 14840,
+      "applicationFee": 82,
+      "applicationOpen": false,
+      "applicationUrl": "https://macauuniversityofscienceandtechnology.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Macau%20University%20of%20Science%20and%20Technology",
+      "isWatchlisted": false,
+      "description": "Macau University of Science and Technology is a prestigious university located in Macau SAR.",
+      "programs": [
+        "Computer Science",
+        "Engineering",
+        "Business",
+        "Arts",
+        "Medicine"
+      ],
+      "acceptanceRate": 18,
+      "studentCount": 52391,
+      "founded": 1867,
+      "campusType": "Rural",
+      "worldRanking": 505,
+      "countryRanking": 2
+    }
+  ]
+}

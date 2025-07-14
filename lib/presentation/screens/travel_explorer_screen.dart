@@ -264,7 +264,7 @@ class _TravelExplorerScreenState extends State<TravelExplorerScreen>
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
-            color: AppColors.deepTeal,
+            color: AppColors.sand,
           ),
         ).animate(controller: _slideController)
           .fadeIn(delay: 400.ms)
@@ -333,7 +333,7 @@ class _TravelExplorerScreenState extends State<TravelExplorerScreen>
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
-                  color: isSelected ? visaType['color'] : AppColors.deepTeal,
+                  color: isSelected ? visaType['color'] : AppColors.sand,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -366,7 +366,7 @@ class _TravelExplorerScreenState extends State<TravelExplorerScreen>
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
-            color: AppColors.deepTeal,
+            color: AppColors.sand,
           ),
         ),
         const SizedBox(height: 12),
@@ -417,10 +417,10 @@ class _TravelExplorerScreenState extends State<TravelExplorerScreen>
   Widget _buildLoadingIndicator() {
     return Container(
       padding: EdgeInsets.all(24),
-      child: Column(
-        children: [
+            child: Column(
+              children: [
           SpinKitFadingCircle(
-            color: AppColors.deepTeal,
+            color: AppColors.sand,
             size: 40,
           ),
           SizedBox(height: 16),
@@ -431,7 +431,7 @@ class _TravelExplorerScreenState extends State<TravelExplorerScreen>
               fontSize: 14,
             ),
           ),
-        ],
+      ],
       ),
     ).animate()
       .fadeIn()
@@ -447,8 +447,8 @@ class _TravelExplorerScreenState extends State<TravelExplorerScreen>
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: Colors.red.withOpacity(0.3)),
       ),
-      child: Row(
-        children: [
+              child: Row(
+                children: [
           Icon(Icons.error_outline, color: Colors.red),
           SizedBox(width: 12),
           Expanded(
@@ -478,7 +478,7 @@ class _TravelExplorerScreenState extends State<TravelExplorerScreen>
         // Country Header
         Container(
           padding: EdgeInsets.all(20),
-          decoration: BoxDecoration(
+      decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
                 Colors.blue.withOpacity(0.2),
@@ -496,15 +496,15 @@ class _TravelExplorerScreenState extends State<TravelExplorerScreen>
               ),
               SizedBox(width: 16),
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                     Text(
                       country['name'],
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.deepTeal,
+                        color: AppColors.sand,
                       ),
                     ),
                     Text(
@@ -535,7 +535,7 @@ class _TravelExplorerScreenState extends State<TravelExplorerScreen>
                 leading: Icon(Icons.check_circle, color: Colors.green, size: 20),
                 title: Text(
                   req,
-                  style: TextStyle(fontSize: 14),
+                  style: TextStyle(fontSize: 14,color: AppColors.sand),
                 ),
                 dense: true,
                 contentPadding: EdgeInsets.symmetric(horizontal: 16),
@@ -574,7 +574,7 @@ class _TravelExplorerScreenState extends State<TravelExplorerScreen>
                   leading: Icon(Icons.arrow_right, color: Colors.blue, size: 20),
                   title: Text(
                     req,
-                    style: TextStyle(fontSize: 14),
+                    style: TextStyle(fontSize: 14,color: AppColors.sand),
                   ),
                   dense: true,
                   contentPadding: EdgeInsets.symmetric(horizontal: 16),
@@ -587,7 +587,7 @@ class _TravelExplorerScreenState extends State<TravelExplorerScreen>
         
         // Action Buttons
         Row(
-          children: [
+              children: [
             Expanded(
               child: ElevatedButton.icon(
                 onPressed: () {
@@ -598,8 +598,8 @@ class _TravelExplorerScreenState extends State<TravelExplorerScreen>
                 },
                 icon: Icon(Icons.assignment),
                 label: Text('Start Application'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.deepTeal,
+                  style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.sand,
                   foregroundColor: Colors.white,
                   padding: EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
@@ -620,8 +620,8 @@ class _TravelExplorerScreenState extends State<TravelExplorerScreen>
                 icon: Icon(Icons.bookmark_border),
                 label: Text('Save'),
                 style: OutlinedButton.styleFrom(
-                  foregroundColor: AppColors.deepTeal,
-                  side: BorderSide(color: AppColors.deepTeal),
+                  foregroundColor: AppColors.sand,
+                  side: BorderSide(color: AppColors.sand),
                   padding: EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -649,7 +649,7 @@ class _TravelExplorerScreenState extends State<TravelExplorerScreen>
         title,
         style: TextStyle(
           fontWeight: FontWeight.w600,
-          color: AppColors.deepTeal,
+          color: AppColors.sand,
         ),
       ),
       children: children,
@@ -678,7 +678,7 @@ class _TravelExplorerScreenState extends State<TravelExplorerScreen>
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w600,
-              color: AppColors.deepTeal,
+              color: AppColors.sand,
             ),
           ),
         ],

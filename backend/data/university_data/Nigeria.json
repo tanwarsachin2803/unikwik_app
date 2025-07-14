@@ -1,0 +1,42 @@
+{
+  "country": "Nigeria",
+  "totalUniversities": 2,
+  "universities": [
+    {
+      "id": "Nigeria_1",
+      "rank": 1401,
+      "ranking": "",
+      "name": "University of Ibadan",
+      "code": "NG",
+      "country": "Nigeria",
+      "score": 0,
+      "region": "Africa",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 22895,
+      "applicationFee": 156,
+      "applicationOpen": true,
+      "applicationUrl": "https://universityofibadan.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=University%20of%20Ibadan",
+      "isWatchlisted": false
+    },
+    {
+      "id": "Nigeria_2",
+      "rank": 1401,
+      "ranking": "",
+      "name": "University of Lagos",
+      "code": "NG",
+      "country": "Nigeria",
+      "score": 0,
+      "region": "Africa",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 38372,
+      "applicationFee": 113,
+      "applicationOpen": true,
+      "applicationUrl": "https://universityoflagos.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=University%20of%20Lagos",
+      "isWatchlisted": false
+    }
+  ]
+}

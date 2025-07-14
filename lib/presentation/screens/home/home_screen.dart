@@ -80,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               children: [
                 SandGlassContainer(
                   padding: const EdgeInsets.all(16),
-                  child: Icon(Icons.account_balance, size: 40, color: AppColors.deepTeal),
+                  child: Icon(Icons.account_balance, size: 40, color: Colors.white),
                 ),
                 const SizedBox(width: 18),
                 Expanded(
@@ -89,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
-                      color: AppColors.deepTeal,
+                      color: Colors.white,
                     ),
                   ),
                 ),
@@ -133,10 +133,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           children: [
                             SandGlassContainer(
                               padding: const EdgeInsets.all(12),
-                              child: Icon(Icons.public, size: 36, color: AppColors.deepTeal),
+                              child: Icon(Icons.public, size: 36, color: Colors.white),
                             ),
                             const SizedBox(height: 10),
-                            const Text('Visa Service', style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.deepTeal)),
+                            const Text('Visa Service', style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white)),
                           ],
                         ),
                       ),
@@ -157,10 +157,10 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           children: [
                             SandGlassContainer(
                               padding: const EdgeInsets.all(12),
-                              child: Icon(Icons.attach_money, size: 36, color: AppColors.deepTeal),
+                              child: Icon(Icons.attach_money, size: 36, color: Colors.white),
                             ),
                             const SizedBox(height: 10),
-                            const Text('Loan Service', style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.deepTeal)),
+                            const Text('Loan Service', style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white)),
                           ],
                         ),
                       ),
@@ -187,11 +187,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 children: [
                   SandGlassContainer(
                     padding: const EdgeInsets.all(16),
-                    child: Icon(Icons.menu_book, size: 40, color: AppColors.deepTeal),
+                    child: Icon(Icons.menu_book, size: 40, color: Colors.white),
                   ),
                   const SizedBox(width: 18),
                   const Expanded(
-                    child: Text('Exam Prep', style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.deepTeal, fontSize: 20)),
+                    child: Text('Exam Prep', style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white, fontSize: 20)),
                   ),
                 ],
               ),
@@ -207,14 +207,14 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.attach_money, size: 80, color: AppColors.deepTeal),
+          Icon(Icons.attach_money, size: 80, color: Colors.white),
           const SizedBox(height: 20),
           Text(
             'Loans & Financial Aid',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: AppColors.deepTeal,
+              color: Colors.white,
             ),
           ),
           const SizedBox(height: 10),
@@ -222,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             'Coming Soon',
             style: TextStyle(
               fontSize: 16,
-              color: AppColors.deepTeal.withOpacity(0.7),
+              color: Colors.white.withOpacity(0.7),
             ),
           ),
         ],
@@ -235,14 +235,14 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.group, size: 80, color: AppColors.deepTeal),
+          Icon(Icons.group, size: 80, color: Colors.white),
           const SizedBox(height: 20),
           Text(
             'Community',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: AppColors.deepTeal,
+              color: Colors.white,
             ),
           ),
           const SizedBox(height: 10),
@@ -250,7 +250,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             'Coming Soon',
             style: TextStyle(
               fontSize: 16,
-              color: AppColors.deepTeal.withOpacity(0.7),
+              color: Colors.white.withOpacity(0.7),
             ),
           ),
         ],
@@ -263,14 +263,14 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.account_circle, size: 80, color: AppColors.deepTeal),
+          Icon(Icons.account_circle, size: 80, color: Colors.white),
           const SizedBox(height: 20),
           Text(
             'Profile',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: AppColors.deepTeal,
+              color: Colors.white,
             ),
           ),
           const SizedBox(height: 10),
@@ -278,7 +278,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             'Coming Soon',
             style: TextStyle(
               fontSize: 16,
-              color: AppColors.deepTeal.withOpacity(0.7),
+              color: Colors.white.withOpacity(0.7),
             ),
           ),
         ],
@@ -290,7 +290,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: AppColors.bgGradientStart,
+      backgroundColor: Colors.transparent,
       extendBody: true, // This is important for curved navigation bar
       body: Stack(
         children: [
@@ -319,7 +319,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
-                                color: AppColors.deepTeal,
+                                color: Colors.white,
                               ),
                             ),
                           ),
@@ -340,8 +340,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       ),
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Colors.transparent,
-        color: AppColors.deepTeal.withOpacity(0.9),
-        buttonBackgroundColor: AppColors.steelBlue,
+        color: Colors.white.withOpacity(0.9),
+        buttonBackgroundColor: AppColors.sand,
         height: 75,
         animationDuration: const Duration(milliseconds: 300),
         index: _selectedIndex,

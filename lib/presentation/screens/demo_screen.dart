@@ -8,6 +8,7 @@ class DemoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: Stack(
         children: [
           // Reusable gradient background
@@ -29,7 +30,7 @@ class DemoScreen extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.deepTeal,
+                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -47,7 +48,7 @@ class DemoScreen extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.deepTeal,
+                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -63,7 +64,7 @@ class DemoScreen extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.deepTeal,
+                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -81,7 +82,7 @@ class DemoScreen extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: AppColors.deepTeal,
+                            color: Colors.white,
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -101,7 +102,7 @@ class DemoScreen extends StatelessWidget {
                         ElevatedButton(
                           onPressed: () {},
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.steelBlue,
+                            backgroundColor: AppColors.sand,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),

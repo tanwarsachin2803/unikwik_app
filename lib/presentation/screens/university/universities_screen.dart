@@ -6,6 +6,7 @@ import 'package:unikwik_app/presentation/widgets/glass_container.dart';
 import 'widgets/university_card.dart';
 import 'widgets/university_filter_chip.dart';
 import 'dart:convert';
+import 'package:unikwik_app/presentation/widgets/profile_drawer.dart';
 
 class UniversityScreen extends StatefulWidget {
   const UniversityScreen({super.key});
@@ -91,10 +92,10 @@ class _UniversityScreenState extends State<UniversityScreen>
 
   Future<void> _loadUniversityData() async {
     try {
-      setState(() {
-        _isLoading = true;
-        _error = null;
-      });
+    setState(() {
+      _isLoading = true;
+      _error = null;
+    });
 
       // Load countries data
       final countriesData = await rootBundle.loadString('assets/university_data/countries.json');
@@ -126,7 +127,7 @@ class _UniversityScreenState extends State<UniversityScreen>
               'flag': country['flag'] ?? '',
             });
           }
-        } catch (e) {
+    } catch (e) {
           // Ignore missing files or bad data
         }
       }
@@ -136,8 +137,8 @@ class _UniversityScreenState extends State<UniversityScreen>
           .map((uni) => uni['region'] as String?)
           .where((region) => region != null && region.isNotEmpty)
           .map((region) => region!)
-          .toSet()
-          .toList();
+        .toSet()
+        .toList();
       regions.sort();
 
       // Show top 10 by default
@@ -298,6 +299,8 @@ class _UniversityScreenState extends State<UniversityScreen>
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center, // Center the row
         children: [
+          // Removed profile icon here
+          // const SizedBox(width: 16), // Remove the gap after the icon as well
           Icon(
             Icons.school_rounded,
             color: Colors.amber[300],
@@ -342,9 +345,9 @@ class _UniversityScreenState extends State<UniversityScreen>
             color: hasActiveFilters ? Colors.amber.withOpacity(0.18) : Colors.transparent,
             borderRadius: BorderRadius.circular(16),
           ),
-          child: Row(
+                    child: Row(
             mainAxisSize: MainAxisSize.min,
-            children: [
+                      children: [
               Icon(
                 _showFilters ? Icons.tune : Icons.tune_outlined,
                 color: hasActiveFilters ? Colors.amber : Colors.white,
@@ -375,30 +378,30 @@ class _UniversityScreenState extends State<UniversityScreen>
         children: [
           Expanded(
             child: GlassContainer(
-              child: TextField(
+                          child: TextField(
                 controller: _searchTextController,
-                onChanged: (value) {
-                  setState(() {
+                            onChanged: (value) {
+                              setState(() {
                     _searchQuery = value;
-                  });
+                              });
                   _applyFilters();
-                },
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                ),
+                            },
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
                 decoration: InputDecoration(
                   hintText: 'Search universities or countries...',
-                  hintStyle: TextStyle(
+                              hintStyle: TextStyle(
                     color: Colors.white.withOpacity(0.6),
-                    fontSize: 16,
-                  ),
-                  border: InputBorder.none,
+                                fontSize: 16,
+                              ),
+                              border: InputBorder.none,
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 20,
                     vertical: 16,
-                  ),
-                  prefixIcon: Icon(
+                              ),
+                              prefixIcon: Icon(
                     Icons.search_rounded,
                     color: Colors.white.withOpacity(0.7),
                     size: 24,
@@ -415,13 +418,13 @@ class _UniversityScreenState extends State<UniversityScreen>
                           icon: Icon(
                             Icons.clear_rounded,
                             color: Colors.white.withOpacity(0.7),
-                            size: 20,
-                          ),
+                                size: 20,
+                              ),
                         )
                       : null,
-                ),
-              ),
-            ),
+                            ),
+                          ),
+                        ),
           ),
           const SizedBox(width: 8),
           _buildSortButton(),
@@ -438,7 +441,7 @@ class _UniversityScreenState extends State<UniversityScreen>
     return GlassContainer(
       child: GestureDetector(
         onTap: () {
-          setState(() {
+                            setState(() {
             _sortAscending = !_sortAscending;
             _applyFilters();
           });
@@ -534,56 +537,56 @@ class _UniversityScreenState extends State<UniversityScreen>
       children: [
         Expanded(
           child: GlassContainer(
-            child: TextField(
+                          child: TextField(
               controller: _tuitionController,
-              onChanged: (value) {
-                setState(() {
+                            onChanged: (value) {
+                              setState(() {
                   _maxTuition = double.tryParse(value);
-                });
+                              });
                 _applyFilters();
-              },
-              keyboardType: TextInputType.number,
+                            },
+                            keyboardType: TextInputType.number,
               style: const TextStyle(color: Colors.white),
               decoration: InputDecoration(
-                hintText: 'Max Tuition',
+                              hintText: 'Max Tuition',
                 hintStyle: TextStyle(color: Colors.white.withOpacity(0.6)),
-                border: InputBorder.none,
+                              border: InputBorder.none,
                 contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                prefixIcon: Icon(
+                              prefixIcon: Icon(
                   Icons.attach_money_rounded,
                   color: Colors.white.withOpacity(0.7),
                   size: 18,
-                ),
-              ),
-            ),
-          ),
+                              ),
+                            ),
+                          ),
+                        ),
         ),
         const SizedBox(width: 12),
         Expanded(
           child: GlassContainer(
-            child: TextField(
+                          child: TextField(
               controller: _applicationController,
-              onChanged: (value) {
-                setState(() {
+                            onChanged: (value) {
+                              setState(() {
                   _maxApplicationFee = double.tryParse(value);
-                });
+                              });
                 _applyFilters();
-              },
-              keyboardType: TextInputType.number,
+                            },
+                            keyboardType: TextInputType.number,
               style: const TextStyle(color: Colors.white),
               decoration: InputDecoration(
                 hintText: 'Application Fee',
                 hintStyle: TextStyle(color: Colors.white.withOpacity(0.6)),
-                border: InputBorder.none,
+                              border: InputBorder.none,
                 contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                prefixIcon: Icon(
+                              prefixIcon: Icon(
                   Icons.description_rounded,
                   color: Colors.white.withOpacity(0.7),
                   size: 18,
-                ),
-              ),
-            ),
-          ),
+                              ),
+                            ),
+                          ),
+                        ),
         ),
       ],
     );
@@ -591,31 +594,31 @@ class _UniversityScreenState extends State<UniversityScreen>
 
   Widget _buildClearFiltersButton() {
     return GestureDetector(
-      onTap: _clearAllFilters,
+                          onTap: _clearAllFilters,
       child: GlassContainer(
-        child: Container(
+                          child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
                 Icons.clear_all_rounded,
                 color: Colors.red[300],
                 size: 18,
-              ),
-              const SizedBox(width: 8),
-              Text(
+                                ),
+                                const SizedBox(width: 8),
+                                Text(
                 'Clear All Filters',
                 style: TextStyle(
                   color: Colors.red[300],
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
     );
   }
 
@@ -656,9 +659,9 @@ class _UniversityScreenState extends State<UniversityScreen>
 
   Widget _buildErrorState() {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
           Icon(
             Icons.error_outline_rounded,
             color: Colors.red[300],
@@ -674,8 +677,8 @@ class _UniversityScreenState extends State<UniversityScreen>
             ),
           ),
           const SizedBox(height: 8),
-          Text(
-            _error!,
+                                  Text(
+                                    _error!,
             style: TextStyle(
               color: Colors.white.withOpacity(0.7),
               fontSize: 14,
@@ -691,8 +694,8 @@ class _UniversityScreenState extends State<UniversityScreen>
                 child: const Text(
                   'Try Again',
                   style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
+                                      color: Colors.white,
+                                      fontSize: 16,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -700,9 +703,9 @@ class _UniversityScreenState extends State<UniversityScreen>
             ),
           ),
         ],
-      ),
-    );
-  }
+                                              ),
+                                            );
+                                          }
 
   Widget _buildEmptyState() {
     return Center(
@@ -741,8 +744,8 @@ class _UniversityScreenState extends State<UniversityScreen>
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                   child: const Text(
                     'Clear Filters',
-                    style: TextStyle(
-                      color: Colors.white,
+                                    style: TextStyle(
+                                      color: Colors.white,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),
@@ -758,26 +761,26 @@ class _UniversityScreenState extends State<UniversityScreen>
 
   Widget _buildUniversitiesList() {
     return ListView.builder(
-      controller: _scrollController,
+                                  controller: _scrollController,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       itemCount: _filteredUniversities.length,
-      itemBuilder: (context, index) {
+                                  itemBuilder: (context, index) {
         final university = _filteredUniversities[index];
         final isExpanded = _expandedIndex == index;
-        return Padding(
+                                    return Padding(
           padding: const EdgeInsets.only(bottom: 12),
-          child: UniversityCard(
+                                      child: UniversityCard(
             university: university,
-            index: index,
+                                        index: index,
             isExpanded: isExpanded,
             onTap: () {
               setState(() {
                 _expandedIndex = isExpanded ? null : index;
               });
             },
-          ),
-        );
-      },
+                                      ),
+                                    );
+                                  },
     );
   }
 

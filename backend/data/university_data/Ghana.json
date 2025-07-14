@@ -1,0 +1,42 @@
+{
+  "country": "Ghana",
+  "totalUniversities": 2,
+  "universities": [
+    {
+      "id": "Ghana_1",
+      "rank": 951,
+      "ranking": "1201-1400",
+      "name": "University of Ghana",
+      "code": "GH",
+      "country": "Ghana",
+      "score": 0,
+      "region": "Africa",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 33716,
+      "applicationFee": 143,
+      "applicationOpen": false,
+      "applicationUrl": "https://universityofghana.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=University%20of%20Ghana",
+      "isWatchlisted": false
+    },
+    {
+      "id": "Ghana_2",
+      "rank": 1401,
+      "ranking": "",
+      "name": "Kwame Nkrumah University of Science and Technology",
+      "code": "GH",
+      "country": "Ghana",
+      "score": 0,
+      "region": "Africa",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 56877,
+      "applicationFee": 200,
+      "applicationOpen": false,
+      "applicationUrl": "https://kwamenkrumahuniversityofscienceandtechnology.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Kwame%20Nkrumah%20University%20of%20Science%20and%20Technology",
+      "isWatchlisted": false
+    }
+  ]
+}

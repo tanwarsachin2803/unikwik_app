@@ -1,0 +1,39 @@
+{
+  "country": "Malta",
+  "flag": "🇲🇹",
+  "totalUniversities": 1,
+  "universities": [
+    {
+      "id": "Malta_1",
+      "rank": 851,
+      "ranking": "801-1000",
+      "name": "University of Malta",
+      "code": "MT",
+      "country": "Malta",
+      "score": 0,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 38543,
+      "applicationFee": 58,
+      "applicationOpen": true,
+      "applicationUrl": "https://universityofmalta.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=University%20of%20Malta",
+      "isWatchlisted": false,
+      "description": "University of Malta is a prestigious university located in Malta.",
+      "programs": [
+        "Computer Science",
+        "Engineering",
+        "Business",
+        "Arts",
+        "Medicine"
+      ],
+      "acceptanceRate": 13,
+      "studentCount": 21357,
+      "founded": 1927,
+      "campusType": "Urban",
+      "worldRanking": 851,
+      "countryRanking": 1
+    }
+  ]
+}

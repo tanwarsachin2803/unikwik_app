@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:unikwik_app/core/theme/app_colors.dart';
 import 'package:glass/glass.dart';
 import 'package:unikwik_app/presentation/widgets/gradient_background.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:confetti/confetti.dart';
 
 class EducationEntry {
   final String level;
@@ -36,11 +38,30 @@ class EducationDetailsScreen extends StatefulWidget {
   State<EducationDetailsScreen> createState() => _EducationDetailsScreenState();
 }
 
-class _EducationDetailsScreenState extends State<EducationDetailsScreen> {
+class _EducationDetailsScreenState extends State<EducationDetailsScreen> with TickerProviderStateMixin {
+  final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   final List<EducationEntry> _entries = [];
   bool _showAddForm = false;
   EducationEntry? _editingEntry;
   int? _editingIndex;
+  Offset? _tapPosition;
+  late AnimationController _fabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _fabController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
+    _fabController.forward();
+  }
+
+  @override
+  void dispose() {
+    _fabController.dispose();
+    super.dispose();
+  }
 
   void _openAddEducation() {
     setState(() {
@@ -70,19 +91,23 @@ class _EducationDetailsScreenState extends State<EducationDetailsScreen> {
     setState(() {
       if (_editingIndex != null) {
         _entries[_editingIndex!] = entry;
+        _editingIndex = null;
       } else {
         _entries.add(entry);
+        _listKey.currentState?.insertItem(_entries.length - 1);
       }
       _showAddForm = false;
       _editingEntry = null;
-      _editingIndex = null;
     });
   }
 
   void _removeEducation(int index) {
-    setState(() {
-      _entries.removeAt(index);
-    });
+    final removed = _entries.removeAt(index);
+    _listKey.currentState?.removeItem(
+      index,
+      (context, animation) => _buildAnimatedTile(removed, index, animation),
+      duration: const Duration(milliseconds: 400),
+    );
   }
 
   Future<void> _showCardMenu(BuildContext context, Offset tapPosition, int index) async {
@@ -106,7 +131,122 @@ class _EducationDetailsScreenState extends State<EducationDetailsScreen> {
     }
   }
 
-  Offset? _tapPosition;
+  Widget _buildAnimatedTile(EducationEntry entry, int index, Animation<double> animation) {
+    return SizeTransition(
+      sizeFactor: animation,
+      child: _buildEducationTile(entry, index),
+    );
+  }
+
+  Widget _buildEducationTile(EducationEntry entry, int index) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(20),
+        onTapDown: (details) => _tapPosition = details.globalPosition,
+        onLongPress: () {
+          if (_tapPosition != null) _showCardMenu(context, _tapPosition!, index);
+        },
+        child: ExpansionTile(
+          tilePadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+          backgroundColor: Colors.white.withOpacity(0.18),
+          collapsedBackgroundColor: Colors.white.withOpacity(0.12),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          collapsedShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          leading: Animate(
+            effects: [ShimmerEffect(duration: 800.ms)],
+            child: Icon(Icons.school, color: AppColors.sand),
+          ),
+          title: Row(
+            children: [
+              Text(
+                '${entry.level} - ${entry.courseName}',
+                style: const TextStyle(color: AppColors.sand, fontWeight: FontWeight.bold),
+              ),
+              if (entry.pursuing)
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Chip(
+                    label: const Text('Pursuing'),
+                    backgroundColor: Colors.blueAccent.withOpacity(0.2),
+                    labelStyle: const TextStyle(color: Colors.blueAccent),
+                  ),
+                ),
+            ],
+          ),
+          subtitle: Text(
+            '${entry.universityName} | ${entry.fromYear}${entry.toYear != null ? ' - ${entry.toYear}' : ''}',
+            style: const TextStyle(color: AppColors.sand),
+          ),
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Icon(Icons.percent, size: 18, color: Colors.deepPurpleAccent),
+                      const SizedBox(width: 6),
+                      Text('Percentage: ', style: const TextStyle(color: AppColors.sand, fontWeight: FontWeight.w600)),
+                      Text(entry.percentage, style: const TextStyle(color: AppColors.sand)),
+                    ],
+                  ),
+                  if (entry.documentNumber != null && entry.documentNumber!.isNotEmpty)
+                    Row(
+                      children: [
+                        const Icon(Icons.description, size: 18, color: Colors.teal),
+                        const SizedBox(width: 6),
+                        Text('Doc #: ', style: const TextStyle(color: AppColors.sand, fontWeight: FontWeight.w600)),
+                        Text(entry.documentNumber!, style: const TextStyle(color: AppColors.sand)),
+                      ],
+                    ),
+                  Row(
+                    children: [
+                      const Icon(Icons.verified, size: 18, color: Colors.green),
+                      const SizedBox(width: 6),
+                      Text('Certificate: ', style: const TextStyle(color: AppColors.sand, fontWeight: FontWeight.w600)),
+                      if (entry.certificatePath != null)
+                        GestureDetector(
+                          onTap: () {
+                            // Show hero animation for certificate
+                            showDialog(
+                              context: context,
+                              builder: (_) => Dialog(
+                                backgroundColor: Colors.transparent,
+                                child: Hero(
+                                  tag: 'cert_${index}',
+                                  child: Image.asset('assets/certificates/${entry.certificatePath!}', fit: BoxFit.contain),
+                                ),
+                              ),
+                            );
+                          },
+                          child: Hero(
+                            tag: 'cert_${index}',
+                            child: Chip(
+                              label: const Text('View'),
+                              backgroundColor: Colors.green.withOpacity(0.2),
+                              labelStyle: const TextStyle(color: Colors.green),
+                            ),
+                          ),
+                        )
+                      else
+                        const Text('Not Uploaded', style: TextStyle(color: AppColors.sand)),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ).asGlass(
+          blurX: 18,
+          blurY: 18,
+          tintColor: Colors.white.withOpacity(0.18),
+          clipBorderRadius: BorderRadius.circular(20),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -134,81 +274,18 @@ class _EducationDetailsScreenState extends State<EducationDetailsScreen> {
             children: [
               SizedBox(height: topPadding),
               Expanded(
+                child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 400),
                 child: _entries.isEmpty
                     ? const Center(child: Text('No education details added yet.', style: TextStyle(color: AppColors.sand)))
-                    : ListView.builder(
+                      : AnimatedList(
+                          key: _listKey,
                         padding: const EdgeInsets.all(16),
-                        itemCount: _entries.length,
-                        itemBuilder: (context, index) {
-                          final entry = _entries[index];
-                          return GestureDetector(
-                            onTapDown: (details) {
-                              _tapPosition = details.globalPosition;
-                            },
-                            onLongPress: () {
-                              if (_tapPosition != null) {
-                                _showCardMenu(context, _tapPosition!, index);
-                              }
-                            },
-                            child: Card(
-                              color: Colors.white.withOpacity(0.18),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                              margin: const EdgeInsets.symmetric(vertical: 8),
-                              child: ListTile(
-                                contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                                leading: Icon(Icons.school, color: AppColors.sand),
-                                title: Text(
-                                  '${entry.level} - ${entry.courseName}',
-                                  style: const TextStyle(color: AppColors.sand, fontWeight: FontWeight.bold),
-                                ),
-                                subtitle: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    if (entry.universityName.isNotEmpty)
-                                      Text(entry.universityName, style: const TextStyle(color: AppColors.sand)),
-                                    Row(
-                                      children: [
-                                        Text('Years: ', style: const TextStyle(color: AppColors.sand, fontWeight: FontWeight.w600)),
-                                        Text(
-                                          entry.fromYear +
-                                              (entry.pursuing
-                                                  ? ' - Pursuing'
-                                                  : (entry.toYear != null && entry.toYear!.isNotEmpty ? ' - ${entry.toYear}' : '')),
-                                          style: const TextStyle(color: AppColors.sand),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text('Percentage/CGPA: ', style: const TextStyle(color: AppColors.sand, fontWeight: FontWeight.w600)),
-                                        Text(entry.percentage, style: const TextStyle(color: AppColors.sand)),
-                                      ],
-                                    ),
-                                    if (entry.documentNumber != null && entry.documentNumber!.isNotEmpty)
-                                      Row(
-                                        children: [
-                                          Text('Doc #: ', style: const TextStyle(color: AppColors.sand, fontWeight: FontWeight.w600)),
-                                          Text(entry.documentNumber!, style: const TextStyle(color: AppColors.sand)),
-                                        ],
-                                      ),
-                                    Row(
-                                      children: [
-                                        Text('Certificate: ', style: const TextStyle(color: AppColors.sand, fontWeight: FontWeight.w600)),
-                                        if (entry.certificatePath != null)
-                                          Text('Uploaded', style: const TextStyle(color: AppColors.sand))
-                                        else
-                                          Text('Not Uploaded', style: const TextStyle(color: AppColors.sand)),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                trailing: entry.verified && entry.certificatePath != null
-                                    ? const Icon(Icons.check_circle, color: Colors.green)
-                                    : null,
-                              ),
-                            ),
-                          );
-                        },
+                          initialItemCount: _entries.length,
+                          itemBuilder: (context, index, animation) {
+                            return _buildAnimatedTile(_entries[index], index, animation);
+                          },
+                        ),
                       ),
               ),
             ],
@@ -223,11 +300,17 @@ class _EducationDetailsScreenState extends State<EducationDetailsScreen> {
       ),
       floatingActionButton: _showAddForm
         ? null
-        : FloatingActionButton(
+          : ScaleTransition(
+              scale: CurvedAnimation(parent: _fabController, curve: Curves.elasticOut),
+              child: FloatingActionButton(
             backgroundColor: AppColors.sand,
             foregroundColor: Colors.white,
             onPressed: _openAddEducation,
+                child: Animate(
+                  effects: [ShakeEffect(duration: 800.ms)],
             child: const Icon(Icons.add),
+                ),
+              ),
           ),
     );
   }
@@ -243,7 +326,7 @@ class AddEducationOverlay extends StatefulWidget {
   State<AddEducationOverlay> createState() => _AddEducationOverlayState();
 }
 
-class _AddEducationOverlayState extends State<AddEducationOverlay> {
+class _AddEducationOverlayState extends State<AddEducationOverlay> with SingleTickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   late String _level;
   late TextEditingController _courseController;
@@ -255,6 +338,9 @@ class _AddEducationOverlayState extends State<AddEducationOverlay> {
   late TextEditingController _documentNumberController;
   String? _certificatePath;
   bool _verified = false;
+  bool _showErrors = false;
+  late AnimationController _animController;
+  late ConfettiController _confettiController;
 
   final List<String> _levels = [
     '10', '12', 'Bachelors', 'Masters', 'PhD', 'Diploma', 'Pg Diploma', 'CFA', 'CA', 'Other'
@@ -274,6 +360,9 @@ class _AddEducationOverlayState extends State<AddEducationOverlay> {
     _documentNumberController = TextEditingController(text: entry?.documentNumber ?? '');
     _certificatePath = entry?.certificatePath;
     _verified = entry?.verified ?? false;
+    _animController = AnimationController(vsync: this, duration: const Duration(milliseconds: 600));
+    _animController.forward();
+    _confettiController = ConfettiController(duration: const Duration(seconds: 1));
   }
 
   @override
@@ -284,6 +373,8 @@ class _AddEducationOverlayState extends State<AddEducationOverlay> {
     _toYearController.dispose();
     _percentageController.dispose();
     _documentNumberController.dispose();
+    _animController.dispose();
+    _confettiController.dispose();
     super.dispose();
   }
 
@@ -292,6 +383,45 @@ class _AddEducationOverlayState extends State<AddEducationOverlay> {
       _certificatePath = 'mock_certificate.png';
       _verified = true;
     });
+  }
+
+  void _trySave() {
+    setState(() => _showErrors = true);
+    if (_formKey.currentState?.validate() ?? false) {
+      _confettiController.play();
+      Future.delayed(const Duration(milliseconds: 900), () {
+        widget.onSave(EducationEntry(
+          level: _level,
+          courseName: _courseController.text.trim(),
+          universityName: _universityController.text.trim(),
+          fromYear: _fromYearController.text.trim(),
+          toYear: _pursuing ? null : _toYearController.text.trim(),
+          pursuing: _pursuing,
+          percentage: _percentageController.text.trim(),
+          documentNumber: _documentNumberController.text.trim(),
+          certificatePath: _certificatePath,
+          verified: _verified,
+        ));
+      });
+    }
+  }
+
+  String? _validateYear(String? value) {
+    if (value == null || value.isEmpty) return 'Required';
+    if (value.length != 4 || int.tryParse(value) == null) return 'YYYY';
+    return null;
+  }
+
+  Widget _animatedError(String? error) {
+    if (error == null) return const SizedBox.shrink();
+    return AnimatedOpacity(
+      opacity: 1.0,
+      duration: 300.ms,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 8.0, top: 2.0),
+        child: Text(error, style: const TextStyle(color: Colors.redAccent, fontSize: 13, fontWeight: FontWeight.w600)),
+      ),
+    );
   }
 
   @override
@@ -303,9 +433,11 @@ class _AddEducationOverlayState extends State<AddEducationOverlay> {
       borderRadius: BorderRadius.circular(20),
       borderSide: BorderSide(color: AppColors.sand.withOpacity(0.5)),
     );
-    return Stack(
-      children: [
-        Center(
+    return FadeTransition(
+      opacity: CurvedAnimation(parent: _animController, curve: Curves.easeIn),
+      child: ScaleTransition(
+        scale: CurvedAnimation(parent: _animController, curve: Curves.elasticOut),
+        child: Center(
           child: Stack(
             children: [
               Container(
@@ -324,6 +456,7 @@ class _AddEducationOverlayState extends State<AddEducationOverlay> {
                 child: SingleChildScrollView(
                   child: Form(
                     key: _formKey,
+                    autovalidateMode: _showErrors ? AutovalidateMode.always : AutovalidateMode.disabled,
                     child: Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
@@ -333,15 +466,30 @@ class _AddEducationOverlayState extends State<AddEducationOverlay> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 40),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  const Icon(Icons.school, color: AppColors.sand, size: 32),
+                                  const SizedBox(width: 10),
                           Text(
                             widget.entry == null ? 'Add Education' : 'Edit Education',
                             style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.sand),
+                                  ),
+                                ],
+                              ),
+                              GestureDetector(
+                                onTap: widget.onClose,
+                                child: Animate(
+                                  effects: [ShakeEffect(duration: 600.ms)],
+                                  child: const Icon(Icons.close, color: AppColors.sand, size: 32),
+                                ),
+                              ),
+                            ],
                           ),
                           const SizedBox(height: 18),
-                          SizedBox(
-                            width: double.infinity,
-                            child: DropdownButtonFormField<String>(
+                          DropdownButtonFormField<String>(
                               value: _level,
                               items: _levels.map((l) => DropdownMenuItem(value: l, child: Text(l))).toList(),
                               onChanged: (v) => setState(() => _level = v ?? 'Bachelors'),
@@ -354,13 +502,10 @@ class _AddEducationOverlayState extends State<AddEducationOverlay> {
                                 enabledBorder: border,
                                 focusedBorder: border,
                                 contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                              ),
                             ),
                           ),
                           const SizedBox(height: 12),
-                          SizedBox(
-                            width: double.infinity,
-                            child: TextFormField(
+                          TextFormField(
                               controller: _courseController,
                               decoration: InputDecoration(
                                 labelText: 'Course Name',
@@ -371,14 +516,12 @@ class _AddEducationOverlayState extends State<AddEducationOverlay> {
                                 enabledBorder: border,
                                 focusedBorder: border,
                                 contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                              ),
-                              validator: (v) => v == null || v.isEmpty ? 'Required' : null,
+                              prefixIcon: const Icon(Icons.menu_book, color: AppColors.sand),
                             ),
+                            validator: (v) => v == null || v.trim().isEmpty ? 'Required' : null,
                           ),
                           const SizedBox(height: 12),
-                          SizedBox(
-                            width: double.infinity,
-                            child: TextFormField(
+                          TextFormField(
                               controller: _universityController,
                               decoration: InputDecoration(
                                 labelText: 'University/School Name',
@@ -389,9 +532,9 @@ class _AddEducationOverlayState extends State<AddEducationOverlay> {
                                 enabledBorder: border,
                                 focusedBorder: border,
                                 contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                              ),
-                              validator: (v) => v == null || v.isEmpty ? 'Required' : null,
+                              prefixIcon: const Icon(Icons.location_city, color: AppColors.sand),
                             ),
+                            validator: (v) => v == null || v.trim().isEmpty ? 'Required' : null,
                           ),
                           const SizedBox(height: 12),
                           Row(
@@ -399,6 +542,7 @@ class _AddEducationOverlayState extends State<AddEducationOverlay> {
                               Expanded(
                                 child: TextFormField(
                                   controller: _fromYearController,
+                                  keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
                                     labelText: 'From Year',
                                     labelStyle: const TextStyle(color: AppColors.sand),
@@ -408,16 +552,20 @@ class _AddEducationOverlayState extends State<AddEducationOverlay> {
                                     enabledBorder: border,
                                     focusedBorder: border,
                                     contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                                    prefixIcon: const Icon(Icons.calendar_today, color: AppColors.sand),
                                   ),
-                                  validator: (v) => v == null || v.isEmpty ? 'Required' : null,
+                                  validator: _validateYear,
                                 ),
                               ),
-                              const SizedBox(width: 10),
+                              const SizedBox(width: 8),
                               Expanded(
-                                child: _pursuing
-                                    ? const SizedBox()
-                                    : TextFormField(
+                                child: AnimatedOpacity(
+                                  opacity: _pursuing ? 0.4 : 1.0,
+                                  duration: 300.ms,
+                                  child: TextFormField(
                                         controller: _toYearController,
+                                    enabled: !_pursuing,
+                                    keyboardType: TextInputType.number,
                                         decoration: InputDecoration(
                                           labelText: 'To Year',
                                           labelStyle: const TextStyle(color: AppColors.sand),
@@ -427,21 +575,30 @@ class _AddEducationOverlayState extends State<AddEducationOverlay> {
                                           enabledBorder: border,
                                           focusedBorder: border,
                                           contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                                      prefixIcon: const Icon(Icons.calendar_today, color: AppColors.sand),
+                                    ),
+                                    validator: (v) {
+                                      if (_pursuing) return null;
+                                      return _validateYear(v);
+                                    },
                                         ),
                                       ),
                               ),
+                              const SizedBox(width: 8),
+                              Column(
+                                children: [
                               Checkbox(
                                 value: _pursuing,
                                 onChanged: (v) => setState(() => _pursuing = v ?? false),
-                                activeColor: AppColors.sand,
+                                    activeColor: Colors.blueAccent,
+                                  ),
+                                  const Text('Pursuing', style: TextStyle(color: AppColors.sand, fontSize: 12)),
+                                ],
                               ),
-                              const Text('Pursuing', style: TextStyle(color: AppColors.sand)),
                             ],
                           ),
                           const SizedBox(height: 12),
-                          SizedBox(
-                            width: double.infinity,
-                            child: TextFormField(
+                          TextFormField(
                               controller: _percentageController,
                               decoration: InputDecoration(
                                 labelText: 'Percentage/CGPA',
@@ -452,14 +609,12 @@ class _AddEducationOverlayState extends State<AddEducationOverlay> {
                                 enabledBorder: border,
                                 focusedBorder: border,
                                 contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                              ),
-                              validator: (v) => v == null || v.isEmpty ? 'Required' : null,
+                              prefixIcon: const Icon(Icons.percent, color: AppColors.sand),
                             ),
+                            validator: (v) => v == null || v.trim().isEmpty ? 'Required' : null,
                           ),
                           const SizedBox(height: 12),
-                          SizedBox(
-                            width: double.infinity,
-                            child: TextFormField(
+                          TextFormField(
                               controller: _documentNumberController,
                               decoration: InputDecoration(
                                 labelText: 'Document Number (optional)',
@@ -470,64 +625,52 @@ class _AddEducationOverlayState extends State<AddEducationOverlay> {
                                 enabledBorder: border,
                                 focusedBorder: border,
                                 contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                              ),
+                              prefixIcon: const Icon(Icons.description, color: AppColors.sand),
                             ),
                           ),
-                          const SizedBox(height: 12),
+                          const SizedBox(height: 16),
                           Row(
                             children: [
-                              ElevatedButton.icon(
+                              Expanded(
+                                child: ElevatedButton.icon(
+                                  onPressed: _mockUploadCertificate,
+                                  icon: const Icon(Icons.upload_file, color: AppColors.sand),
+                                  label: Text(_certificatePath == null ? 'Upload Certificate' : 'Uploaded', style: const TextStyle(color: AppColors.sand)),
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.sand,
-                                  foregroundColor: Colors.white,
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                                  padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+                                    backgroundColor: AppColors.sand.withOpacity(0.3),
+                                    foregroundColor: AppColors.sand,
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                                    elevation: 0,
+                                    padding: const EdgeInsets.symmetric(vertical: 14),
+                                  ),
                                 ),
-                                onPressed: _mockUploadCertificate,
-                                icon: const Icon(Icons.upload_file),
-                                label: const Text('Upload Certificate'),
                               ),
-                              if (_certificatePath != null) ...[
-                                const SizedBox(width: 12),
-                                const Icon(Icons.check_circle, color: AppColors.sand),
-                                const SizedBox(width: 4),
-                                const Text('Uploaded', style: TextStyle(color: AppColors.sand)),
-                              ]
+                              if (_certificatePath != null)
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8.0),
+                                  child: Icon(Icons.check_circle, color: Colors.greenAccent, size: 28),
+                                ),
                             ],
                           ),
-                          const SizedBox(height: 18),
-                          SizedBox(
-                            width: double.infinity,
+                          const SizedBox(height: 24),
+                          Center(
                             child: ElevatedButton(
+                              onPressed: _trySave,
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: AppColors.sand,
                                 foregroundColor: Colors.white,
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                                padding: const EdgeInsets.symmetric(vertical: 18),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+                                elevation: 0,
+                                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 18),
                               ),
-                              onPressed: () {
-                                if (_formKey.currentState?.validate() ?? false) {
-                                  widget.onSave(EducationEntry(
-                                    level: _level,
-                                    courseName: _courseController.text,
-                                    universityName: _universityController.text,
-                                    fromYear: _fromYearController.text,
-                                    toYear: _pursuing ? null : _toYearController.text,
-                                    pursuing: _pursuing,
-                                    percentage: _percentageController.text,
-                                    documentNumber: _documentNumberController.text.isEmpty ? null : _documentNumberController.text,
-                                    certificatePath: _certificatePath,
-                                    verified: _verified,
-                                  ));
-                                }
-                              },
-                              child: Text(
-                                widget.entry == null ? 'Save' : 'Update',
-                                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                              child: Animate(
+                                effects: [FadeEffect(duration: 400.ms)],
+                                child: const Text('Save', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
                               ),
                             ),
                           ),
                         ],
+                      ),
                       ),
                     ),
                   ),
@@ -537,23 +680,11 @@ class _AddEducationOverlayState extends State<AddEducationOverlay> {
                   blurX: 20,
                   blurY: 20,
                 ),
-              ),
-              // Cross button
-              Positioned(
-                top: 16,
-                right: 16,
-                child: GestureDetector(
-                  onTap: widget.onClose,
-                  child: Container(
-                    padding: const EdgeInsets.all(15),
-                    child: const Icon(Icons.close, color: AppColors.sand, size: 32),
-                  ),
-                ),
-              ),
+              // Cross button (already handled in header)
             ],
           ),
         ),
-      ],
+      ),
     );
   }
 }

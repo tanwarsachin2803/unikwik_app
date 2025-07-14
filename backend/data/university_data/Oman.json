@@ -1,0 +1,24 @@
+{
+  "country": "Oman",
+  "totalUniversities": 1,
+  "universities": [
+    {
+      "id": "Oman_1",
+      "rank": 454,
+      "ranking": "384=",
+      "name": "Sultan Qaboos University",
+      "code": "OM",
+      "country": "Oman",
+      "score": 25.2,
+      "region": "Asia",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 39998,
+      "applicationFee": 213,
+      "applicationOpen": true,
+      "applicationUrl": "https://sultanqaboosuniversity.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Sultan%20Qaboos%20University",
+      "isWatchlisted": false
+    }
+  ]
+}

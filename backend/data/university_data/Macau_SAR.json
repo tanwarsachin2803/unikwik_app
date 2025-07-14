@@ -1,0 +1,42 @@
+{
+  "country": "Macau SAR",
+  "totalUniversities": 2,
+  "universities": [
+    {
+      "id": "Macau SAR_1",
+      "rank": 254,
+      "ranking": "304",
+      "name": "University of Macau",
+      "code": "MO",
+      "country": "Macau SAR",
+      "score": 38.9,
+      "region": "Asia",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 32357,
+      "applicationFee": 171,
+      "applicationOpen": false,
+      "applicationUrl": "https://universityofmacau.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=University%20of%20Macau",
+      "isWatchlisted": false
+    },
+    {
+      "id": "Macau SAR_2",
+      "rank": 505,
+      "ranking": "581-590",
+      "name": "Macau University of Science and Technology",
+      "code": "MO",
+      "country": "Macau SAR",
+      "score": 23,
+      "region": "Asia",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 53831,
+      "applicationFee": 57,
+      "applicationOpen": false,
+      "applicationUrl": "https://macauuniversityofscienceandtechnology.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Macau%20University%20of%20Science%20and%20Technology",
+      "isWatchlisted": false
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "country": "Bolivia",
+  "totalUniversities": 3,
+  "universities": [
+    {
+      "id": "Bolivia_1",
+      "rank": 1201,
+      "ranking": "1201-1400",
+      "name": "Universidad Mayor de San Andrés (UMSA)",
+      "code": "BO",
+      "country": "Bolivia",
+      "score": 0,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 28313,
+      "applicationFee": 211,
+      "applicationOpen": false,
+      "applicationUrl": "https://universidadmayordesanandrés(umsa).edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Universidad%20Mayor%20de%20San%20Andr%C3%A9s%20(UMSA)",
+      "isWatchlisted": false
+    },
+    {
+      "id": "Bolivia_2",
+      "rank": 1401,
+      "ranking": "1401+",
+      "name": "Universidad Católica Boliviana San Pablo",
+      "code": "BO",
+      "country": "Bolivia",
+      "score": 0,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 33517,
+      "applicationFee": 129,
+      "applicationOpen": true,
+      "applicationUrl": "https://universidadcatólicabolivianasanpablo.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Universidad%20Cat%C3%B3lica%20Boliviana%20San%20Pablo",
+      "isWatchlisted": false
+    },
+    {
+      "id": "Bolivia_3",
+      "rank": 1401,
+      "ranking": "1401+",
+      "name": "Universidad Mayor de San Simón Cochabamba",
+      "code": "BO",
+      "country": "Bolivia",
+      "score": 0,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 47268,
+      "applicationFee": 111,
+      "applicationOpen": true,
+      "applicationUrl": "https://universidadmayordesansimóncochabamba.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Universidad%20Mayor%20de%20San%20Sim%C3%B3n%20Cochabamba",
+      "isWatchlisted": false
+    }
+  ]
+}
