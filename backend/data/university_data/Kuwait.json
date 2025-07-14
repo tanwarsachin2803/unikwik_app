@@ -1,0 +1,60 @@
+{
+  "country": "Kuwait",
+  "totalUniversities": 3,
+  "universities": [
+    {
+      "id": "Kuwait_1",
+      "rank": 671,
+      "ranking": "701-750",
+      "name": "American University of the Middle East",
+      "code": "KW",
+      "country": "Kuwait",
+      "score": 0,
+      "region": "Asia",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 42436,
+      "applicationFee": 169,
+      "applicationOpen": true,
+      "applicationUrl": "https://americanuniversityofthemiddleeast.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=American%20University%20of%20the%20Middle%20East",
+      "isWatchlisted": false
+    },
+    {
+      "id": "Kuwait_2",
+      "rank": 851,
+      "ranking": "801-1000",
+      "name": "Gulf University for Science and Technology",
+      "code": "KW",
+      "country": "Kuwait",
+      "score": 0,
+      "region": "Asia",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 46537,
+      "applicationFee": 119,
+      "applicationOpen": false,
+      "applicationUrl": "https://gulfuniversityforscienceandtechnology.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Gulf%20University%20for%20Science%20and%20Technology",
+      "isWatchlisted": false
+    },
+    {
+      "id": "Kuwait_3",
+      "rank": 851,
+      "ranking": "1001-1200",
+      "name": "Kuwait University",
+      "code": "KW",
+      "country": "Kuwait",
+      "score": 0,
+      "region": "Asia",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 42279,
+      "applicationFee": 89,
+      "applicationOpen": false,
+      "applicationUrl": "https://kuwaituniversity.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Kuwait%20University",
+      "isWatchlisted": false
+    }
+  ]
+}

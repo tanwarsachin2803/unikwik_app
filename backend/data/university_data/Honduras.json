@@ -1,0 +1,24 @@
+{
+  "country": "Honduras",
+  "totalUniversities": 1,
+  "universities": [
+    {
+      "id": "Honduras_1",
+      "rank": 1401,
+      "ranking": "1401+",
+      "name": "Universidad Nacional Autónoma de Honduras (UNAH)",
+      "code": "HN",
+      "country": "Honduras",
+      "score": 0,
+      "region": "Africa",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 30516,
+      "applicationFee": 86,
+      "applicationOpen": false,
+      "applicationUrl": "https://universidadnacionalautónomadehonduras(unah).edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Universidad%20Nacional%20Aut%C3%B3noma%20de%20Honduras%20(UNAH)",
+      "isWatchlisted": false
+    }
+  ]
+}

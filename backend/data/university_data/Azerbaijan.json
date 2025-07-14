@@ -1,0 +1,60 @@
+{
+  "country": "Azerbaijan",
+  "totalUniversities": 3,
+  "universities": [
+    {
+      "id": "Azerbaijan_1",
+      "rank": 1001,
+      "ranking": "1001-1200",
+      "name": "Azerbaijan State University of Economics",
+      "code": "AZ",
+      "country": "Azerbaijan",
+      "score": 0,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 13022,
+      "applicationFee": 65,
+      "applicationOpen": true,
+      "applicationUrl": "https://azerbaijanstateuniversityofeconomics.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Azerbaijan%20State%20University%20of%20Economics",
+      "isWatchlisted": false
+    },
+    {
+      "id": "Azerbaijan_2",
+      "rank": 1001,
+      "ranking": "1001-1200",
+      "name": "Baku State University",
+      "code": "AZ",
+      "country": "Azerbaijan",
+      "score": 0,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 30446,
+      "applicationFee": 228,
+      "applicationOpen": true,
+      "applicationUrl": "https://bakustateuniversity.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Baku%20State%20University",
+      "isWatchlisted": false
+    },
+    {
+      "id": "Azerbaijan_3",
+      "rank": 1201,
+      "ranking": "",
+      "name": "Azerbaijan State Oil and Industry University",
+      "code": "AZ",
+      "country": "Azerbaijan",
+      "score": 0,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 44058,
+      "applicationFee": 230,
+      "applicationOpen": true,
+      "applicationUrl": "https://azerbaijanstateoilandindustryuniversity.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Azerbaijan%20State%20Oil%20and%20Industry%20University",
+      "isWatchlisted": false
+    }
+  ]
+}

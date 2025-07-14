@@ -1,0 +1,39 @@
+{
+  "country": "Puerto Rico",
+  "flag": "🇵🇷",
+  "totalUniversities": 1,
+  "universities": [
+    {
+      "id": "Puerto_Rico_1",
+      "rank": 1001,
+      "ranking": "1201-1400",
+      "name": "Universidad de Puerto Rico",
+      "code": "PR",
+      "country": "Puerto Rico",
+      "score": 0,
+      "region": "South America",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 38103,
+      "applicationFee": 128,
+      "applicationOpen": false,
+      "applicationUrl": "https://universidaddepuertorico.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Universidad%20de%20Puerto%20Rico",
+      "isWatchlisted": false,
+      "description": "Universidad de Puerto Rico is a prestigious university located in Puerto Rico.",
+      "programs": [
+        "Computer Science",
+        "Engineering",
+        "Business",
+        "Arts",
+        "Medicine"
+      ],
+      "acceptanceRate": 10,
+      "studentCount": 43429,
+      "founded": 1997,
+      "campusType": "Suburban",
+      "worldRanking": 1001,
+      "countryRanking": 1
+    }
+  ]
+}

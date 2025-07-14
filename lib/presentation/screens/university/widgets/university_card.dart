@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:glass/glass.dart';
-import 'package:unikwik_app/data/models/university_model.dart';
-import 'package:unikwik_app/core/theme/app_colors.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:unikwik_app/presentation/widgets/glass_container.dart';
 
 String getUniversityInitials(String name) {
   final words = name.split(' ');
@@ -10,240 +9,345 @@ String getUniversityInitials(String name) {
 }
 
 class UniversityCard extends StatelessWidget {
-  final University university;
+  final Map<String, dynamic> university;
   final int index;
-  final VoidCallback? onWatchlistToggle;
-  const UniversityCard({super.key, required this.university, required this.index, this.onWatchlistToggle});
+  final bool isExpanded;
+  final VoidCallback? onTap;
+
+  const UniversityCard({
+    super.key,
+    required this.university,
+    required this.index,
+    required this.isExpanded,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final double cardWidth = MediaQuery.of(context).size.width * 0.95;
-    final ranking = university.effectiveRanking; // Use effective ranking from CSV
-    final bool isOpen = university.csvRanking?.isCurrentlyOpen ?? false;
+    final name = university['name'] as String;
+    final country = university['country'] as String;
+    final rank = university['rank'] is num ? (university['rank'] as num).toInt() : int.tryParse(university['rank'].toString()) ?? 0;
+    final score = university['score'] is num ? (university['score'] as num).toDouble() : double.tryParse(university['score'].toString()) ?? 0.0;
+    final tuitionFee = university['tuitionFee'] is num ? (university['tuitionFee'] as num).toInt() : int.tryParse(university['tuitionFee'].toString()) ?? 0;
+    final applicationFee = university['applicationFee'] is num ? (university['applicationFee'] as num).toInt() : int.tryParse(university['applicationFee'].toString()) ?? 0;
+    final applicationOpen = university['applicationOpen'] ?? false;
+    final region = university['region'] as String;
+    final flag = university['flag'] ?? '🏳️';
+    final isWatchlisted = university['isWatchlisted'] as bool? ?? false;
 
-    // Decrease the image and font sizes by 20%
-    const double imageSize = 80 * 0.8; // 64
-    const double iconSize = 40 * 0.8; // 32
-    const double rankingFontSize = 16 * 0.8; // 12.8
-    const double nameFontSize = 20 * 0.8; // 16
-    const double countryFontSize = 16 * 0.8; // 12.8
-    const double tuitionFontSize = 16 * 0.8; // 12.8
-    const double appFontSize = 16 * 0.8; // 12.8
-    const double emojiFontSize = 16 * 0.8; // 12.8
-    const double heartIconSize = 28 * 0.8; // 22.4
-
-    // Decrease the vertical margin (gap between cards) by 50%
-    const double verticalMargin = 8 * 0.5; // 4
-
-    // Decrease paddings and spacings by 20%
-    const double containerPadding = 16 * 0.8; // 12.8
-    const double imageTextSpacing = 16 * 0.8; // 12.8
-    const double nameCountrySpacing = 4 * 0.8; // 3.2
-    const double countryTuitionSpacing = 8 * 0.8; // 6.4
-    const double rowSpacing = 12 * 0.8; // 9.6
-    const double emojiSpacing = 16 * 0.8; // 12.8
-
-    return Align(
-      alignment: Alignment.center,
+    return GestureDetector(
+      onTap: onTap,
       child: Container(
-        width: cardWidth,
-        margin: const EdgeInsets.symmetric(vertical: verticalMargin, horizontal: 0),
-        clipBehavior: Clip.none, // Prevent clipping of shadow
-        decoration: isOpen
-            ? BoxDecoration(
-                borderRadius: BorderRadius.circular(32),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.green.withOpacity(0.95),
-                    blurRadius: 48,
-                    spreadRadius: 10,
-                  ),
-                ],
-              )
-            : null,
+        margin: const EdgeInsets.only(bottom: 16),
+        child: GlassContainer(
         child: Container(
-          width: cardWidth,
+            padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(24),
+              borderRadius: BorderRadius.circular(20),
             border: Border.all(
-              color: Colors.black.withOpacity(0.18),
-              width: 1.5,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.10),
-                blurRadius: 12,
-                offset: const Offset(0, 4),
+                color: applicationOpen 
+                    ? Colors.green.withOpacity(0.3)
+                    : Colors.white.withOpacity(0.1),
+                width: applicationOpen ? 2 : 1,
               ),
-            ],
-            color: Colors.white.withOpacity(0.18),
-          ),
-          child: Stack(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(containerPadding),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(24),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                // Header row with ranking, name, and watchlist
                     Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // University initials with ranking badge overlay
-                        Stack(
-                          children: [
+                    // Ranking badge
                             Container(
-                              width: imageSize,
-                              height: imageSize,
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                               decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.15),
-                                borderRadius: BorderRadius.circular(16),
-                                border: Border.all(color: Colors.blue, width: 2),
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.amber[400]!,
+                            Colors.amber[600]!,
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.amber.withOpacity(0.3),
+                            blurRadius: 8,
+                            offset: const Offset(0, 2),
                               ),
-                              child: Center(
+                        ],
+                      ),
                                 child: Text(
-                                  getUniversityInitials(university.name),
-                                  style: TextStyle(
-                                    fontSize: 28,
+                        '#$rank',
+                        style: const TextStyle(
+                          color: Colors.white,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.blue,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    // Score badge
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.blue.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color: Colors.blue.withOpacity(0.3),
+                          width: 1,
+                        ),
                                   ),
+                      child: Text(
+                        '${score.toStringAsFixed(1)}',
+                        style: TextStyle(
+                          color: Colors.blue[300],
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12,
                                 ),
                               ),
                             ),
-                            if (ranking != null && ranking > 0)
-                              Positioned(
-                                top: 0,
-                                left: 0,
+                    const Spacer(),
+                    // Watchlist button
+                    GestureDetector(
+                      onTap: () {
+                        // TODO: Implement watchlist toggle
+                      },
                                 child: Container(
+                        padding: const EdgeInsets.all(8),
                                   decoration: BoxDecoration(
-                                    color: const Color(0xFFFFD700), // Golden shade
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(16),
-                                      bottomRight: Radius.circular(12),
+                          color: isWatchlisted 
+                              ? Colors.red.withOpacity(0.2)
+                              : Colors.white.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Icon(
+                          isWatchlisted 
+                              ? Icons.favorite_rounded
+                              : Icons.favorite_border_rounded,
+                          color: isWatchlisted 
+                              ? Colors.red[300]
+                              : Colors.white.withOpacity(0.7),
+                          size: 20,
+                        ),
                                     ),
                                   ),
-                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                // University name
+                Text(
+                  name,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 8),
+                // Country and region info
+                Row(
+                  children: [
+                    Text(
+                      flag,
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
                                   child: Text(
-                                    ranking.toString(), // No hashtag
+                        country,
                                     style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: rankingFontSize,
-                                    ),
+                          color: Colors.white.withOpacity(0.8),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.purple.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Text(
+                        region,
+                        style: TextStyle(
+                          color: Colors.purple[300],
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
                                   ),
                                 ),
                               ),
                           ],
                         ),
-                        SizedBox(width: imageTextSpacing),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                AnimatedCrossFade(
+                  firstChild: const SizedBox.shrink(),
+                  secondChild: Column(
                             children: [
+                      const SizedBox(height: 16),
+                      // Financial info
                               Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Expanded(
-                                    child: Text(
-                                      university.name,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: nameFontSize,
-                                        color: Colors.white,
-                                      ),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
+                            child: _buildInfoChip(
+                              icon: Icons.attach_money_rounded,
+                              label: 'Tuition',
+                              value: '\$${tuitionFee.toStringAsFixed(0)}',
+                              color: Colors.green,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: _buildInfoChip(
+                              icon: Icons.description_rounded,
+                              label: 'App Fee',
+                              value: '\$${applicationFee.toStringAsFixed(0)}',
+                              color: Colors.orange,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      // Application status
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                            decoration: BoxDecoration(
+                              color: applicationOpen 
+                                  ? Colors.green.withOpacity(0.2)
+                                  : Colors.red.withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                color: applicationOpen 
+                                    ? Colors.green.withOpacity(0.3)
+                                    : Colors.red.withOpacity(0.3),
+                                width: 1,
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  applicationOpen 
+                                      ? Icons.check_circle_rounded
+                                      : Icons.cancel_rounded,
+                                  color: applicationOpen 
+                                      ? Colors.green[300]
+                                      : Colors.red[300],
+                                  size: 16,
                                   ),
-                                  SizedBox(width: 8),
+                                const SizedBox(width: 6),
+                                Text(
+                                  applicationOpen ? 'Open' : 'Closed',
+                                  style: TextStyle(
+                                    color: applicationOpen 
+                                        ? Colors.green[300]
+                                        : Colors.red[300],
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const Spacer(),
+                          // Apply button
                                   GestureDetector(
-                                    onTap: onWatchlistToggle,
-                                    child: Icon(
-                                      university.isWatchlisted ? Icons.favorite : Icons.favorite_border,
-                                      color: university.isWatchlisted ? Colors.redAccent : Colors.white,
-                                      size: heartIconSize,
-                                    ),
+                            onTap: () {
+                              // TODO: Implement apply functionality
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Colors.blue[400]!,
+                                    Colors.blue[600]!,
+                                  ],
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.blue.withOpacity(0.3),
+                                    blurRadius: 8,
+                                    offset: const Offset(0, 2),
                                   ),
                                 ],
                               ),
-                              SizedBox(height: nameCountrySpacing),
-                              Text(
-                                university.country,
+                              child: const Text(
+                                'Apply',
                                 style: TextStyle(
-                                  fontSize: countryFontSize,
                                   color: Colors.white,
-                                ),
-                              ),
-                              SizedBox(height: countryTuitionSpacing),
-                              Row(
-                                children: [
-                                  Text(
-                                    'Tuition: ',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      fontSize: tuitionFontSize,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 14,
                                     ),
                                   ),
-                                  Text(
-                                    '\$${university.tuitionFee.toStringAsFixed(0)}',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.normal,
-                                      color: Colors.white,
-                                      fontSize: tuitionFontSize,
                                     ),
                                   ),
                                 ],
                               ),
                             ],
                           ),
+                  crossFadeState: isExpanded ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+                  duration: const Duration(milliseconds: 300),
                         ),
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInfoChip({
+    required IconData icon,
+    required String label,
+    required String value,
+    required Color color,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: color.withOpacity(0.2),
+          width: 1,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           children: [
-                            Text(
-                              'App: ',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontSize: appFontSize,
+              Icon(
+                icon,
+                color: color,
+                size: 16,
                               ),
-                            ),
+              const SizedBox(width: 6),
                             Text(
-                              '\$${university.applicationFee.toStringAsFixed(0)}',
+                label,
                               style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                                color: Colors.white,
-                                fontSize: appFontSize,
+                  color: color,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(width: rowSpacing),
-                        Text('🌞 Sep', style: TextStyle(fontSize: emojiFontSize, color: Colors.white)),
-                        SizedBox(width: emojiSpacing),
-                        Text('❄️ Jan', style: TextStyle(fontSize: emojiFontSize, color: Colors.white)),
-                      ],
-                    ),
-                  ],
-                ),
-              ).asGlass(
-                enabled: true,
-                tintColor: AppColors.deepTeal.withOpacity(0.85),
-                clipBorderRadius: BorderRadius.circular(24),
-                blurX: 6,
-                blurY: 6,
+          const SizedBox(height: 4),
+          Text(
+            value,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
               ),
             ],
-          ),
-        ),
       ),
     );
   }

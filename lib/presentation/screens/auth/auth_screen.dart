@@ -53,6 +53,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.transparent,
       body: Stack(
         children: [
           const GradientBackground(),
@@ -67,7 +68,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   Text(isSignIn ? 'Sign In' : 'Sign Up',
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                            color: AppColors.deepTeal.withOpacity(.9),
+                            color: Colors.white.withOpacity(.9),
                             fontWeight: FontWeight.w700,
                             letterSpacing: 0.3,
                           )),
@@ -80,7 +81,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     height: 52,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.steelBlue,
+                        backgroundColor: AppColors.sand,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18),
                         ),
@@ -91,12 +92,12 @@ class _AuthScreenState extends State<AuthScreen> {
                   ),
                   const SizedBox(height: 24),
                   Row(children: [
-                    Expanded(child: Divider(color: AppColors.deepTeal.withOpacity(.3))),
+                    Expanded(child: Divider(color: Colors.white.withOpacity(.3))),
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8.0),
                       child: Text('or', style: TextStyle(letterSpacing: 1)),
                     ),
-                    Expanded(child: Divider(color: AppColors.deepTeal.withOpacity(.3))),
+                    Expanded(child: Divider(color: Colors.white.withOpacity(.3))),
                   ]),
                   const SizedBox(height: 20),
                   _SocialButton(
@@ -174,7 +175,7 @@ class _SocialButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.white,
           elevation: 0,
-          foregroundColor: AppColors.deepTeal,
+          foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         ),
         onPressed: onTap,
@@ -191,7 +192,7 @@ class _SocialButton extends StatelessWidget {
             ],
             Text(label,
                 style: const TextStyle(
-                    fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.deepTeal)),
+                    fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white)),
           ],
         ),
       ),

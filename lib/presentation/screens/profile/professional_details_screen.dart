@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:unikwik_app/core/theme/app_colors.dart';
 import 'package:glass/glass.dart';
 import 'package:unikwik_app/presentation/widgets/gradient_background.dart';
+import 'package:confetti/confetti.dart';
 
 class ProfessionalEntry {
   final String companyName;
@@ -38,11 +39,31 @@ class ProfessionalDetailsScreen extends StatefulWidget {
   State<ProfessionalDetailsScreen> createState() => _ProfessionalDetailsScreenState();
 }
 
-class _ProfessionalDetailsScreenState extends State<ProfessionalDetailsScreen> {
+class _ProfessionalDetailsScreenState extends State<ProfessionalDetailsScreen> with TickerProviderStateMixin {
   final List<ProfessionalEntry> _entries = [];
   bool _showAddForm = false;
   ProfessionalEntry? _editingEntry;
   int? _editingIndex;
+  Offset? _tapPosition;
+  String? _resumePath;
+  String? _resumeFileName;
+  late AnimationController _fabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _fabController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
+    _fabController.forward();
+  }
+
+  @override
+  void dispose() {
+    _fabController.dispose();
+    super.dispose();
+  }
 
   void _openAddProfessional() {
     setState(() {
@@ -72,18 +93,33 @@ class _ProfessionalDetailsScreenState extends State<ProfessionalDetailsScreen> {
     setState(() {
       if (_editingIndex != null) {
         _entries[_editingIndex!] = entry;
+        _editingIndex = null;
       } else {
         _entries.add(entry);
       }
       _showAddForm = false;
       _editingEntry = null;
-      _editingIndex = null;
     });
   }
 
   void _removeProfessional(int index) {
     setState(() {
       _entries.removeAt(index);
+    });
+  }
+
+  void _uploadResume() async {
+    // Mock PDF upload
+    setState(() {
+      _resumePath = 'mock_resume.pdf';
+      _resumeFileName = 'Sachin_Resume.pdf';
+    });
+  }
+
+  void _removeResume() {
+    setState(() {
+      _resumePath = null;
+      _resumeFileName = null;
     });
   }
 
@@ -107,8 +143,6 @@ class _ProfessionalDetailsScreenState extends State<ProfessionalDetailsScreen> {
       _removeProfessional(index);
     }
   }
-
-  Offset? _tapPosition;
 
   @override
   Widget build(BuildContext context) {
@@ -135,84 +169,113 @@ class _ProfessionalDetailsScreenState extends State<ProfessionalDetailsScreen> {
           Column(
             children: [
               SizedBox(height: topPadding),
+              // Resume section
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16),
+                child: _resumePath == null
+                    ? GestureDetector(
+                        onTap: _uploadResume,
+                        child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(vertical: 18),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.12),
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(color: Colors.white.withOpacity(0.18)),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Icon(Icons.picture_as_pdf, color: Colors.deepOrange, size: 32),
+                              SizedBox(width: 12),
+                              Text('Add Resume (PDF)', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 16)),
+                            ],
+                          ),
+                        ),
+                      )
+                    : Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 16),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.12),
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(color: Colors.white.withOpacity(0.18)),
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.picture_as_pdf, color: Colors.deepOrange, size: 32),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Text(_resumeFileName ?? '', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 16), overflow: TextOverflow.ellipsis),
+                            ),
+                            const SizedBox(width: 12),
+                            const Icon(Icons.check_circle, color: Colors.greenAccent, size: 28),
+                            IconButton(
+                              icon: const Icon(Icons.delete, color: Colors.redAccent),
+                              onPressed: _removeResume,
+                              tooltip: 'Remove Resume',
+                            ),
+                          ],
+                        ),
+                      ),
+              ),
+              // Work Experience heading
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8),
+                child: Row(
+                  children: const [
+                    Icon(Icons.work, color: Colors.white),
+                    SizedBox(width: 10),
+                    Text('Work Experience', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18)),
+                  ],
+                ),
+              ),
+              // Work Experience list
               Expanded(
                 child: _entries.isEmpty
-                    ? const Center(child: Text('No professional details added yet.', style: TextStyle(color: AppColors.sand)))
+                    ? const Center(child: Text('No professional details added yet.', style: TextStyle(color: Colors.white)))
                     : ListView.builder(
                         padding: const EdgeInsets.all(16),
                         itemCount: _entries.length,
                         itemBuilder: (context, index) {
                           final entry = _entries[index];
-                          return GestureDetector(
-                            onTapDown: (details) {
-                              _tapPosition = details.globalPosition;
-                            },
-                            onLongPress: () {
-                              if (_tapPosition != null) {
-                                _showCardMenu(context, _tapPosition!, index);
-                              }
-                            },
-                            child: Card(
+                          return Card(
                               color: Colors.white.withOpacity(0.18),
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                               margin: const EdgeInsets.symmetric(vertical: 8),
                               child: ListTile(
                                 contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                                leading: Icon(Icons.business_center, color: AppColors.sand),
+                              leading: const Icon(Icons.business_center, color: Colors.white),
                                 title: Text(
-                                  '${entry.profileName} @ ${entry.companyName}',
-                                  style: const TextStyle(color: AppColors.sand, fontWeight: FontWeight.bold),
+                                '${entry.companyName} - ${entry.profileName}',
+                                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                                 ),
                                 subtitle: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     if (entry.location.isNotEmpty)
-                                      Text(entry.location, style: const TextStyle(color: AppColors.sand)),
+                                    Text(entry.location, style: const TextStyle(color: Colors.white70)),
                                     Row(
                                       children: [
-                                        Text('Roles: ', style: const TextStyle(color: AppColors.sand, fontWeight: FontWeight.w600)),
-                                        Flexible(child: Text(entry.roles.join(', '), style: const TextStyle(color: AppColors.sand))),
+                                      const Icon(Icons.calendar_today, size: 16, color: Colors.white54),
+                                      const SizedBox(width: 4),
+                                      Text('${entry.fromTime}${entry.serving ? ' - Present' : entry.toTime != null ? ' - ${entry.toTime}' : ''}', style: const TextStyle(color: Colors.white70)),
                                       ],
                                     ),
-                                    Row(
-                                      children: [
-                                        Text('Tech Stacks: ', style: const TextStyle(color: AppColors.sand, fontWeight: FontWeight.w600)),
-                                        Flexible(child: Text(entry.techStacks.join(', '), style: const TextStyle(color: AppColors.sand))),
-                                      ],
+                                  Wrap(
+                                    spacing: 6,
+                                    children: entry.roles.map((role) => Chip(label: Text(role), backgroundColor: Colors.blue.withOpacity(0.2), labelStyle: const TextStyle(color: Colors.blue))).toList(),
                                     ),
-                                    Row(
-                                      children: [
-                                        Text('From: ', style: const TextStyle(color: AppColors.sand, fontWeight: FontWeight.w600)),
-                                        Text(entry.fromTime, style: const TextStyle(color: AppColors.sand)),
-                                        if (entry.serving)
-                                          const Text(' - Serving', style: TextStyle(color: AppColors.sand))
-                                        else if (entry.toTime != null && entry.toTime!.isNotEmpty)
-                                          Text(' - ${entry.toTime}', style: const TextStyle(color: AppColors.sand)),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text('Employment: ', style: const TextStyle(color: AppColors.sand, fontWeight: FontWeight.w600)),
-                                        Text(entry.employmentType, style: const TextStyle(color: AppColors.sand)),
-                                      ],
-                                    ),
-                                    if (entry.reference != null && entry.reference!.isNotEmpty)
-                                      Row(
-                                        children: [
-                                          Text('Reference: ', style: const TextStyle(color: AppColors.sand, fontWeight: FontWeight.w600)),
-                                          Flexible(child: Text(entry.reference!, style: const TextStyle(color: AppColors.sand))),
-                                        ],
+                                  Wrap(
+                                    spacing: 6,
+                                    children: entry.techStacks.map((tech) => Chip(label: Text(tech), backgroundColor: Colors.deepPurple.withOpacity(0.2), labelStyle: const TextStyle(color: Colors.deepPurple))).toList(),
                                       ),
                                     if (entry.achievements != null && entry.achievements!.isNotEmpty)
-                                      Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text('Achievements: ', style: const TextStyle(color: AppColors.sand, fontWeight: FontWeight.w600)),
-                                          Flexible(child: Text(entry.achievements!, style: const TextStyle(color: AppColors.sand))),
-                                        ],
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 6.0),
+                                      child: Text('Achievements: ${entry.achievements}', style: const TextStyle(color: Colors.amberAccent)),
                                       ),
                                   ],
-                                ),
                               ),
                             ),
                           );
@@ -231,11 +294,14 @@ class _ProfessionalDetailsScreenState extends State<ProfessionalDetailsScreen> {
       ),
       floatingActionButton: _showAddForm
         ? null
-        : FloatingActionButton(
+          : ScaleTransition(
+              scale: CurvedAnimation(parent: _fabController, curve: Curves.elasticOut),
+              child: FloatingActionButton(
             backgroundColor: AppColors.sand,
             foregroundColor: Colors.white,
             onPressed: _openAddProfessional,
             child: const Icon(Icons.add),
+              ),
           ),
     );
   }
@@ -251,12 +317,12 @@ class AddProfessionalOverlay extends StatefulWidget {
   State<AddProfessionalOverlay> createState() => _AddProfessionalOverlayState();
 }
 
-class _AddProfessionalOverlayState extends State<AddProfessionalOverlay> {
+class _AddProfessionalOverlayState extends State<AddProfessionalOverlay> with SingleTickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _companyController;
   late TextEditingController _profileController;
-  late List<String> _roles;
-  late List<String> _techStacks;
+  late List<String> _skills;
+  late TextEditingController _skillInputController;
   late TextEditingController _fromTimeController;
   late TextEditingController _toTimeController;
   late bool _serving;
@@ -264,16 +330,14 @@ class _AddProfessionalOverlayState extends State<AddProfessionalOverlay> {
   String _employmentType = 'Full-time';
   late TextEditingController _referenceController;
   late TextEditingController _achievementsController;
-
-  final List<String> _roleOptions = [
-    'Team Lead', 'Developer', 'Mentor', 'Architect', 'DevOps', 'QA', 'Manager', 'Designer', 'Analyst', 'Other'
-  ];
-  final List<String> _techOptions = [
-    'Flutter', 'Dart', 'React', 'Node.js', 'Python', 'Java', 'AWS', 'Azure', 'Docker', 'Kubernetes', 'SQL', 'NoSQL', 'Other'
-  ];
+  bool _showErrors = false;
+  late AnimationController _animController;
+  late ConfettiController _confettiController;
   final List<String> _employmentTypes = [
     'Full-time', 'Part-time', 'Contract', 'Internship'
   ];
+  bool _skillsInputMode = false;
+  FocusNode _skillsFocusNode = FocusNode();
 
   @override
   void initState() {
@@ -281,8 +345,8 @@ class _AddProfessionalOverlayState extends State<AddProfessionalOverlay> {
     final entry = widget.entry;
     _companyController = TextEditingController(text: entry?.companyName ?? '');
     _profileController = TextEditingController(text: entry?.profileName ?? '');
-    _roles = List<String>.from(entry?.roles ?? []);
-    _techStacks = List<String>.from(entry?.techStacks ?? []);
+    _skills = List<String>.from(entry?.techStacks ?? []); // Use techStacks for skills
+    _skillInputController = TextEditingController();
     _fromTimeController = TextEditingController(text: entry?.fromTime ?? '');
     _toTimeController = TextEditingController(text: entry?.toTime ?? '');
     _serving = entry?.serving ?? false;
@@ -290,53 +354,94 @@ class _AddProfessionalOverlayState extends State<AddProfessionalOverlay> {
     _employmentType = entry?.employmentType ?? 'Full-time';
     _referenceController = TextEditingController(text: entry?.reference ?? '');
     _achievementsController = TextEditingController(text: entry?.achievements ?? '');
+    _animController = AnimationController(vsync: this, duration: const Duration(milliseconds: 600));
+    _animController.forward();
+    _confettiController = ConfettiController(duration: const Duration(seconds: 1));
   }
 
   @override
   void dispose() {
     _companyController.dispose();
     _profileController.dispose();
+    _skillInputController.dispose();
     _fromTimeController.dispose();
     _toTimeController.dispose();
     _locationController.dispose();
     _referenceController.dispose();
     _achievementsController.dispose();
+    _animController.dispose();
+    _confettiController.dispose();
+    _skillsFocusNode.dispose();
     super.dispose();
   }
 
-  void _toggleRole(String role) {
-    setState(() {
-      if (_roles.contains(role)) {
-        _roles.remove(role);
-      } else {
-        if (_roles.length < 5) {
-          _roles.add(role);
-        }
-      }
+  void _enterSkillsInputMode() {
+    setState(() => _skillsInputMode = true);
+    Future.delayed(const Duration(milliseconds: 100), () {
+      _skillsFocusNode.requestFocus();
     });
   }
 
-  void _toggleTech(String tech) {
-    setState(() {
-      if (_techStacks.contains(tech)) {
-        _techStacks.remove(tech);
-      } else {
-        _techStacks.add(tech);
+  void _exitSkillsInputMode() {
+    setState(() => _skillsInputMode = false);
+    _skillsFocusNode.unfocus();
+  }
+
+  void _addSkill() {
+    final skill = _skillInputController.text.trim();
+    if (skill.isNotEmpty && !_skills.contains(skill)) {
+      setState(() {
+        _skills.add(skill);
+        _skillInputController.clear();
+      });
       }
+    _exitSkillsInputMode();
+  }
+
+  void _removeSkill(String skill) {
+    setState(() {
+      _skills.remove(skill);
     });
   }
 
-  Future<void> _pickDate(TextEditingController controller) async {
-    final now = DateTime.now();
-    final picked = await showDatePicker(
-      context: context,
-      initialDate: now,
-      firstDate: DateTime(1970),
-      lastDate: DateTime(now.year + 5),
-    );
-    if (picked != null) {
-      controller.text = '${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}';
+  void _trySave() {
+    setState(() => _showErrors = true);
+    if (_formKey.currentState?.validate() ?? false) {
+      _confettiController.play();
+      Future.delayed(const Duration(milliseconds: 900), () {
+        widget.onSave(ProfessionalEntry(
+          companyName: _companyController.text.trim(),
+          profileName: _profileController.text.trim(),
+          roles: [], // No roles, just skills
+          techStacks: _skills,
+          fromTime: _fromTimeController.text.trim(),
+          toTime: _serving ? null : _toTimeController.text.trim(),
+          serving: _serving,
+          location: _locationController.text.trim(),
+          employmentType: _employmentType,
+          reference: _referenceController.text.trim(),
+          achievements: _achievementsController.text.trim(),
+        ));
+      });
     }
+  }
+
+  String? _validateYear(String? value) {
+    if (value == null || value.isEmpty) return 'Required';
+    if (value.length != 4 || int.tryParse(value) == null) return 'YYYY';
+    return null;
+  }
+
+  Widget _animatedError(String? error) {
+    if (error == null) return const SizedBox.shrink();
+    return AnimatedOpacity(
+      opacity: 1.0,
+      duration: Duration(milliseconds: 300),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 8.0, top: 2.0),
+        child: Text(error, style: const TextStyle(color: Colors.redAccent, fontSize: 13, fontWeight: FontWeight.w600)),
+      ),
+    );
   }
 
   @override
@@ -346,11 +451,15 @@ class _AddProfessionalOverlayState extends State<AddProfessionalOverlay> {
     final fieldFill = Colors.white.withOpacity(0.18);
     final border = OutlineInputBorder(
       borderRadius: BorderRadius.circular(20),
-      borderSide: BorderSide(color: AppColors.sand.withOpacity(0.5)),
+      borderSide: BorderSide(color: Colors.white.withOpacity(0.5)),
     );
     return Stack(
       children: [
-        Center(
+        FadeTransition(
+          opacity: CurvedAnimation(parent: _animController, curve: Curves.easeIn),
+          child: ScaleTransition(
+            scale: CurvedAnimation(parent: _animController, curve: Curves.elasticOut),
+            child: Center(
           child: Stack(
             children: [
               Container(
@@ -369,6 +478,7 @@ class _AddProfessionalOverlayState extends State<AddProfessionalOverlay> {
                 child: SingleChildScrollView(
                   child: Form(
                     key: _formKey,
+                        autovalidateMode: _showErrors ? AutovalidateMode.always : AutovalidateMode.disabled,
                     child: Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
@@ -378,66 +488,145 @@ class _AddProfessionalOverlayState extends State<AddProfessionalOverlay> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 40),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      const Icon(Icons.business_center, color: Colors.white, size: 32),
+                                      const SizedBox(width: 10),
                           Text(
                             widget.entry == null ? 'Add Professional' : 'Edit Professional',
-                            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.sand),
+                                        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                  GestureDetector(
+                                    onTap: widget.onClose,
+                                    child: const Icon(Icons.close, color: Colors.white, size: 32),
+                                  ),
+                                ],
                           ),
                           const SizedBox(height: 18),
                           TextFormField(
                             controller: _companyController,
                             decoration: InputDecoration(
                               labelText: 'Company Name',
-                              labelStyle: const TextStyle(color: AppColors.sand),
+                                  labelStyle: const TextStyle(color: Colors.white),
                               filled: true,
                               fillColor: fieldFill,
                               border: border,
                               enabledBorder: border,
                               focusedBorder: border,
                               contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                                  prefixIcon: const Icon(Icons.business, color: Colors.white),
                             ),
-                            validator: (v) => v == null || v.isEmpty ? 'Required' : null,
+                                validator: (v) => v == null || v.trim().isEmpty ? 'Required' : null,
                           ),
                           const SizedBox(height: 12),
                           TextFormField(
                             controller: _profileController,
                             decoration: InputDecoration(
-                              labelText: 'Profile Name (Job Title)',
-                              labelStyle: const TextStyle(color: AppColors.sand),
+                                  labelText: 'Profile Name',
+                                  labelStyle: const TextStyle(color: Colors.white),
                               filled: true,
                               fillColor: fieldFill,
                               border: border,
                               enabledBorder: border,
                               focusedBorder: border,
                               contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                                  prefixIcon: const Icon(Icons.person, color: Colors.white),
                             ),
-                            validator: (v) => v == null || v.isEmpty ? 'Required' : null,
+                                validator: (v) => v == null || v.trim().isEmpty ? 'Required' : null,
                           ),
                           const SizedBox(height: 12),
-                          Text('Roles (max 5):', style: const TextStyle(color: AppColors.sand, fontWeight: FontWeight.w600)),
-                          Wrap(
+                              AnimatedContainer(
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.ease,
+                                padding: EdgeInsets.zero,
+                                child: GestureDetector(
+                                  onTap: _enterSkillsInputMode,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white.withOpacity(0.18),
+                                      borderRadius: BorderRadius.circular(20),
+                                      border: Border.all(color: _skillsInputMode ? Colors.blueAccent : Colors.white.withOpacity(0.5), width: 2),
+                                    ),
+                                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Icon(Icons.label, color: _skillsInputMode ? Colors.blueAccent : Colors.white),
+                                            const SizedBox(width: 10),
+                                            Text('Skills', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
+                                          ],
+                                        ),
+                                        AnimatedCrossFade(
+                                          duration: const Duration(milliseconds: 250),
+                                          crossFadeState: _skillsInputMode ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+                                          firstChild: _skills.isEmpty
+                                              ? const SizedBox(height: 0)
+                                              : Padding(
+                                                  padding: const EdgeInsets.only(top: 8.0),
+                                                  child: Wrap(
                             spacing: 8,
-                            children: _roleOptions.map((role) => FilterChip(
-                              label: Text(role),
-                              selected: _roles.contains(role),
-                              onSelected: (_) => _toggleRole(role),
-                              selectedColor: AppColors.sand.withOpacity(0.7),
-                              backgroundColor: fieldFill,
-                              labelStyle: TextStyle(color: _roles.contains(role) ? Colors.white : AppColors.sand),
+                                                    runSpacing: 4,
+                                                    children: _skills.map((skill) => Chip(
+                                                      label: Text(skill),
+                                                      backgroundColor: Colors.blue.withOpacity(0.2),
+                                                      labelStyle: TextStyle(color: Colors.blue),
+                                                      deleteIcon: Icon(Icons.close, color: Colors.redAccent, size: 18),
+                                                      onDeleted: () => _removeSkill(skill),
                             )).toList(),
                           ),
-                          const SizedBox(height: 12),
-                          Text('Tech Stacks:', style: const TextStyle(color: AppColors.sand, fontWeight: FontWeight.w600)),
-                          Wrap(
+                                                ),
+                                          secondChild: Column(
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: TextFormField(
+                                                      focusNode: _skillsFocusNode,
+                                                      controller: _skillInputController,
+                                                      decoration: InputDecoration(
+                                                        hintText: 'Type a skill and press add',
+                                                        hintStyle: TextStyle(color: Colors.white70),
+                                                        border: InputBorder.none,
+                                                      ),
+                                                      style: TextStyle(color: Colors.white),
+                                                      onFieldSubmitted: (_) => _addSkill(),
+                                                    ),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: _addSkill,
+                                                    child: Text('Add', style: TextStyle(color: Colors.blueAccent)),
+                                                  ),
+                                                ],
+                                              ),
+                                              if (_skills.isNotEmpty)
+                                                Padding(
+                                                  padding: const EdgeInsets.only(top: 8.0),
+                                                  child: Wrap(
                             spacing: 8,
-                            children: _techOptions.map((tech) => FilterChip(
-                              label: Text(tech),
-                              selected: _techStacks.contains(tech),
-                              onSelected: (_) => _toggleTech(tech),
-                              selectedColor: AppColors.sand.withOpacity(0.7),
-                              backgroundColor: fieldFill,
-                              labelStyle: TextStyle(color: _techStacks.contains(tech) ? Colors.white : AppColors.sand),
+                                                    runSpacing: 4,
+                                                    children: _skills.map((skill) => Chip(
+                                                      label: Text(skill),
+                                                      backgroundColor: Colors.blue.withOpacity(0.2),
+                                                      labelStyle: TextStyle(color: Colors.blue),
+                                                      deleteIcon: Icon(Icons.close, color: Colors.redAccent, size: 18),
+                                                      onDeleted: () => _removeSkill(skill),
                             )).toList(),
+                                                  ),
+                                                ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                           ),
                           const SizedBox(height: 12),
                           Row(
@@ -445,47 +634,59 @@ class _AddProfessionalOverlayState extends State<AddProfessionalOverlay> {
                               Expanded(
                                 child: TextFormField(
                                   controller: _fromTimeController,
-                                  readOnly: true,
-                                  onTap: () => _pickDate(_fromTimeController),
+                                      keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
-                                    labelText: 'From',
-                                    labelStyle: const TextStyle(color: AppColors.sand),
+                                        labelText: 'From Year',
+                                        labelStyle: const TextStyle(color: Colors.white),
                                     filled: true,
                                     fillColor: fieldFill,
                                     border: border,
                                     enabledBorder: border,
                                     focusedBorder: border,
                                     contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                                        prefixIcon: const Icon(Icons.calendar_today, color: Colors.white),
+                                      ),
+                                      validator: _validateYear,
+                                    ),
                                   ),
-                                  validator: (v) => v == null || v.isEmpty ? 'Required' : null,
-                                ),
-                              ),
-                              const SizedBox(width: 10),
+                                  const SizedBox(width: 8),
                               Expanded(
-                                child: _serving
-                                    ? const SizedBox()
-                                    : TextFormField(
+                                    child: AnimatedOpacity(
+                                      opacity: _serving ? 0.4 : 1.0,
+                                      duration: Duration(milliseconds: 300),
+                                      child: TextFormField(
                                         controller: _toTimeController,
-                                        readOnly: true,
-                                        onTap: () => _pickDate(_toTimeController),
+                                        enabled: !_serving,
+                                        keyboardType: TextInputType.number,
                                         decoration: InputDecoration(
-                                          labelText: 'To',
-                                          labelStyle: const TextStyle(color: AppColors.sand),
+                                          labelText: 'To Year',
+                                          labelStyle: const TextStyle(color: Colors.white),
                                           filled: true,
                                           fillColor: fieldFill,
                                           border: border,
                                           enabledBorder: border,
                                           focusedBorder: border,
                                           contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                                          prefixIcon: const Icon(Icons.calendar_today, color: Colors.white),
                                         ),
+                                        validator: (v) {
+                                          if (_serving) return null;
+                                          return _validateYear(v);
+                                        },
                                       ),
                               ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Column(
+                                    children: [
                               Checkbox(
                                 value: _serving,
                                 onChanged: (v) => setState(() => _serving = v ?? false),
-                                activeColor: AppColors.sand,
+                                        activeColor: Colors.blueAccent,
                               ),
-                              const Text('Serving', style: TextStyle(color: AppColors.sand)),
+                                      const Text('Serving', style: TextStyle(color: Colors.white, fontSize: 12)),
+                                    ],
+                                  ),
                             ],
                           ),
                           const SizedBox(height: 12),
@@ -493,15 +694,16 @@ class _AddProfessionalOverlayState extends State<AddProfessionalOverlay> {
                             controller: _locationController,
                             decoration: InputDecoration(
                               labelText: 'Location',
-                              labelStyle: const TextStyle(color: AppColors.sand),
+                                  labelStyle: const TextStyle(color: Colors.white),
                               filled: true,
                               fillColor: fieldFill,
                               border: border,
                               enabledBorder: border,
                               focusedBorder: border,
                               contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                                  prefixIcon: const Icon(Icons.location_on, color: Colors.white),
                             ),
-                            validator: (v) => v == null || v.isEmpty ? 'Required' : null,
+                                validator: (v) => v == null || v.trim().isEmpty ? 'Required' : null,
                           ),
                           const SizedBox(height: 12),
                           DropdownButtonFormField<String>(
@@ -510,78 +712,62 @@ class _AddProfessionalOverlayState extends State<AddProfessionalOverlay> {
                             onChanged: (v) => setState(() => _employmentType = v ?? 'Full-time'),
                             decoration: InputDecoration(
                               labelText: 'Employment Type',
-                              labelStyle: const TextStyle(color: AppColors.sand),
+                                  labelStyle: const TextStyle(color: Colors.white),
                               filled: true,
                               fillColor: fieldFill,
                               border: border,
                               enabledBorder: border,
                               focusedBorder: border,
                               contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                                  prefixIcon: const Icon(Icons.work, color: Colors.white),
                             ),
                           ),
                           const SizedBox(height: 12),
                           TextFormField(
                             controller: _referenceController,
                             decoration: InputDecoration(
-                              labelText: 'Reference/Contact (optional)',
-                              labelStyle: const TextStyle(color: AppColors.sand),
+                                  labelText: 'Reference (optional)',
+                                  labelStyle: const TextStyle(color: Colors.white),
                               filled: true,
                               fillColor: fieldFill,
                               border: border,
                               enabledBorder: border,
                               focusedBorder: border,
                               contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                                  prefixIcon: const Icon(Icons.contact_mail, color: Colors.white),
                             ),
                           ),
                           const SizedBox(height: 12),
                           TextFormField(
                             controller: _achievementsController,
-                            maxLines: 3,
                             decoration: InputDecoration(
-                              labelText: 'Achievements/Highlights (optional)',
-                              labelStyle: const TextStyle(color: AppColors.sand),
+                                  labelText: 'Achievements (optional)',
+                                  labelStyle: const TextStyle(color: Colors.white),
                               filled: true,
                               fillColor: fieldFill,
                               border: border,
                               enabledBorder: border,
                               focusedBorder: border,
                               contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                                  prefixIcon: const Icon(Icons.emoji_events, color: Colors.white),
                             ),
                           ),
-                          const SizedBox(height: 18),
-                          SizedBox(
-                            width: double.infinity,
+                              const SizedBox(height: 24),
+                              Center(
                             child: ElevatedButton(
+                                  onPressed: _trySave,
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.sand,
-                                foregroundColor: Colors.white,
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                                padding: const EdgeInsets.symmetric(vertical: 18),
-                              ),
-                              onPressed: () {
-                                if (_formKey.currentState?.validate() ?? false) {
-                                  widget.onSave(ProfessionalEntry(
-                                    companyName: _companyController.text,
-                                    profileName: _profileController.text,
-                                    roles: _roles,
-                                    techStacks: _techStacks,
-                                    fromTime: _fromTimeController.text,
-                                    toTime: _serving ? null : _toTimeController.text,
-                                    serving: _serving,
-                                    location: _locationController.text,
-                                    employmentType: _employmentType,
-                                    reference: _referenceController.text.isEmpty ? null : _referenceController.text,
-                                    achievements: _achievementsController.text.isEmpty ? null : _achievementsController.text,
-                                  ));
-                                }
-                              },
-                              child: Text(
-                                widget.entry == null ? 'Save' : 'Update',
-                                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
+                                    backgroundColor: Colors.white,
+                                    foregroundColor: Colors.blueAccent,
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+                                    elevation: 0,
+                                    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 18),
+                                  ),
+                                  child: const Text('Save', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
                             ),
                           ),
                         ],
+                          ),
                       ),
                     ),
                   ),
@@ -591,20 +777,23 @@ class _AddProfessionalOverlayState extends State<AddProfessionalOverlay> {
                   blurX: 20,
                   blurY: 20,
                 ),
+                ],
               ),
-              // Cross button
-              Positioned(
-                top: 16,
-                right: 16,
-                child: GestureDetector(
-                  onTap: widget.onClose,
-                  child: Container(
-                    padding: const EdgeInsets.all(15),
-                    child: const Icon(Icons.close, color: AppColors.sand, size: 32),
                   ),
                 ),
               ),
-            ],
+        Align(
+          alignment: Alignment.topCenter,
+          child: ConfettiWidget(
+            confettiController: _confettiController,
+            blastDirectionality: BlastDirectionality.explosive,
+            shouldLoop: false,
+            colors: [Colors.blue, Colors.pink, Colors.amber, Colors.green, Colors.deepPurple],
+            numberOfParticles: 30,
+            maxBlastForce: 20,
+            minBlastForce: 8,
+            emissionFrequency: 0.05,
+            gravity: 0.2,
           ),
         ),
       ],

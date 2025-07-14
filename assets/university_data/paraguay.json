@@ -1,0 +1,39 @@
+{
+  "country": "Paraguay",
+  "flag": "🇵🇾",
+  "totalUniversities": 1,
+  "universities": [
+    {
+      "id": "Paraguay_1",
+      "rank": 1001,
+      "ranking": "1001-1200",
+      "name": "Universidad Nacional de la Asunción",
+      "code": "PY",
+      "country": "Paraguay",
+      "score": 0,
+      "region": "South America",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 10995,
+      "applicationFee": 107,
+      "applicationOpen": true,
+      "applicationUrl": "https://universidadnacionaldelaasunción.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Universidad%20Nacional%20de%20la%20Asunci%C3%B3n",
+      "isWatchlisted": false,
+      "description": "Universidad Nacional de la Asunción is a prestigious university located in Paraguay.",
+      "programs": [
+        "Computer Science",
+        "Engineering",
+        "Business",
+        "Arts",
+        "Medicine"
+      ],
+      "acceptanceRate": 21,
+      "studentCount": 7269,
+      "founded": 1813,
+      "campusType": "Suburban",
+      "worldRanking": 1001,
+      "countryRanking": 1
+    }
+  ]
+}

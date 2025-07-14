@@ -1,0 +1,39 @@
+{
+  "country": "Guatemala",
+  "flag": "🇬🇹",
+  "totalUniversities": 1,
+  "universities": [
+    {
+      "id": "Guatemala_1",
+      "rank": 1201,
+      "ranking": "1201-1400",
+      "name": "Universidad de San Carlos de Guatemala - USAC",
+      "code": "GT",
+      "country": "Guatemala",
+      "score": 0,
+      "region": "Asia",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 12770,
+      "applicationFee": 245,
+      "applicationOpen": false,
+      "applicationUrl": "https://universidaddesancarlosdeguatemala-usac.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Universidad%20de%20San%20Carlos%20de%20Guatemala%20-%20USAC",
+      "isWatchlisted": false,
+      "description": "Universidad de San Carlos de Guatemala - USAC is a prestigious university located in Guatemala.",
+      "programs": [
+        "Computer Science",
+        "Engineering",
+        "Business",
+        "Arts",
+        "Medicine"
+      ],
+      "acceptanceRate": 23,
+      "studentCount": 41212,
+      "founded": 1913,
+      "campusType": "Urban",
+      "worldRanking": 1201,
+      "countryRanking": 1
+    }
+  ]
+}

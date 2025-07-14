@@ -1,0 +1,24 @@
+{
+  "country": "Luxembourg",
+  "totalUniversities": 1,
+  "universities": [
+    {
+      "id": "Luxembourg_1",
+      "rank": 381,
+      "ranking": "",
+      "name": "University of Luxembourg",
+      "code": "LU",
+      "country": "Luxembourg",
+      "score": 29.1,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 25924,
+      "applicationFee": 102,
+      "applicationOpen": true,
+      "applicationUrl": "https://universityofluxembourg.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=University%20of%20Luxembourg",
+      "isWatchlisted": false
+    }
+  ]
+}

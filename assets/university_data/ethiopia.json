@@ -1,0 +1,39 @@
+{
+  "country": "Ethiopia",
+  "flag": "🇪🇹",
+  "totalUniversities": 1,
+  "universities": [
+    {
+      "id": "Ethiopia_1",
+      "rank": 851,
+      "ranking": "",
+      "name": "Addis Ababa University",
+      "code": "ET",
+      "country": "Ethiopia",
+      "score": 0,
+      "region": "Africa",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 15300,
+      "applicationFee": 93,
+      "applicationOpen": true,
+      "applicationUrl": "https://addisababauniversity.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Addis%20Ababa%20University",
+      "isWatchlisted": false,
+      "description": "Addis Ababa University is a prestigious university located in Ethiopia.",
+      "programs": [
+        "Computer Science",
+        "Engineering",
+        "Business",
+        "Arts",
+        "Medicine"
+      ],
+      "acceptanceRate": 10,
+      "studentCount": 31843,
+      "founded": 1941,
+      "campusType": "Rural",
+      "worldRanking": 851,
+      "countryRanking": 1
+    }
+  ]
+}

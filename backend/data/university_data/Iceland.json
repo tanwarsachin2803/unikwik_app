@@ -1,0 +1,24 @@
+{
+  "country": "Iceland",
+  "totalUniversities": 1,
+  "universities": [
+    {
+      "id": "Iceland_1",
+      "rank": 1201,
+      "ranking": "",
+      "name": "University of Iceland",
+      "code": "IS",
+      "country": "Iceland",
+      "score": 0,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 39106,
+      "applicationFee": 148,
+      "applicationOpen": false,
+      "applicationUrl": "https://universityoficeland.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=University%20of%20Iceland",
+      "isWatchlisted": false
+    }
+  ]
+}

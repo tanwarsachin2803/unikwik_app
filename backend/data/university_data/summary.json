@@ -1,0 +1,526 @@
+{
+  "totalCountries": 104,
+  "totalUniversities": 1498,
+  "countries": [
+    {
+      "name": "United States",
+      "count": 199,
+      "fileName": "United_States.json"
+    },
+    {
+      "name": "United Kingdom",
+      "count": 90,
+      "fileName": "United_Kingdom.json"
+    },
+    {
+      "name": "China (Mainland)",
+      "count": 71,
+      "fileName": "China__Mainland_.json"
+    },
+    {
+      "name": "Japan",
+      "count": 51,
+      "fileName": "Japan.json"
+    },
+    {
+      "name": "Germany",
+      "count": 49,
+      "fileName": "Germany.json"
+    },
+    {
+      "name": "Russia",
+      "count": 48,
+      "fileName": "Russia.json"
+    },
+    {
+      "name": "India",
+      "count": 45,
+      "fileName": "India.json"
+    },
+    {
+      "name": "South Korea",
+      "count": 43,
+      "fileName": "South_Korea.json"
+    },
+    {
+      "name": "Italy",
+      "count": 42,
+      "fileName": "Italy.json"
+    },
+    {
+      "name": "Australia",
+      "count": 38,
+      "fileName": "Australia.json"
+    },
+    {
+      "name": "France",
+      "count": 35,
+      "fileName": "France.json"
+    },
+    {
+      "name": "Brazil",
+      "count": 35,
+      "fileName": "Brazil.json"
+    },
+    {
+      "name": "Spain",
+      "count": 35,
+      "fileName": "Spain.json"
+    },
+    {
+      "name": "Mexico",
+      "count": 32,
+      "fileName": "Mexico.json"
+    },
+    {
+      "name": "Canada",
+      "count": 31,
+      "fileName": "Canada.json"
+    },
+    {
+      "name": "Malaysia",
+      "count": 28,
+      "fileName": "Malaysia.json"
+    },
+    {
+      "name": "Taiwan",
+      "count": 27,
+      "fileName": "Taiwan.json"
+    },
+    {
+      "name": "Indonesia",
+      "count": 26,
+      "fileName": "Indonesia.json"
+    },
+    {
+      "name": "Argentina",
+      "count": 25,
+      "fileName": "Argentina.json"
+    },
+    {
+      "name": "Chile",
+      "count": 25,
+      "fileName": "Chile.json"
+    },
+    {
+      "name": "Colombia",
+      "count": 25,
+      "fileName": "Colombia.json"
+    },
+    {
+      "name": "Turkey",
+      "count": 25,
+      "fileName": "Turkey.json"
+    },
+    {
+      "name": "Poland",
+      "count": 22,
+      "fileName": "Poland.json"
+    },
+    {
+      "name": "Kazakhstan",
+      "count": 21,
+      "fileName": "Kazakhstan.json"
+    },
+    {
+      "name": "Saudi Arabia",
+      "count": 16,
+      "fileName": "Saudi_Arabia.json"
+    },
+    {
+      "name": "Czech Republic",
+      "count": 16,
+      "fileName": "Czech_Republic.json"
+    },
+    {
+      "name": "Egypt",
+      "count": 15,
+      "fileName": "Egypt.json"
+    },
+    {
+      "name": "Bangladesh",
+      "count": 15,
+      "fileName": "Bangladesh.json"
+    },
+    {
+      "name": "Pakistan",
+      "count": 14,
+      "fileName": "Pakistan.json"
+    },
+    {
+      "name": "Netherlands",
+      "count": 13,
+      "fileName": "Netherlands.json"
+    },
+    {
+      "name": "Thailand",
+      "count": 13,
+      "fileName": "Thailand.json"
+    },
+    {
+      "name": "Romania",
+      "count": 13,
+      "fileName": "Romania.json"
+    },
+    {
+      "name": "Switzerland",
+      "count": 11,
+      "fileName": "Switzerland.json"
+    },
+    {
+      "name": "South Africa",
+      "count": 11,
+      "fileName": "South_Africa.json"
+    },
+    {
+      "name": "United Arab Emirates",
+      "count": 11,
+      "fileName": "United_Arab_Emirates.json"
+    },
+    {
+      "name": "Hungary",
+      "count": 11,
+      "fileName": "Hungary.json"
+    },
+    {
+      "name": "Ukraine",
+      "count": 11,
+      "fileName": "Ukraine.json"
+    },
+    {
+      "name": "Ecuador",
+      "count": 11,
+      "fileName": "Ecuador.json"
+    },
+    {
+      "name": "Peru",
+      "count": 10,
+      "fileName": "Peru.json"
+    },
+    {
+      "name": "Belgium",
+      "count": 9,
+      "fileName": "Belgium.json"
+    },
+    {
+      "name": "Finland",
+      "count": 9,
+      "fileName": "Finland.json"
+    },
+    {
+      "name": "Jordan",
+      "count": 9,
+      "fileName": "Jordan.json"
+    },
+    {
+      "name": "New Zealand",
+      "count": 8,
+      "fileName": "New_Zealand.json"
+    },
+    {
+      "name": "Sweden",
+      "count": 8,
+      "fileName": "Sweden.json"
+    },
+    {
+      "name": "Ireland",
+      "count": 8,
+      "fileName": "Ireland.json"
+    },
+    {
+      "name": "Austria",
+      "count": 8,
+      "fileName": "Austria.json"
+    },
+    {
+      "name": "Lebanon",
+      "count": 8,
+      "fileName": "Lebanon.json"
+    },
+    {
+      "name": "Portugal",
+      "count": 8,
+      "fileName": "Portugal.json"
+    },
+    {
+      "name": "Greece",
+      "count": 8,
+      "fileName": "Greece.json"
+    },
+    {
+      "name": "Hong Kong SAR",
+      "count": 7,
+      "fileName": "Hong_Kong_SAR.json"
+    },
+    {
+      "name": "Iran, Islamic Republic of",
+      "count": 7,
+      "fileName": "Iran__Islamic_Republic_of.json"
+    },
+    {
+      "name": "Venezuela",
+      "count": 7,
+      "fileName": "Venezuela.json"
+    },
+    {
+      "name": "Norway",
+      "count": 6,
+      "fileName": "Norway.json"
+    },
+    {
+      "name": "Israel",
+      "count": 6,
+      "fileName": "Israel.json"
+    },
+    {
+      "name": "Denmark",
+      "count": 5,
+      "fileName": "Denmark.json"
+    },
+    {
+      "name": "Philippines",
+      "count": 5,
+      "fileName": "Philippines.json"
+    },
+    {
+      "name": "Lithuania",
+      "count": 5,
+      "fileName": "Lithuania.json"
+    },
+    {
+      "name": "Vietnam",
+      "count": 5,
+      "fileName": "Vietnam.json"
+    },
+    {
+      "name": "Slovakia",
+      "count": 5,
+      "fileName": "Slovakia.json"
+    },
+    {
+      "name": "Iraq",
+      "count": 5,
+      "fileName": "Iraq.json"
+    },
+    {
+      "name": "Singapore",
+      "count": 4,
+      "fileName": "Singapore.json"
+    },
+    {
+      "name": "Cuba",
+      "count": 4,
+      "fileName": "Cuba.json"
+    },
+    {
+      "name": "Uruguay",
+      "count": 4,
+      "fileName": "Uruguay.json"
+    },
+    {
+      "name": "Serbia",
+      "count": 4,
+      "fileName": "Serbia.json"
+    },
+    {
+      "name": "Croatia",
+      "count": 4,
+      "fileName": "Croatia.json"
+    },
+    {
+      "name": "Tunisia",
+      "count": 4,
+      "fileName": "Tunisia.json"
+    },
+    {
+      "name": "Estonia",
+      "count": 3,
+      "fileName": "Estonia.json"
+    },
+    {
+      "name": "Belarus",
+      "count": 3,
+      "fileName": "Belarus.json"
+    },
+    {
+      "name": "Costa Rica",
+      "count": 3,
+      "fileName": "Costa_Rica.json"
+    },
+    {
+      "name": "Bahrain",
+      "count": 3,
+      "fileName": "Bahrain.json"
+    },
+    {
+      "name": "Slovenia",
+      "count": 3,
+      "fileName": "Slovenia.json"
+    },
+    {
+      "name": "Kuwait",
+      "count": 3,
+      "fileName": "Kuwait.json"
+    },
+    {
+      "name": "Latvia",
+      "count": 3,
+      "fileName": "Latvia.json"
+    },
+    {
+      "name": "Palestinian Territory, Occupied",
+      "count": 3,
+      "fileName": "Palestinian_Territory__Occupied.json"
+    },
+    {
+      "name": "Azerbaijan",
+      "count": 3,
+      "fileName": "Azerbaijan.json"
+    },
+    {
+      "name": "Bolivia",
+      "count": 3,
+      "fileName": "Bolivia.json"
+    },
+    {
+      "name": "Qatar",
+      "count": 2,
+      "fileName": "Qatar.json"
+    },
+    {
+      "name": "Macau SAR",
+      "count": 2,
+      "fileName": "Macau_SAR.json"
+    },
+    {
+      "name": "Brunei",
+      "count": 2,
+      "fileName": "Brunei.json"
+    },
+    {
+      "name": "Georgia",
+      "count": 2,
+      "fileName": "Georgia.json"
+    },
+    {
+      "name": "Panama",
+      "count": 2,
+      "fileName": "Panama.json"
+    },
+    {
+      "name": "Ghana",
+      "count": 2,
+      "fileName": "Ghana.json"
+    },
+    {
+      "name": "Dominican Republic",
+      "count": 2,
+      "fileName": "Dominican_Republic.json"
+    },
+    {
+      "name": "Sri Lanka",
+      "count": 2,
+      "fileName": "Sri_Lanka.json"
+    },
+    {
+      "name": "Kenya",
+      "count": 2,
+      "fileName": "Kenya.json"
+    },
+    {
+      "name": "Sudan",
+      "count": 2,
+      "fileName": "Sudan.json"
+    },
+    {
+      "name": "Nigeria",
+      "count": 2,
+      "fileName": "Nigeria.json"
+    },
+    {
+      "name": "Cyprus",
+      "count": 1,
+      "fileName": "Cyprus.json"
+    },
+    {
+      "name": "Luxembourg",
+      "count": 1,
+      "fileName": "Luxembourg.json"
+    },
+    {
+      "name": "Oman",
+      "count": 1,
+      "fileName": "Oman.json"
+    },
+    {
+      "name": "Bulgaria",
+      "count": 1,
+      "fileName": "Bulgaria.json"
+    },
+    {
+      "name": "Ethiopia",
+      "count": 1,
+      "fileName": "Ethiopia.json"
+    },
+    {
+      "name": "Kyrgyzstan",
+      "count": 1,
+      "fileName": "Kyrgyzstan.json"
+    },
+    {
+      "name": "Malta",
+      "count": 1,
+      "fileName": "Malta.json"
+    },
+    {
+      "name": "Uganda",
+      "count": 1,
+      "fileName": "Uganda.json"
+    },
+    {
+      "name": "Puerto Rico",
+      "count": 1,
+      "fileName": "Puerto_Rico.json"
+    },
+    {
+      "name": "Paraguay",
+      "count": 1,
+      "fileName": "Paraguay.json"
+    },
+    {
+      "name": "Armenia",
+      "count": 1,
+      "fileName": "Armenia.json"
+    },
+    {
+      "name": "Syrian Arab Republic",
+      "count": 1,
+      "fileName": "Syrian_Arab_Republic.json"
+    },
+    {
+      "name": "Guatemala",
+      "count": 1,
+      "fileName": "Guatemala.json"
+    },
+    {
+      "name": "Morocco",
+      "count": 1,
+      "fileName": "Morocco.json"
+    },
+    {
+      "name": "Iceland",
+      "count": 1,
+      "fileName": "Iceland.json"
+    },
+    {
+      "name": "Bosnia and Herzegovina",
+      "count": 1,
+      "fileName": "Bosnia_and_Herzegovina.json"
+    },
+    {
+      "name": "Honduras",
+      "count": 1,
+      "fileName": "Honduras.json"
+    }
+  ]
+}

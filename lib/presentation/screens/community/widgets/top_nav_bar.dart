@@ -9,6 +9,7 @@ class TopNavBar extends StatelessWidget {
     _NavBarItemData(icon: Icons.campaign, label: 'Feeds'),
     _NavBarItemData(icon: Icons.people, label: 'Connections'),
     _NavBarItemData(icon: Icons.question_answer, label: 'Questions'),
+    _NavBarItemData(icon: Icons.help_outline, label: 'FAQ'),
   ];
 
   @override

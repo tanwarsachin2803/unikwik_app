@@ -1,0 +1,60 @@
+{
+  "country": "Latvia",
+  "totalUniversities": 3,
+  "universities": [
+    {
+      "id": "Latvia_1",
+      "rank": 751,
+      "ranking": "751-800",
+      "name": "Riga Technical University",
+      "code": "LV",
+      "country": "Latvia",
+      "score": 0,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 16657,
+      "applicationFee": 201,
+      "applicationOpen": true,
+      "applicationUrl": "https://rigatechnicaluniversity.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Riga%20Technical%20University",
+      "isWatchlisted": false
+    },
+    {
+      "id": "Latvia_2",
+      "rank": 801,
+      "ranking": "1001-1200",
+      "name": "University of Latvia",
+      "code": "LV",
+      "country": "Latvia",
+      "score": 0,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 43023,
+      "applicationFee": 87,
+      "applicationOpen": true,
+      "applicationUrl": "https://universityoflatvia.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=University%20of%20Latvia",
+      "isWatchlisted": false
+    },
+    {
+      "id": "Latvia_3",
+      "rank": 901,
+      "ranking": "801-1000",
+      "name": "Riga Stradins University",
+      "code": "LV",
+      "country": "Latvia",
+      "score": 0,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 49944,
+      "applicationFee": 240,
+      "applicationOpen": false,
+      "applicationUrl": "https://rigastradinsuniversity.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Riga%20Stradins%20University",
+      "isWatchlisted": false
+    }
+  ]
+}

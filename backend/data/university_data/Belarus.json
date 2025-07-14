@@ -1,0 +1,60 @@
+{
+  "country": "Belarus",
+  "totalUniversities": 3,
+  "universities": [
+    {
+      "id": "Belarus_1",
+      "rank": 387,
+      "ranking": "288=",
+      "name": "Belarusian State University",
+      "code": "BY",
+      "country": "Belarus",
+      "score": 28.3,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 40892,
+      "applicationFee": 123,
+      "applicationOpen": false,
+      "applicationUrl": "https://belarusianstateuniversity.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Belarusian%20State%20University",
+      "isWatchlisted": false
+    },
+    {
+      "id": "Belarus_2",
+      "rank": 801,
+      "ranking": "751-800",
+      "name": "Belarusian National Technical University (BNTU)",
+      "code": "BY",
+      "country": "Belarus",
+      "score": 0,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 40298,
+      "applicationFee": 94,
+      "applicationOpen": false,
+      "applicationUrl": "https://belarusiannationaltechnicaluniversity(bntu).edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Belarusian%20National%20Technical%20University%20(BNTU)",
+      "isWatchlisted": false
+    },
+    {
+      "id": "Belarus_3",
+      "rank": 1201,
+      "ranking": "1001-1200",
+      "name": "Belarusian State University of Informatics and Radioelectronics",
+      "code": "BY",
+      "country": "Belarus",
+      "score": 0,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 44160,
+      "applicationFee": 100,
+      "applicationOpen": false,
+      "applicationUrl": "https://belarusianstateuniversityofinformaticsandradioelectronics.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Belarusian%20State%20University%20of%20Informatics%20and%20Radioelectronics",
+      "isWatchlisted": false
+    }
+  ]
+}

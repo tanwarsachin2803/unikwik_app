@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:unikwik_app/core/theme/app_colors.dart';
 import 'package:glass/glass.dart';
 import 'package:unikwik_app/presentation/widgets/gradient_background.dart';
+import 'package:confetti/confetti.dart';
 
 class CertificationEntry {
   final String type; // e.g. IELTS, TOEFL, Other
@@ -207,7 +208,7 @@ class AddCertificationOverlay extends StatefulWidget {
   State<AddCertificationOverlay> createState() => _AddCertificationOverlayState();
 }
 
-class _AddCertificationOverlayState extends State<AddCertificationOverlay> {
+class _AddCertificationOverlayState extends State<AddCertificationOverlay> with SingleTickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   final List<String> _certTypes = [
     'IELTS', 'TOEFL', 'GRE', 'GMAT', 'SAT', 'ACT', 'PTE', 'Duolingo', 'LSAT', 'MCAT', 'Other'
@@ -219,6 +220,9 @@ class _AddCertificationOverlayState extends State<AddCertificationOverlay> {
   late TextEditingController _nameController;
   String? _certificatePath;
   String? _fileName;
+  bool _showErrors = false;
+  late AnimationController _animController;
+  late ConfettiController _confettiController;
 
   @override
   void initState() {
@@ -231,6 +235,9 @@ class _AddCertificationOverlayState extends State<AddCertificationOverlay> {
     _nameController = TextEditingController(text: entry?.candidateName ?? '');
     _certificatePath = entry?.certificatePath;
     _fileName = entry?.fileName;
+    _animController = AnimationController(vsync: this, duration: const Duration(milliseconds: 600));
+    _animController.forward();
+    _confettiController = ConfettiController(duration: const Duration(seconds: 1));
   }
 
   @override
@@ -239,59 +246,47 @@ class _AddCertificationOverlayState extends State<AddCertificationOverlay> {
     _gradeController.dispose();
     _dateController.dispose();
     _nameController.dispose();
+    _animController.dispose();
+    _confettiController.dispose();
     super.dispose();
   }
 
-  Future<void> _pickDate(TextEditingController controller) async {
-    final now = DateTime.now();
-    final picked = await showDatePicker(
-      context: context,
-      initialDate: now,
-      firstDate: DateTime(1970),
-      lastDate: DateTime(now.year + 10),
-    );
-    if (picked != null) {
-      controller.text = '${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}';
+  void _trySave() {
+    setState(() => _showErrors = true);
+    if (_formKey.currentState?.validate() ?? false) {
+      _confettiController.play();
+      Future.delayed(const Duration(milliseconds: 900), () {
+        widget.onSave(CertificationEntry(
+          type: _type,
+          customType: _type == 'Other' ? _customTypeController.text.trim() : null,
+          grade: _gradeController.text.trim(),
+          date: _dateController.text.trim(),
+          candidateName: _nameController.text.trim(),
+          certificatePath: _certificatePath,
+          fileName: _fileName,
+        ));
+      });
     }
   }
 
-  void _showUploadOptions() async {
-    final result = await showModalBottomSheet<String>(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+  String? _validateDate(String? value) {
+    if (value == null || value.isEmpty) return 'Required';
+    // Simple YYYY-MM-DD check
+    final regex = RegExp(r'^\d{4}-\d{2}-\d{2} 0$');
+    if (!regex.hasMatch(value)) return 'YYYY-MM-DD';
+    return null;
+  }
+
+  Widget _animatedError(String? error) {
+    if (error == null) return const SizedBox.shrink();
+    return AnimatedOpacity(
+      opacity: 1.0,
+      duration: Duration(milliseconds: 300),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 8.0, top: 2.0),
+        child: Text(error, style: const TextStyle(color: Colors.redAccent, fontSize: 13, fontWeight: FontWeight.w600)),
       ),
-      builder: (context) {
-        return SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ListTile(
-                leading: const Icon(Icons.upload_file),
-                title: const Text('Upload from device'),
-                onTap: () => Navigator.pop(context, 'upload'),
-              ),
-              ListTile(
-                leading: const Icon(Icons.camera_alt),
-                title: const Text('Use Camera'),
-                onTap: () => Navigator.pop(context, 'camera'),
-              ),
-            ],
-          ),
-        );
-      },
     );
-    if (result == 'upload') {
-      setState(() {
-        _certificatePath = 'mock_certificate.pdf';
-        _fileName = 'certificate.pdf';
-      });
-    } else if (result == 'camera') {
-      setState(() {
-        _certificatePath = 'mock_certificate_camera.jpg';
-        _fileName = 'certificate_camera.jpg';
-      });
-    }
   }
 
   @override
@@ -301,11 +296,13 @@ class _AddCertificationOverlayState extends State<AddCertificationOverlay> {
     final fieldFill = Colors.white.withOpacity(0.18);
     final border = OutlineInputBorder(
       borderRadius: BorderRadius.circular(20),
-      borderSide: BorderSide(color: AppColors.sand.withOpacity(0.5)),
+      borderSide: BorderSide(color: Colors.white.withOpacity(0.5)),
     );
-    return Stack(
-      children: [
-        Center(
+    return FadeTransition(
+      opacity: CurvedAnimation(parent: _animController, curve: Curves.easeIn),
+      child: ScaleTransition(
+        scale: CurvedAnimation(parent: _animController, curve: Curves.elasticOut),
+        child: Center(
           child: Stack(
             children: [
               Container(
@@ -324,6 +321,7 @@ class _AddCertificationOverlayState extends State<AddCertificationOverlay> {
                 child: SingleChildScrollView(
                   child: Form(
                     key: _formKey,
+                    autovalidateMode: _showErrors ? AutovalidateMode.always : AutovalidateMode.disabled,
                     child: Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
@@ -333,10 +331,24 @@ class _AddCertificationOverlayState extends State<AddCertificationOverlay> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 40),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  const Icon(Icons.verified, color: Colors.white, size: 32),
+                                  const SizedBox(width: 10),
                           Text(
                             widget.entry == null ? 'Add Certification' : 'Edit Certification',
-                            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.sand),
+                                    style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+                                  ),
+                                ],
+                              ),
+                              GestureDetector(
+                                onTap: widget.onClose,
+                                child: const Icon(Icons.close, color: Colors.white, size: 32),
+                              ),
+                            ],
                           ),
                           const SizedBox(height: 18),
                           DropdownButtonFormField<String>(
@@ -345,130 +357,128 @@ class _AddCertificationOverlayState extends State<AddCertificationOverlay> {
                             onChanged: (v) => setState(() => _type = v ?? 'IELTS'),
                             decoration: InputDecoration(
                               labelText: 'Certification Type',
-                              labelStyle: const TextStyle(color: AppColors.sand),
+                              labelStyle: const TextStyle(color: Colors.white),
                               filled: true,
                               fillColor: fieldFill,
                               border: border,
                               enabledBorder: border,
                               focusedBorder: border,
                               contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                              prefixIcon: const Icon(Icons.verified, color: Colors.white),
                             ),
                           ),
-                          if (_type == 'Other') ...[
-                            const SizedBox(height: 12),
-                            TextFormField(
+                          if (_type == 'Other')
+                            Padding(
+                              padding: const EdgeInsets.only(top: 12.0),
+                              child: TextFormField(
                               controller: _customTypeController,
                               decoration: InputDecoration(
-                                labelText: 'Custom Certification Name',
-                                labelStyle: const TextStyle(color: AppColors.sand),
+                                  labelText: 'Custom Type',
+                                  labelStyle: const TextStyle(color: Colors.white),
                                 filled: true,
                                 fillColor: fieldFill,
                                 border: border,
                                 enabledBorder: border,
                                 focusedBorder: border,
                                 contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                                  prefixIcon: const Icon(Icons.edit, color: Colors.white),
+                                ),
+                                validator: (v) => v == null || v.trim().isEmpty ? 'Required' : null,
                               ),
-                              validator: (v) => v == null || v.isEmpty ? 'Required' : null,
                             ),
-                          ],
                           const SizedBox(height: 12),
                           TextFormField(
                             controller: _gradeController,
                             decoration: InputDecoration(
-                              labelText: 'Grade (optional)',
-                              labelStyle: const TextStyle(color: AppColors.sand),
+                              labelText: 'Grade/Score',
+                              labelStyle: const TextStyle(color: Colors.white),
                               filled: true,
                               fillColor: fieldFill,
                               border: border,
                               enabledBorder: border,
                               focusedBorder: border,
                               contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                              prefixIcon: const Icon(Icons.grade, color: Colors.white),
                             ),
+                            validator: (v) => v == null || v.trim().isEmpty ? 'Required' : null,
                           ),
                           const SizedBox(height: 12),
                           TextFormField(
                             controller: _dateController,
-                            readOnly: true,
-                            onTap: () => _pickDate(_dateController),
                             decoration: InputDecoration(
-                              labelText: 'Date',
-                              labelStyle: const TextStyle(color: AppColors.sand),
+                              labelText: 'Date (YYYY-MM-DD)',
+                              labelStyle: const TextStyle(color: Colors.white),
                               filled: true,
                               fillColor: fieldFill,
                               border: border,
                               enabledBorder: border,
                               focusedBorder: border,
                               contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                              prefixIcon: const Icon(Icons.calendar_today, color: Colors.white),
                             ),
-                            validator: (v) => v == null || v.isEmpty ? 'Required' : null,
+                            validator: _validateDate,
                           ),
                           const SizedBox(height: 12),
                           TextFormField(
                             controller: _nameController,
                             decoration: InputDecoration(
                               labelText: 'Candidate Name',
-                              labelStyle: const TextStyle(color: AppColors.sand),
+                              labelStyle: const TextStyle(color: Colors.white),
                               filled: true,
                               fillColor: fieldFill,
                               border: border,
                               enabledBorder: border,
                               focusedBorder: border,
                               contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                              prefixIcon: const Icon(Icons.person, color: Colors.white),
                             ),
-                            validator: (v) => v == null || v.isEmpty ? 'Required' : null,
+                            validator: (v) => v == null || v.trim().isEmpty ? 'Required' : null,
                           ),
-                          const SizedBox(height: 12),
+                          const SizedBox(height: 16),
                           Row(
                             children: [
-                              ElevatedButton.icon(
+                              Expanded(
+                                child: ElevatedButton.icon(
+                                  onPressed: () {
+                                    setState(() {
+                                      _certificatePath = 'mock_certificate.png';
+                                      _fileName = 'certificate.pdf';
+                                    });
+                                  },
+                                  icon: const Icon(Icons.upload_file, color: Colors.white),
+                                  label: Text(_certificatePath == null ? 'Upload Certificate' : 'Uploaded', style: const TextStyle(color: Colors.white)),
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.sand,
+                                    backgroundColor: Colors.white.withOpacity(0.3),
                                   foregroundColor: Colors.white,
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                                  padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                                    elevation: 0,
+                                    padding: const EdgeInsets.symmetric(vertical: 14),
                                 ),
-                                onPressed: _showUploadOptions,
-                                icon: const Icon(Icons.upload_file),
-                                label: const Text('Upload/Camera'),
+                                ),
                               ),
-                              if (_fileName != null) ...[
-                                const SizedBox(width: 12),
-                                const Icon(Icons.check_circle, color: AppColors.sand),
-                                const SizedBox(width: 4),
-                                Text(_fileName!, style: const TextStyle(color: AppColors.sand)),
-                              ]
+                              if (_certificatePath != null)
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8.0),
+                                  child: Icon(Icons.check_circle, color: Colors.greenAccent, size: 28),
+                                ),
                             ],
                           ),
-                          const SizedBox(height: 18),
-                          SizedBox(
-                            width: double.infinity,
+                          const SizedBox(height: 24),
+                          Center(
                             child: ElevatedButton(
+                              onPressed: _trySave,
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.sand,
-                                foregroundColor: Colors.white,
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                                padding: const EdgeInsets.symmetric(vertical: 18),
+                                backgroundColor: Colors.white,
+                                foregroundColor: Colors.blueAccent,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+                                elevation: 0,
+                                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 18),
                               ),
-                              onPressed: () {
-                                if (_formKey.currentState?.validate() ?? false) {
-                                  widget.onSave(CertificationEntry(
-                                    type: _type,
-                                    customType: _type == 'Other' ? _customTypeController.text : null,
-                                    grade: _gradeController.text.isEmpty ? null : _gradeController.text,
-                                    date: _dateController.text,
-                                    candidateName: _nameController.text,
-                                    certificatePath: _certificatePath,
-                                    fileName: _fileName,
-                                  ));
-                                }
-                              },
-                              child: Text(
-                                widget.entry == null ? 'Save' : 'Update',
-                                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
+                              child: const Text('Save', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
                             ),
                           ),
                         ],
+                      ),
                       ),
                     ),
                   ),
@@ -477,24 +487,11 @@ class _AddCertificationOverlayState extends State<AddCertificationOverlay> {
                   clipBorderRadius: BorderRadius.circular(32),
                   blurX: 20,
                   blurY: 20,
-                ),
-              ),
-              // Cross button
-              Positioned(
-                top: 16,
-                right: 16,
-                child: GestureDetector(
-                  onTap: widget.onClose,
-                  child: Container(
-                    padding: const EdgeInsets.all(15),
-                    child: const Icon(Icons.close, color: AppColors.sand, size: 32),
-                  ),
-                ),
               ),
             ],
           ),
         ),
-      ],
+      ),
     );
   }
 } 

@@ -1,0 +1,60 @@
+{
+  "country": "Palestinian Territory, Occupied",
+  "totalUniversities": 3,
+  "universities": [
+    {
+      "id": "Palestinian Territory, Occupied_1",
+      "rank": 1001,
+      "ranking": "1001-1200",
+      "name": "Al Quds University The Arab University in Jerusalem",
+      "code": "PS",
+      "country": "Palestinian Territory, Occupied",
+      "score": 0,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 57551,
+      "applicationFee": 177,
+      "applicationOpen": false,
+      "applicationUrl": "https://alqudsuniversitythearabuniversityinjerusalem.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Al%20Quds%20University%20The%20Arab%20University%20in%20Jerusalem",
+      "isWatchlisted": false
+    },
+    {
+      "id": "Palestinian Territory, Occupied_2",
+      "rank": 1001,
+      "ranking": "1001-1200",
+      "name": "An-Najah National University",
+      "code": "PS",
+      "country": "Palestinian Territory, Occupied",
+      "score": 0,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 43552,
+      "applicationFee": 210,
+      "applicationOpen": true,
+      "applicationUrl": "https://an-najahnationaluniversity.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=An-Najah%20National%20University",
+      "isWatchlisted": false
+    },
+    {
+      "id": "Palestinian Territory, Occupied_3",
+      "rank": 1201,
+      "ranking": "1201-1400",
+      "name": "Birzeit university",
+      "code": "PS",
+      "country": "Palestinian Territory, Occupied",
+      "score": 0,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 18235,
+      "applicationFee": 171,
+      "applicationOpen": false,
+      "applicationUrl": "https://birzeituniversity.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Birzeit%20university",
+      "isWatchlisted": false
+    }
+  ]
+}

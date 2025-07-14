@@ -11,6 +11,8 @@ import 'package:unikwik_app/presentation/screens/community/community_screen.dart
 import 'package:unikwik_app/presentation/screens/travel_explorer_screen.dart';
 import 'package:unikwik_app/presentation/screens/exam_prep/exam_prep_screen.dart';
 import 'package:unikwik_app/presentation/widgets/app_scaffold.dart';
+import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
+import 'package:unikwik_app/presentation/screens/profile/profile_page.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -48,7 +50,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> with Single
       case 4:
         return ExamPrepScreen();
       case 5:
-        return const Center(child: Text('Profile Screen', style: TextStyle(fontSize: 22)));
+        return const ProfilePage();
       default:
         return TravelExplorerScreen();
     }
@@ -59,14 +61,14 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> with Single
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.attach_money, size: 80, color: AppColors.deepTeal),
+          Icon(Icons.attach_money, size: 80, color: Colors.white),
           const SizedBox(height: 20),
           Text(
             'Loans & Financial Aid',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: AppColors.deepTeal,
+              color: Colors.white,
             ),
           ),
           const SizedBox(height: 10),
@@ -74,7 +76,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> with Single
             'Coming Soon',
             style: TextStyle(
               fontSize: 16,
-              color: AppColors.deepTeal.withOpacity(0.7),
+              color: Colors.white.withOpacity(0.7),
             ),
           ),
         ],
@@ -87,14 +89,14 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> with Single
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.group, size: 80, color: AppColors.deepTeal),
+          Icon(Icons.group, size: 80, color: Colors.white),
           const SizedBox(height: 20),
           Text(
             'Community',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: AppColors.deepTeal,
+              color: Colors.white,
             ),
           ),
           const SizedBox(height: 10),
@@ -102,7 +104,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> with Single
             'Coming Soon',
             style: TextStyle(
               fontSize: 16,
-              color: AppColors.deepTeal.withOpacity(0.7),
+              color: Colors.white.withOpacity(0.7),
             ),
           ),
         ],
@@ -115,14 +117,14 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> with Single
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.account_circle, size: 80, color: AppColors.deepTeal),
+          Icon(Icons.account_circle, size: 80, color: Colors.white),
           const SizedBox(height: 20),
           Text(
             'Profile',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: AppColors.deepTeal,
+              color: Colors.white,
             ),
           ),
           const SizedBox(height: 10),
@@ -130,7 +132,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> with Single
             'Coming Soon',
             style: TextStyle(
               fontSize: 16,
-              color: AppColors.deepTeal.withOpacity(0.7),
+              color: Colors.white.withOpacity(0.7),
             ),
           ),
         ],
@@ -140,38 +142,75 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> with Single
 
   @override
   Widget build(BuildContext context) {
-    return AppScaffold(
-      firstName: 'Sachin',
-      lastName: 'Tanwar',
-      personalComplete: true,
-      educationComplete: false,
-      professionalComplete: false,
-      certificationsComplete: true,
-      bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: Colors.transparent,
-        color: AppColors.deepTeal,
-        items: _icons.map((icon) => Icon(icon, color: Colors.white, size: 30)).toList(),
-        index: _selectedIndex,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-      ),
-      body: Stack(
-        children: [
-          const GradientBackground(),
-          SafeArea(
-            child: Column(
-              children: [
-                Expanded(
-                  child: _buildCurrentScreen(),
-                ),
-              ],
+    return Stack(
+      children: [
+        const GradientBackground(),
+        SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 90), // extra bottom padding for overlays
+            child: AppScaffold(
+              firstName: 'Sachin',
+              lastName: 'Tanwar',
+              personalComplete: true,
+              educationComplete: false,
+              professionalComplete: false,
+              certificationsComplete: true,
+              body: Column(
+                children: [
+                  Expanded(
+                    child: _buildCurrentScreen(),
+                  ),
+                ],
+              ),
             ),
           ),
-        ],
-      ),
+        ),
+        Positioned(
+          left: 24,
+          right: 24,
+          bottom: 24,
+          child: SalomonBottomBar(
+            currentIndex: _selectedIndex,
+            onTap: (index) {
+              setState(() {
+                _selectedIndex = index;
+              });
+            },
+            items: [
+              SalomonBottomBarItem(
+                icon: const Icon(Icons.travel_explore),
+                title: const Text("Travel"),
+                selectedColor: AppColors.aqua,
+              ),
+              SalomonBottomBarItem(
+                icon: const Icon(Icons.attach_money),
+                title: const Text("Loans"),
+                selectedColor: AppColors.peach,
+              ),
+              SalomonBottomBarItem(
+                icon: const Icon(Icons.account_balance),
+                title: const Text("Universities"),
+                selectedColor:Colors.white,
+              ),
+              SalomonBottomBarItem(
+                icon: const Icon(Icons.group),
+                title: const Text("Community"),
+                selectedColor: AppColors.peach,
+              ),
+              SalomonBottomBarItem(
+                icon: const Icon(Icons.school),
+                title: const Text("Exam Prep"),
+                selectedColor: AppColors.aqua,
+              ),
+            ],
+            backgroundColor: Colors.transparent, // fully transparent for seamless gradient
+            unselectedItemColor: Colors.white.withOpacity(0.7),
+            margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            duration: const Duration(milliseconds: 600),
+            curve: Curves.easeOutExpo,
+          ),
+        ),
+      ],
     );
   }
 }

@@ -1,0 +1,42 @@
+{
+  "country": "Panama",
+  "totalUniversities": 2,
+  "universities": [
+    {
+      "id": "Panama_1",
+      "rank": 951,
+      "ranking": "1001-1200",
+      "name": "Universidad Tecnológica de Panamá (UTP)",
+      "code": "PA",
+      "country": "Panama",
+      "score": 0,
+      "region": "South America",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 59880,
+      "applicationFee": 161,
+      "applicationOpen": false,
+      "applicationUrl": "https://universidadtecnológicadepanamá(utp).edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Universidad%20Tecnol%C3%B3gica%20de%20Panam%C3%A1%20(UTP)",
+      "isWatchlisted": false
+    },
+    {
+      "id": "Panama_2",
+      "rank": 1201,
+      "ranking": "1201-1400",
+      "name": "Universidad de Panama",
+      "code": "PA",
+      "country": "Panama",
+      "score": 0,
+      "region": "South America",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 12062,
+      "applicationFee": 170,
+      "applicationOpen": false,
+      "applicationUrl": "https://universidaddepanama.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Universidad%20de%20Panama",
+      "isWatchlisted": false
+    }
+  ]
+}

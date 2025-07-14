@@ -1,0 +1,39 @@
+{
+  "country": "Honduras",
+  "flag": "🇭🇳",
+  "totalUniversities": 1,
+  "universities": [
+    {
+      "id": "Honduras_1",
+      "rank": 1401,
+      "ranking": "1401+",
+      "name": "Universidad Nacional Autónoma de Honduras (UNAH)",
+      "code": "HN",
+      "country": "Honduras",
+      "score": 0,
+      "region": "Africa",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 23223,
+      "applicationFee": 154,
+      "applicationOpen": true,
+      "applicationUrl": "https://universidadnacionalautónomadehonduras(unah).edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Universidad%20Nacional%20Aut%C3%B3noma%20de%20Honduras%20(UNAH)",
+      "isWatchlisted": false,
+      "description": "Universidad Nacional Autónoma de Honduras (UNAH) is a prestigious university located in Honduras.",
+      "programs": [
+        "Computer Science",
+        "Engineering",
+        "Business",
+        "Arts",
+        "Medicine"
+      ],
+      "acceptanceRate": 26,
+      "studentCount": 45804,
+      "founded": 1901,
+      "campusType": "Suburban",
+      "worldRanking": 1401,
+      "countryRanking": 1
+    }
+  ]
+}

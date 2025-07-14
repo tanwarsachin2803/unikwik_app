@@ -1,0 +1,71 @@
+{
+  "country": "Kenya",
+  "flag": "🇰🇪",
+  "totalUniversities": 2,
+  "universities": [
+    {
+      "id": "Kenya_1",
+      "rank": 1001,
+      "ranking": "1001-1200",
+      "name": "University of Nairobi",
+      "code": "KE",
+      "country": "Kenya",
+      "score": 0,
+      "region": "Africa",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 47364,
+      "applicationFee": 180,
+      "applicationOpen": true,
+      "applicationUrl": "https://universityofnairobi.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=University%20of%20Nairobi",
+      "isWatchlisted": false,
+      "description": "University of Nairobi is a prestigious university located in Kenya.",
+      "programs": [
+        "Computer Science",
+        "Engineering",
+        "Business",
+        "Arts",
+        "Medicine"
+      ],
+      "acceptanceRate": 34,
+      "studentCount": 46674,
+      "founded": 1929,
+      "campusType": "Urban",
+      "worldRanking": 1001,
+      "countryRanking": 1
+    },
+    {
+      "id": "Kenya_2",
+      "rank": 1201,
+      "ranking": "",
+      "name": "Kenyatta University",
+      "code": "KE",
+      "country": "Kenya",
+      "score": 0,
+      "region": "Africa",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 37375,
+      "applicationFee": 141,
+      "applicationOpen": true,
+      "applicationUrl": "https://kenyattauniversity.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Kenyatta%20University",
+      "isWatchlisted": false,
+      "description": "Kenyatta University is a prestigious university located in Kenya.",
+      "programs": [
+        "Computer Science",
+        "Engineering",
+        "Business",
+        "Arts",
+        "Medicine"
+      ],
+      "acceptanceRate": 35,
+      "studentCount": 29162,
+      "founded": 1905,
+      "campusType": "Rural",
+      "worldRanking": 1201,
+      "countryRanking": 2
+    }
+  ]
+}

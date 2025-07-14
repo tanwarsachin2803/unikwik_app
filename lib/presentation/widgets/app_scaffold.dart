@@ -29,6 +29,7 @@ class AppScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar,
+      backgroundColor: Colors.transparent,
       body: Stack(
         children: [
           body,

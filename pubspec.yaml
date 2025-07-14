@@ -52,6 +52,10 @@ dependencies:
   http: ^1.1.0
   flutter_spinkit: ^5.2.0
   flutter_animate: ^4.2.0
+  salomon_bottom_bar: ^3.3.2
+  image_picker: ^1.0.7
+  font_awesome_flutter: ^10.7.0
+  confetti: ^0.7.0
 
 dependency_overrides:          
   flutter_web_auth_2: ^4.1.0
@@ -77,3 +81,4 @@ flutter:
     - lib/presentation/screens/university/assets/flags/
     - lib/presentation/screens/university/assets/regions/
     - assets/countries.json
+    - assets/university_data/

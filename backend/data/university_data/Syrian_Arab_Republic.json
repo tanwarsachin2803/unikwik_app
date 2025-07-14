@@ -1,0 +1,24 @@
+{
+  "country": "Syrian Arab Republic",
+  "totalUniversities": 1,
+  "universities": [
+    {
+      "id": "Syrian Arab Republic_1",
+      "rank": 1201,
+      "ranking": "1401+",
+      "name": "Damascus University",
+      "code": "SY",
+      "country": "Syrian Arab Republic",
+      "score": 0,
+      "region": "Asia",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 15551,
+      "applicationFee": 159,
+      "applicationOpen": true,
+      "applicationUrl": "https://damascusuniversity.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Damascus%20University",
+      "isWatchlisted": false
+    }
+  ]
+}

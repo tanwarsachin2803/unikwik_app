@@ -1,0 +1,39 @@
+{
+  "country": "Bulgaria",
+  "flag": "🇧🇬",
+  "totalUniversities": 1,
+  "universities": [
+    {
+      "id": "Bulgaria_1",
+      "rank": 741,
+      "ranking": "561-570",
+      "name": "Sofia University St. Kliment Ohridski",
+      "code": "BG",
+      "country": "Bulgaria",
+      "score": 0,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 46385,
+      "applicationFee": 157,
+      "applicationOpen": false,
+      "applicationUrl": "https://sofiauniversityst.klimentohridski.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Sofia%20University%20St.%20Kliment%20Ohridski",
+      "isWatchlisted": false,
+      "description": "Sofia University St. Kliment Ohridski is a prestigious university located in Bulgaria.",
+      "programs": [
+        "Computer Science",
+        "Engineering",
+        "Business",
+        "Arts",
+        "Medicine"
+      ],
+      "acceptanceRate": 28,
+      "studentCount": 36432,
+      "founded": 1811,
+      "campusType": "Suburban",
+      "worldRanking": 741,
+      "countryRanking": 1
+    }
+  ]
+}

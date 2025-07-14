@@ -1,0 +1,24 @@
+{
+  "country": "Cyprus",
+  "totalUniversities": 1,
+  "universities": [
+    {
+      "id": "Cyprus_1",
+      "rank": 368,
+      "ranking": "473=",
+      "name": "University of Cyprus (UCY)",
+      "code": "CY",
+      "country": "Cyprus",
+      "score": 30.1,
+      "region": "Europe",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 13861,
+      "applicationFee": 161,
+      "applicationOpen": true,
+      "applicationUrl": "https://universityofcyprus(ucy).edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=University%20of%20Cyprus%20(UCY)",
+      "isWatchlisted": false
+    }
+  ]
+}

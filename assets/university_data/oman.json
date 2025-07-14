@@ -1,0 +1,39 @@
+{
+  "country": "Oman",
+  "flag": "🇴🇲",
+  "totalUniversities": 1,
+  "universities": [
+    {
+      "id": "Oman_1",
+      "rank": 454,
+      "ranking": "384=",
+      "name": "Sultan Qaboos University",
+      "code": "OM",
+      "country": "Oman",
+      "score": 25.2,
+      "region": "Asia",
+      "startDate": "",
+      "endDate": "",
+      "tuitionFee": 18156,
+      "applicationFee": 63,
+      "applicationOpen": false,
+      "applicationUrl": "https://sultanqaboosuniversity.edu",
+      "imageUrl": "https://via.placeholder.com/300x200/4A90E2/FFFFFF?text=Sultan%20Qaboos%20University",
+      "isWatchlisted": false,
+      "description": "Sultan Qaboos University is a prestigious university located in Oman.",
+      "programs": [
+        "Computer Science",
+        "Engineering",
+        "Business",
+        "Arts",
+        "Medicine"
+      ],
+      "acceptanceRate": 26,
+      "studentCount": 19102,
+      "founded": 1834,
+      "campusType": "Urban",
+      "worldRanking": 454,
+      "countryRanking": 1
+    }
+  ]
+}
